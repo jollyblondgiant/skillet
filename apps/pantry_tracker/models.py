@@ -58,9 +58,11 @@ class Product(models.Model):
     pantry = models.ForeignKey(Pantry, related_name = "product")
     name = models.CharField(max_length=255)
     quantity = models.PositiveSmallIntegerField()
+    measure = models.CharField(max_length = 255, default = "unit")        # use this attr. to establish values such as "quart" or "tsp" or "pound". we need to be DILLIGENT to be CONSISTENT so we can search/filter by this field
     description = models.CharField(max_length=255)
+    image = models.CharField(max_length = 255, default = "please link to static img")    # use this field to link to static img file, update default once we have a default watermark to use instead
     price = models.PositiveSmallIntegerField()          # represent price in cents, present to user after dividing by 100
-    shelf_life = models.PositiveSmallIntegerField()     # Product.shelf_life should be expressed in days
+    shelf_life = models.PositiveSmallIntegerField()     # Product.shelf_life should be expressed in days // HOW TO EXPRESS NON-PERISHABLE? **FOR NOW, USE (AND {IF-CHECK} FOR) 0**
     # there exists a ManyToMany with Diet below
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
@@ -101,4 +103,27 @@ class Restriction(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
 # class "user" is not yet set up to accept any relationships or input related to the rest of the app
+
+
+class Recipe(models.Model):
+    name = models.CharField(max_length=255)
+    desc = models.TextField()
+    #probably won't need the 'author' field,
+    #adding it, just in case
+    author = models.ForeignKey(User, related_name="recipes_submitted")
+    #this field we'll definitely need:
+    added_by = models.ManyToManyField(User, related_name='added_recipes')
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
+
+#This is for linking product types with recipes
+#stores quantity required and text notes, again
+#just in case
+class RecipeComponents(models.Model):
+    product = models.ForeignKey(Product, related_name='used_in_recipe')
+    recipe = models.ForeignKey(Recipe, related_name="components")
+    quantity = models.IntegerField()
+    note = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
 
