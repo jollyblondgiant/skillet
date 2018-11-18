@@ -50,14 +50,55 @@ class Validator(models.Manager):
         return errors
     
 
+class Pantry(models.Model):
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
+
+class Product(models.Model):
+    pantry = models.ForeignKey(Pantry, related_name = "product")
+    name = models.CharField(max_length=255)
+    quantity = models.PositiveSmallIntegerField()
+    description = models.CharField(max_length=255)
+    price = models.PositiveSmallIntegerField()          # represent price in cents, present to user after dividing by 100
+    shelf_life = models.PositiveSmallIntegerField()     # Product.shelf_life should be expressed in days
+    # there exists a ManyToMany with Diet below
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
+
 class User(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
+    pantry = models.ForeignKey(Pantry, related_name = "user")
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
     objects = Validator()
 
+class GroceryList(models.Model):
+    product = models.ForeignKey(Product, related_name = "product_grocery_list")
+    user = models.OneToOneField(User, related_name = "user_grocery_list")
+    
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
+    
+class Diet(models.Model):
+    user = models.ForeignKey(User, related_name = "diet")
+    preference = models.CharField(max_length = 255)
+    products = models.ManyToManyField(Product, related_name="diets")
+    # ManyToMany with Product, as explained above
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
+
+class Restriction(models.Model):
+    name = models.CharField(max_length=255)
+    diet = models.OneToOneField(Diet, on_delete=models.CASCADE)
+    # A restriction is a more specific form of diet, and should be reserved for when a user CANNOT allow that object, eg allergy.
+    # OneToMany documentation: https://docs.djangoproject.com/en/2.1/topics/db/examples/one_to_one/
+    # when creating an instance with a restriction, it MUST HAVE a diet in its declaration, and that diet SHOULD HAVE a user associated with it.
+    # in this way, a user's restrictions can be accessed the same way we access that user's diet: User.objects.get({{value}}).diet.restriction
+    # Users can be accessed through Restricion.diet.user
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
 # class "user" is not yet set up to accept any relationships or input related to the rest of the app
 
