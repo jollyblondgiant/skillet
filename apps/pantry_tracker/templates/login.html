@@ -16,48 +16,49 @@
 <body class="container">
     <div id="wrapper" class="conatiner-fluid">
         <div id="header" class="row justify-content-start">
-            <div class="col-lg-3 col-md-3 col-sm-3">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-2">
                 <img id="logo" class="img-thumbnail" src="../static/img/logo.png" alt="Skillet Logo">
             </div>
-            <div class="col-lg-8 col-md-8 col-sm-6">
+            <div class="col-8 col-lg-8 col-md-8 col-sm-6 col-xl-2">
                 <h1 id="skillet"><span>S</span><span>K</span><span>I</span><span>L</span><span>L</span><span>E</span><span>T</span></h1>
             </div>
-            <div class="col-12 col-sm-2 col-md-2" id="landing-login">
+            <div class="col-12 col-sm-2 col-md-2 col-xl-2" id="landing-login">
                 <a id="landing-login" href="/">Go Back</a>
             </div>
         </div>
         <!--Ends Header-->
-        <div id="log-wrapper" class="container-fluid">
-            <div class="row">
-                <div id="log-box" class="col-lg-6 col-md-8 col-sm-8 col-10 mx-auto mt-5">
-                    <h3>Login</h3>
-                    <form action="login" method="POST">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <label>Email address</label>
-                            <input type="email" class="form-control" name="loginEmail">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input type="password" class="form-control" name='loginPassword' placeholder="Password">
-                        </div>
+        <div id="main" class="row justify-content-start">
+            <div id="log-wrapper" class="container-fluid">
+                <div class="row">
+                    <div id="log-box" class="col-lg-6 col-md-8 col-sm-8 col-10 mx-auto mt-5">
+                        <h3>Login</h3>
+                        <form action="dashboard" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label>Email address</label>
+                                <input type="email" class="form-control" name="loginEmail">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Password</label>
+                                <input type="password" class="form-control" name='loginPassword' placeholder="Password">
+                            </div>
 
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
-                    <a class="reroute" href="/register">Sign Up</a>
-                    {% if messages %}
-                    <div class="validator_error_messages">
-                        <ul class="messages">
-                            {% for message in messages %}
-                            <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-                            {% endfor %}
-                        </ul>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                        <a class="reroute" href="/register">Sign Up</a>
+                        {% if messages %}
+                        <div class="validator_error_messages">
+                            <ul class="messages">
+                                {% for message in messages %}
+                                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
                     </div>
-                    {% endif %}
                 </div>
+
             </div>
-
-
         </div>
     </div>
 
