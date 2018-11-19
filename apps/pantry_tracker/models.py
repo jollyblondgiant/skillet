@@ -57,7 +57,7 @@ class Pantry(models.Model):
 class Product(models.Model):
     pantry = models.ForeignKey(Pantry, related_name = "product")
     name = models.CharField(max_length=255)
-    quantity = models.PositiveSmallIntegerField()
+    quantity = models.PositiveSmallIntegerField( default =1)
     product_category = models.CharField(max_length=255, default = " ")
     measure = models.CharField(max_length = 255, default = "unit")        # use this attr. to establish values such as "quart" or "tsp" or "pound". we need to be DILLIGENT to be CONSISTENT so we can search/filter by this field
     description = models.CharField(max_length=255)
