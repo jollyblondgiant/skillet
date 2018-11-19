@@ -110,11 +110,34 @@ def dashboard(request):
 
 # Take user to the page for profile editing
 def editProfile(request,id):
-    context = {}
+    user=User.objects.get(id=id)
+    context = {
+        'user':{
+            'first_name':user.first_name,
+            'last_name':user.last_name,
+            'email':user.email,
+            'id':id
+        }
+    }    
     return render(request,"edit.html", context)
 
 # Processes whatever changes the users submits
 def update_profile(request,id):
+    request.session['errors']={}
+    if request.method=="POST":
+        errors = User.objects.update_validator(request.POST)
+        if len(errors):
+            request.session['errors']=errors
+            route = '/myaccount/' + str(request.POST['id'])
+            return redirect(route)
+        else:
+            user = User.objects.get(id=request.POST['id'])
+            user.first_name=request.POST['first_name']
+            user.last_name=request.POST['last_name']
+            if user.email == request.session['current_user']:
+                request.session['current_user']=request.POST['email']
+            user.email=request.POST['email']
+            user.save()
     return redirect('/dashboard') 
 #**********************************************************
 
