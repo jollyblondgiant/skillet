@@ -13,6 +13,7 @@ def landing(request):
 
 #Logout wipes the session out, dumps user back to landing
 def logout(request):
+
     request.session.clear()
     return redirect('/')
 
@@ -258,7 +259,18 @@ def complete_recipe(request):
 # def index(request):
 #     request.session['servercheck'] = "Success!"
 #     return render(request, 'index.html')
+    # del request.session['user_id']
+   # return redirect('/')
 
+
+# **************************************************************************************************************************
+# ******************************BELOW IS THE VALIDATIONS WE WILL BE EDITING AND USING***************************************
+# **************************************************************************************************************************
+
+
+
+# def login(request):
+#     return(request, 'login.html')
 # def login(request):
 #     errors = User.objects.login_validator(request.POST)
 #     if len(errors):
@@ -280,10 +292,12 @@ def complete_recipe(request):
 #         request.session['user_id'] = user.id
 #         return redirect('/dashboard')
    
-
 # def logout(request):
 #     del request.session['user_id']
 #     return redirect('/')
+# def index(request):
+#     request.session['servercheck'] = "Success!"
+#     return render(request, 'index.html')
 
 # def dashboard(request):
 #     if 'user_id' not in request.session:
@@ -297,3 +311,4 @@ def complete_recipe(request):
 #             'email': user.email
 #         }
 #     return render(request,'dashboard.html', context)
+

@@ -2,7 +2,8 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    #Where we start. If logged in will redirect to dash
+
+  #Where we start. If logged in will redirect to dash
     #If not logged in - ask to log in or register
     url(r'^$', views.landing),
 
@@ -63,4 +64,3 @@ urlpatterns = [
 
     #render separate page for complex recipe building
     url(r'recipe_builder$',views.recipe_builder),
-]
