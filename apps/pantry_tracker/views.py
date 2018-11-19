@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
-from .models import User, Validator
+from .models import *
 import re, bcrypt
 
 def landing(request):
-    return render(request, 'landing.html')
+    response = "Landing Page"
+    print(User.objects.get())
+
+    return HttpResponse(response)
 
 def login(request):
     return render(request, 'login.html')
