@@ -2,10 +2,65 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.index),
-    url(r'^skillet$',views.index),
-    url(r'register$', views.register),
-    url(r'dashboard$', views.dashboard),
+    #Where we start. If logged in will redirect to dash
+    #If not logged in - ask to log in or register
+    url(r'^$', views.landing),
+
+    #log out clears session user_id
+    url(r'logout$', views.logout),
+
+    #Takes user to render the login screen
     url(r'login$', views.login),
-    url(r'logout$', views.logout)
+
+    #Processes user name and pw
+    url(r'loginUser$', views.loginUser),
+
+    #Draw registration form
+    url(r'register$', views.register),
+
+    #Process to validate and save the form's data
+    url(r'registerUser$', views.registerUser),
+
+    #Our homepage after you log in
+    url(r'dashboard$', views.dashboard),
+#**********************************************************
+
+    #Allows user to edit their profile
+    url(r'editProfile$(?P<id>\d+)$', views.editProfile),
+
+    #Send changed user data to the DB
+    url(r'update_profile$', views.update_profile),
+
+#**********************************************************
+    #Render the pantry page
+    url(r'myPantry$', views.myPantry),
+
+    #Submit changes to the pantry
+    url(r'editPantry$', views.editPantry),
+#**********************************************************
+    #Displays the current ShoppingList
+    url(r'shoppingList$', views.shoppingList),
+
+    #Updates the shopping list
+    url(r'editShoppingList$', views.editShoppingList),
+#**********************************************************
+
+    #Admin page for User, Product, Recipe CRUD
+    url(r'admin_dash$', views.admin_dash),
+
+    url(r'user_delete/(?P<id>\d+)$',views.user_delete),
+
+    #Add a Product to the DB
+    url(r'addProduct$', views.add_product),
+
+    #add a built recipe to the db
+    url(r'complete_recipe$',views.complete_recipe),
+
+    #push some product instances into the session
+    url(r'add_to_recipe$',views.add_to_recipe),
+
+    url(r'recipe_clear$',views.recipe_clear),
+
+    #render separate page for complex recipe building
+    url(r'recipe_builder$',views.recipe_builder),
 ]
