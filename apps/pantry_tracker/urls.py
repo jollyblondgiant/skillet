@@ -51,7 +51,7 @@ urlpatterns = [
     url(r'user_delete/(?P<id>\d+)$',views.user_delete),
 
     #Add a Product to the DB
-    url(r'addProduct$', views.add_product),
+    url(r'add_product$', views.add_product),
 
     #add a built recipe to the db
     url(r'complete_recipe$',views.complete_recipe),

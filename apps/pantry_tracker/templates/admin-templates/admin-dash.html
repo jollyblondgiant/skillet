@@ -60,7 +60,7 @@
         <div class="admin_list"><!--products-->
             <h3>Products</h3>
             <div>
-                <form action="/addProduct" method="POST">
+                <form action="/add_product" method="POST">
                     {% csrf_token %}
                     <input type="text" name="name" placeholder="Food name">
                     <input type="text" name="desc" placeholder="Product description">

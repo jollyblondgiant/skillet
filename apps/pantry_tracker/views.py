@@ -90,9 +90,17 @@ def dashboard(request):
         return redirect('/')
     user=User.objects.get(id=request.session['user_id'])
     name=user.first_name+" "+user.last_name
+    pantrylist=[]
+    for product in user.pantry.product.order_by('name'):
+        temp={
+            'name':product.name,
+            'id':product.id,
+        }
+        pantrylist.append(temp)
     context = {
         'username':name,
-        'access_level': user.access_level
+        'access_level': user.access_level,
+        'pantrylist':pantrylist,
     }
     return render(request, 'dashboard.html',context)
 #**********************************************************
@@ -180,12 +188,13 @@ def admin_dash(request):
 
 def add_product(request):
     if request.method == 'POST':
-        errors = Product.objects.product_validator(request.POST)
+        errors = {}
         if len(errors):
             print(errors)
         else:
             price=request.POST['price']
-            Product.objects.create(name=request.POST['name'], desc=request.POST['desc'],unit=request.POST['unit'],shelf_life=request.POST['shelf_life'],price=price)
+            Product.objects.create(name=request.POST['name'], description=request.POST['desc'],measure=request.POST['unit'],shelf_life=request.POST['shelf_life'],quantity=1, price=price, pantry=Pantry.objects.get(id=1),image='flour.jpg')
+            #NOTE!! This is making products in Andy's pantry. SUBJECT TO CHANGE
     return redirect('/admin_dash')
 
 def recipe_builder(request):
