@@ -1,12 +1,27 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
+from datetime import datetime, date, time
+import datetime
 from .models import *
 import re, bcrypt
 
 def landing(request):
     response = "Landing Page"
-    print(User.objects.get())
-
+    print("///////////////////////////////////////////////////////////////////////////////////////////////////")
+    print("Remaining time left until item is spoiled")
+    print("///////////////////////////////////////////////////////////////////////////////////////////////////")
+    timeToSpoil = ""
+    for product in Product.objects.filter(pantry = Pantry.objects.get(id = User.objects.get(id = 1).id)): 
+        createdAt = Product.objects.get(id = product.id).created_at.strftime("%d")
+        today = datetime.date.today().strftime("%d")
+        #Update id = 1 to 1 = request.session['user_id']
+        if product.shelf_life:
+            if product.created_at.strftime("%m") != datetime.date.today().strftime("%m"):
+                createdAt = datetime.date.today().strftime("%m")
+                timeToSpoil = timeToSpoil - 1
+            timeToSpoil = Product.objects.get(id = product.id).shelf_life
+            timeToSpoil = timeToSpoil - (int(today) - int(createdAt))
+    print("///////////////////////////////////////////////////////////////////////////////////////////////////")
     return HttpResponse(response)
 
 def login(request):
