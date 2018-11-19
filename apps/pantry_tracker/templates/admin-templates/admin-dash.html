@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Administrator Dashboard</title>
+</head>
+<body>
+    <div>
+        <h2>Welcome, Administrator {{adminname}}</h2>
+        <a href="/dashboard">Back to your own dashboard</a>
+        <a href="/logout">Log out</a>
+        <div class="admin_list"><!--users crud-->
+            <div>
+                <h3>Users</h3>
+                <h4>Create new user</h4>
+                <form action="/registerUser" method="POST">
+                    {% csrf_token %}
+                    <input type="text" name="first_name" placeholder="First name">
+                    <input type="text" name="last_name" placeholder="Last Name">
+                    <input type="email" name="email" placeholder="E-mail">
+                    <select name="access_level">
+                        <option value="1">User</option>
+                        <option value="7">Admin</option>
+                    </select>
+                    <input type="password" name="password" placeholder="Enter Password">
+                    <input type="password" name='password_confirm' placeholder="Confirm Password">
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+            <div>
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>E-mail</th>
+                        <th>Access Level</th>
+                        <th>Pantry</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                    {% for user in userlist %}
+                    <tr>
+                        <td>{{user.id}}</td>
+                        <td>{{user.first_name}}</td>
+                        <td>{{user.last_name}}</td>
+                        <td>{{user.email}}</td>
+                        <td>{{user.access_level}}</td>
+                        <td>{{user.pantry}}</td>
+                        <td>
+                            <a href="">Edit</a>
+                            <a href="/user_delete/{{user.id}}">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div><!--end of user list-->
+        <div class="admin_list"><!--products-->
+            <h3>Products</h3>
+            <div>
+                <form action="/add_product" method="POST">
+                    {% csrf_token %}
+                    <input type="text" name="name" placeholder="Food name">
+                    <input type="text" name="desc" placeholder="Product description">
+                    <select name="unit">
+                        <option value="pcs">Pieces</option>
+                        <option value="gram">Grams</option>
+                        <option value="ml">Milliliters</option>
+                        <option value="lbs">Pounds</option>
+                        <option value="fl_oz">Fluid Ounces</option>
+                    </select>
+                    <input type="number" name="shelf_life" placeholder="Shelf life in days">
+                    <input type="number" name="price" placeholder="Approximate price" style="width:150px">
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+            <div>
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Quantity</th>
+                        <th>Unit of measure</th>
+                        <th>Shelf Life</th>
+                        <th>Price</th>
+                        <th>Owner</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                    {% for product in productlist %}
+                    <tr>
+                        <td>{{product.id}}</td>
+                        <td>{{product.name}}</td>
+                        <td>{{product.desc}}</td>
+                        <td>{{product.quantity}}</td>
+                        <td>{{product.unit}}</td>
+                        <td>
+                            {% if product.shelf_life == 0 %}
+                            Indefinite
+                            {% else %}
+                            {{product.shelf_life}} days
+                            {% endif %}
+                        </td>
+                        <td>{{product.price}}¢</td>
+                        <td>{{product.owner}}</td>
+                        <td>
+                            <a href="">Edit</a>
+                            <a href="">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div><!--end of product list-->
+        <div class="admin_list"><!--recipes-->
+            <h3>Recipes</h3>
+            <a href="/recipe_builder">Recipe Builder</a>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Author</th>
+                    <th>ACTIONS</th>
+                </tr>
+                {% for recipe in recipelist %}
+                <tr>
+                    <td>{{recipe.id}}</td>
+                    <td>{{recipe.name}}</td>
+                    <td>{{recipe.author}}</td>
+                    <td>
+                        <a href="">EDIT</a>
+                        <a href="">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div><!--end of recipe list-->
+    </div>
+</body>
+</html>

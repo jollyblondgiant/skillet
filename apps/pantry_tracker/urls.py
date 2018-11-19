@@ -2,62 +2,65 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
+
+  #Where we start. If logged in will redirect to dash
+    #If not logged in - ask to log in or register
+    url(r'^$', views.landing),
+
     #log out clears session user_id
     url(r'logout$', views.logout),
 
-    
-    #edit pantry allows user to edit their current pantry
-    url(r'editPantry$', views.editPantry),
+    #Takes user to render the login screen
+    url(r'login$', views.login),
 
-    
-    #My pantry holds all of the items in your home's pantry
-    url(r'myPantry$', views.myPantry),
+    #Processes user name and pw
+    url(r'loginUser$', views.loginUser),
 
-    
-    #View Product show the product information that was clicked on
-    url(r'viewProduct$', views.viewProduct),
+    #Draw registration form
+    url(r'register$', views.register),
 
-    
-    #Products shows a list of the products available
-    url(r'products$', views.products),
-
-    
-    #Allows user to edit the shopping list
-    url(r'editShoppingList$', views.editShoppingList),
-
-    
-    #Displays the current ShoppingList
-    url(r'shoppingList$', views.shoppingList),
-
-    
-    #Allows user to edit their profile
-    url(r'editProfile$', views.editProfile),
-
-    
-    #Allows all users to view a user's profile
-    url(r'profile$', views.profile),
-
-    
-    #Our homepage after you log in
-    url(r'dashboard$', views.dashboard),
-
-    
     #Process to validate and save the form's data
     url(r'registerUser$', views.registerUser),
 
-    
-    #Form for a new user to register
-    url(r'register$', views.register),
+    #Our homepage after you log in
+    url(r'dashboard$', views.dashboard),
+#**********************************************************
 
-    
-    #Checks the form's data to the Database to check if the user has an account, password is correct
-    url(r'loginUser$', views.loginUser),
+    #Allows user to edit their profile
+    url(r'editProfile$(?P<id>\d+)$', views.editProfile),
 
-    
-    #Form for a returning user to login
-    url(r'login$', views.login),
+    #Send changed user data to the DB
+    url(r'update_profile$', views.update_profile),
 
-    
-    #Landing page for when a user is not signed in
-    url(r'^$', views.landing),
-]
+#**********************************************************
+    #Render the pantry page
+    url(r'myPantry$', views.myPantry),
+
+    #Submit changes to the pantry
+    url(r'editPantry$', views.editPantry),
+#**********************************************************
+    #Displays the current ShoppingList
+    url(r'shoppingList$', views.shoppingList),
+
+    #Updates the shopping list
+    url(r'editShoppingList$', views.editShoppingList),
+#**********************************************************
+
+    #Admin page for User, Product, Recipe CRUD
+    url(r'admin_dash$', views.admin_dash),
+
+    url(r'user_delete/(?P<id>\d+)$',views.user_delete),
+
+    #Add a Product to the DB
+    url(r'add_product$', views.add_product),
+
+    #add a built recipe to the db
+    url(r'complete_recipe$',views.complete_recipe),
+
+    #push some product instances into the session
+    url(r'add_to_recipe$',views.add_to_recipe),
+
+    url(r'recipe_clear$',views.recipe_clear),
+
+    #render separate page for complex recipe building
+    url(r'recipe_builder$',views.recipe_builder),
