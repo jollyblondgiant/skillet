@@ -53,7 +53,8 @@ urlpatterns = [
 
     #Add a Product to the DB
     url(r'add_product$', views.add_product),
-
+    
+#**********************************************************
     #add a built recipe to the db
     url(r'complete_recipe$',views.complete_recipe),
 
@@ -64,4 +65,13 @@ urlpatterns = [
 
     #render separate page for complex recipe building
     url(r'recipe_builder$',views.recipe_builder),
+#**********************************************************
+    #render shopping list page
+    url(r'shopping_list$',views.shopping_list),
+
+    #chosen groceries go to the list
+    url(r'add_groceries$',views.add_groceries),
+
+    #submit shopping list to the pantry
+    url(r'done_shopping$',views.done_shopping),
 ]

@@ -256,6 +256,17 @@ def complete_recipe(request):
     return redirect('/admin_dash')
 
 
+#render shopping list page
+def shopping_list(request):
+    context={}
+    return render(request,"grocery.html",context)
+
+def add_groceries(request):
+    return redirect('shopping_list')
+
+def done_shopping(request):
+    return redirect('dashboard')
+
 # def index(request):
 #     request.session['servercheck'] = "Success!"
 #     return render(request, 'index.html')
