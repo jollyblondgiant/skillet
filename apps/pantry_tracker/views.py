@@ -95,6 +95,8 @@ def dashboard(request):
         temp={
             'name':product.name,
             'id':product.id,
+            'img':product.image,
+            'time':12
         }
         pantrylist.append(temp)
     context = {
