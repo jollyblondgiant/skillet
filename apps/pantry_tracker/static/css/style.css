@@ -1,9 +1,235 @@
-h1 {
-    color: red;
+*{
+    /*outline: 1px solid red;*/
+
+}
+
+body{
+    background-color: rgb(133, 124, 124);
+}
+.img-thumbnail {
+    background-color: black;
+    border-radius: 10px;
+    border: none;
+    padding: 5% 0 0 5%;
+    max-width: 300%;
+    height: auto;
+}
+div#header{
+    background-color: black;
+    padding: 0;
+}
+div.fixed{
+    position: relative;
+}
+h1{
+    color: whitesmoke;
+}
+span{
+    display: inline-block;
+}
+span#turn{
+    transition: all 0.5s;
+    transform: rotateY(180deg);
+    color: #e1801d;
+}
+span#turn:hover{
+    transform: rotateY(0deg);
+    color: white;
+}
+span:hover{
+    color: #e1801d;
 }
 .validator_error_messages{
     background-color:pink;
     margin-top:20px;
     padding: 20px;
     border-radius:10px;
+}
+.jumbotron {
+    position: relative;
+    overflow: hidden;
+    background-color:black;
+    padding: 10% 0 10% 0;
+    width: 100%;
+}
+.jumbotron video {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    width:100%;
+    height:100%;
+    /*  object-fit is not supported on IE  */
+    object-fit: cover;
+    opacity:0.5;
+}
+.jumbotron .container {
+    z-index: 2;
+    position: relative;
+}
+div#pantry{
+    background-image: url('../img/pantry.png')
+}
+#reg-box{
+    background-color: rgb(97, 96, 96);
+    border-radius: 10px;
+    padding: 2%;
+    margin-bottom: 10%;
+}
+#reg-wrapper{
+    background-image: url(../img/spices.jpg);
+    background-size: 100%;
+    padding: 10% 5% 5% 10%;
+}
+#log-box{
+    background-color: rgb(97, 96, 96);
+    border-radius: 10px;
+    padding: 2%;
+    margin-bottom: 10%;
+}
+#log-wrapper{
+    background-image: url(../img/veggies.jpg);
+    background-size: 100%;
+    margin: 0;
+    padding: 10% 5% 5% 10%;
+}
+.reroute{
+    margin-left: 80%;
+    font-size: 110%;
+    color: white;
+}
+div#footer{
+    background-color: black;
+}
+footer{
+    background-color: black;
+    color: whitesmoke;
+    padding-top: 2%;
+    padding-bottom: 2%;
+
+}
+#profile{
+    border: 5px solid black;
+    border-radius: 50%;
+    margin: -1% 1% 0 30%;
+}
+#profile-box{
+    background-image: url(../img/cutting_board.jpg);
+    background-size: 110%;
+    padding: 1%;
+}
+#profile-box h2{
+    margin: -2% 1% 1% 25%;
+    text-align: center;
+    font-size: 300%;
+}
+#about-user{
+    background-color: whitesmoke;
+    border: 5px solid black;
+    border-radius: 15px;
+    font-size: 200%;
+}
+/*Small devices (portrait phones, 400 and up)*/
+@media (min-width: 320px){
+    img#logo{
+        width: 250%;
+    }
+    h1#skillet{
+        text-align: center;
+        font-size: 400%;
+        margin:10% 0 0 20%;
+    }
+    div#landing-login{
+        text-align: center;
+        margin: -3% 0 0 0;
+        font-size: 90%;
+    }
+    img#profile{
+        width: 50%;
+    }
+    #profile-box h2{
+        width: 50%;
+        font-size: 150%;
+        margin-left: 30%;
+    }
+}
+/*Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) {
+    img#logo{
+        width: 80%;
+        margin: 0 0 0 20%;
+    }
+    h1#skillet{
+        font-size: 300%;
+        margin: 5% 0 0 -30%;
+    }
+    div#landing-login{
+        text-align: center;
+        margin: 13% 0 0 0;
+        font-size: 70%;
+    }
+}
+/*Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+    img#logo{
+        width: 60%;
+        margin: 0;
+
+    }
+    h1#skillet{
+        font-size: 400%;
+        margin: 3% 0 0 -80%;
+    }
+    div#landing-login{
+        text-align: center;
+        margin: 10% 0 0 -10%;
+    }
+    img#profile{
+        width: 30%;
+        margin-left: 40%;
+    }
+    #profile-box h2{
+        font-size: 300%;
+    }
+
+}
+
+/*Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+    img#logo{
+        width:45%;
+    }
+    h1#skillet{
+        font-size: 400%;
+        margin: 1% 0 0 -100%;
+    }
+    div#landing-login{
+        text-align: center;
+        margin: 5% 0 0 -10%;
+        font-size: 90%;
+    }
+    img#profile{
+        width: 50%;
+    }
+    #profile-box h2{
+        font-size: 200%;
+        margin: 0 0 5% 40%;
+    }
+    #about-user{
+        font-size: 150%;
+    }
+ }
+
+/*Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+    img#logo{
+        width: 30%;
+        margin: -3% 0 0 0;
+    }
+    h1#skillet{
+        font-size: 300%;
+        margin: 10% 0 0 -200%;
+    }
+    div#landing-login{
+        margin: -2% 0 0 80%;
+    }
 }

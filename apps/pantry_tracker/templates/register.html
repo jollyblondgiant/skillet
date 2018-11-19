@@ -16,24 +16,24 @@
 <body class="container">
     <div id="wrapper" class="conatiner">
         <div id="header" class="row justify-content-start">
-            <div class="col-lg-3 col-md-3 col-sm-3">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-2">
                 <img id="logo" class="img-thumbnail" src="../static/img/logo.png" alt="Skillet Logo">
             </div>
-            <div class="col-lg-8 col-md-8 col-sm-6">
+            <div class="col-8 col-lg-8 col-md-8 col-sm-6 col-xl-2">
                 <h1 id="skillet"><span>S</span><span id="turn">K</span><span>I</span><span>L</span><span>L</span><span>E</span><span>T</span></h1>
             </div>
-            <div class="col-12 col-sm-2 col-md-2" id="landing-login">
+            <div class="col-12 col-sm-2 col-md-2 col-xl-2" id="landing-login">
                 <a id="landing-login" href="/">Go Back</a>
             </div>
         </div>
         <!--Ends Header-->
-        <main>
-
+        <div id="main" class="row justify-content-start">
             <div id="reg-wrapper" class="container">
+                
                 <div class="row">
                     <div id="reg-box" class="col-lg-6 col-md-8 col-sm-8 col-10 mx-auto mt-5">
                         <h3>Registration</h3>
-                        <form action="register" method="POST">
+                        <form action="dashboard" method="POST">
                             {% csrf_token %}
                             <div class="form-group">
                                 <label>First Name</label>
@@ -72,7 +72,7 @@
 
 
                 </div>
-        </main>
+            </div>
     </div>
 
 
