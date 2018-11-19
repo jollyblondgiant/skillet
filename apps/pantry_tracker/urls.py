@@ -64,3 +64,4 @@ urlpatterns = [
 
     #render separate page for complex recipe building
     url(r'recipe_builder$',views.recipe_builder),
+]
