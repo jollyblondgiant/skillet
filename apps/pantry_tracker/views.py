@@ -12,15 +12,15 @@ def landing(request):
     print("///////////////////////////////////////////////////////////////////////////////////////////////////")
     timeToSpoil = ""
     for product in Product.objects.filter(pantry = Pantry.objects.get(id = User.objects.get(id = 1).id)): 
-        createdAt = Product.objects.get(id = product.id).created_at.strftime("%d")
+        ItemBoughtAt = Product.objects.get(id = product.id).created_at.strftime("%d")
         today = datetime.date.today().strftime("%d")
         #Update id = 1 to 1 = request.session['user_id']
         if product.shelf_life:
             if product.created_at.strftime("%m") != datetime.date.today().strftime("%m"):
-                createdAt = datetime.date.today().strftime("%m")
+                ItemBoughtAt = datetime.date.today().strftime("%m")
                 timeToSpoil = timeToSpoil - 1
             timeToSpoil = Product.objects.get(id = product.id).shelf_life
-            timeToSpoil = timeToSpoil - (int(today) - int(createdAt))
+            timeToSpoil = timeToSpoil - (int(today) - int(ItemBoughtAt))
     print("///////////////////////////////////////////////////////////////////////////////////////////////////")
     return HttpResponse(response)
 
