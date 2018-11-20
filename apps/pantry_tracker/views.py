@@ -352,7 +352,7 @@ def shopping_list(request,id):
         temp = {
             'id': product.id,
             'name':product.name,
-            'description':product.description,
+            'product_category':product.product_category,
             'measure':product.measure,
             'shelf_life':product.shelf_life,
             'price':product.price
