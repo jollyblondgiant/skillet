@@ -185,7 +185,8 @@ def admin_dash(request):
         }
         userlist.append(temp)
     productlist=[]
-    for product in Product.objects.all():
+    vendor=User.objects.first().pantry.product.all()
+    for product in vendor:
         temp = {
             'id': product.id,
             'name':product.name,
@@ -341,6 +342,8 @@ def complete_recipe(request):
 def shopping_list(request,id):
     user=User.objects.get(id=id)
     grocerylist=user.user_grocery_list.product.all()
+    if 'shop_search' not in request.session:
+        request.session['shop_search']=''
     #Make a list for rendering the objects already
     #in our 'shopping cart'
     list_to_show=[]
@@ -380,7 +383,7 @@ def add_groceries(request):
         p_quant = request.POST['quantity']
         product = Product.objects.get(id=p_id)
         p_name=product.name
-        shopping_list = Pantry.objects.get(id=request.session['grocery_list'])
+        shopping_list = User.objects.get(id=request.session['current_user']).user_grocery_list
         check = shopping_list.product.filter(name=p_name)
         if check:
             product = shopping_list.product.get(name=p_name)
@@ -389,19 +392,30 @@ def add_groceries(request):
             product.pk=None
             product.pantry=shopping_list
             product.save()
-    route = 'shopping_list/'+request.session['user_id']
+    route = 'shopping_list/'+str(request.session['user_id'])
+    return redirect(route)
+
+def grocery_search(request):
+    if request.method=='POST':
+        request.session['shop_search']=request.POST['shopping_search']
+    route = 'shopping_list/'+str(request.session['user_id'])
+    return redirect(route)
+
+def shop_search_clear(request):
+    request.session['shop_search']=""
+    route = 'shopping_list/'+str(request.session['user_id'])
     return redirect(route)
 
 def grocery_incr(request,id):
-    route = 'shopping_list/'+request.session['user_id']
+    route = 'shopping_list/'+str(request.session['user_id'])
     return redirect(route)
 
 def grocery_decr(request,id):
-    route = 'shopping_list/'+request.session['user_id']
+    route = 'shopping_list/'+str(request.session['user_id'])
     return redirect(route)
 
 def grocery_remove(request,id):
-    route = 'shopping_list/'+request.session['user_id']
+    route = 'shopping_list/'+str(request.session['user_id'])
     return redirect(route)
 
 def done_shopping(request):
