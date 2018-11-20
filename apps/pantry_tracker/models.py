@@ -48,7 +48,7 @@ class Validator(models.Manager):
         elif not bcrypt.checkpw(postData['loginPassword'].encode(), User.objects.get(email=postData['loginEmail']).password.encode()):
             errors['bad_pw']="Incorrect Password"
         return errors
-    
+        
     def updator_validator(self, postData):
         regex_email_valid = re.compile('^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$')
         emailCheckTable = []
@@ -82,6 +82,7 @@ class Validator(models.Manager):
         return errors
     
 
+
 class Pantry(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
@@ -93,6 +94,7 @@ class Product(models.Model):
     product_category = models.CharField(max_length=255, default = " ")
     measure = models.CharField(max_length = 255, default = "unit")        # use this attr. to establish values such as "quart" or "tsp" or "pound". we need to be DILLIGENT to be CONSISTENT so we can search/filter by this field
     description = models.CharField(max_length=255)
+    diet_flag = models.CharField(max_length=255)
     image = models.CharField(max_length = 255, default = "please link to static img")    # use this field to link to static img file, update default once we have a default watermark to use instead
     price = models.PositiveSmallIntegerField()          # represent price in cents, present to user after dividing by 100
     shelf_life = models.PositiveSmallIntegerField(default = 0)     # Product.shelf_life should be expressed in days // HOW TO EXPRESS NON-PERISHABLE? **FOR NOW, USE (AND {IF-CHECK} FOR) 0**
@@ -113,8 +115,8 @@ class User(models.Model):
     objects = Validator()
 
 class GroceryList(models.Model):
-    product = models.ForeignKey(Product, related_name = "product_grocery_list")
-    user = models.OneToOneField(User, related_name = "user_grocery_list")
+    product = models.ManyToManyField(Product, related_name = "product_grocery_list",blank=True)
+    user = models.OneToOneField(User, related_name = "user_grocery_list", blank = True)
     
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
