@@ -70,8 +70,12 @@ def registerUser(request):
                 access_level = 1
             #Make an empty pantry for the new user
             pantry = Pantry.objects.create()
+
             user = User.objects.create(first_name = request.POST['first_name'], last_name=request.POST['last_name'], email=request.POST['email'], password=bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt()),access_level=access_level, pantry=pantry)
+
+            GroceryList.objects.create(user=user)
             request.session['user_id'] = user.id
+            
             if user.access_level==9 or user.access_level==7:
                 return redirect('/admin_dash')
     return redirect('/dashboard')
@@ -338,7 +342,7 @@ def shopping_list(request,id):
     #when we have more than one user per list this
     #part will become essential
     user=User.objects.get(id=id)
-
+    
     grocerylist=user.user_grocery_list.product.all()
     if 'shop_search' not in request.session:
         request.session['shop_search']=''
@@ -346,7 +350,7 @@ def shopping_list(request,id):
         #Make a list for rendering the objects already
     #in our 'shopping cart'
     list_to_show=[]
-    for grocery in grocerylist.product.all():
+    for grocery in grocerylist:
         temp = {
             'id':grocery.id,
             'quantity':grocery.quantity,

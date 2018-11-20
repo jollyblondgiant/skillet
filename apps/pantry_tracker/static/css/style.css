@@ -1,5 +1,5 @@
 *{
-    outline: 1px solid red;
+    /*outline: 1px solid red;*/
 
 }
 
@@ -98,7 +98,7 @@ div#pantry{
 .reroute{
     margin-left: 80%;
     font-size: 110%;
-    color: white;
+    color: black;
 }
 div#footer{
     background-color: black;
@@ -206,7 +206,7 @@ tr.head{
     div#landing-login{
         text-align: center;
         margin: -3% 0 0 0;
-        font-size: 90%;
+        font-size: 100%;
     }
     img#profile{
         width: 50%;
@@ -215,6 +215,13 @@ tr.head{
         width: 50%;
         font-size: 150%;
         margin-left: 30%;
+    }
+    .reroute{
+        margin-left: 60%;
+
+    }
+    input[type='checkbox']{
+        padding: 7px;
     }
 }
 /*Small devices (landscape phones, 576px and up)*/
@@ -230,7 +237,7 @@ tr.head{
     div#landing-login{
         text-align: center;
         margin: 13% 0 0 0;
-        font-size: 70%;
+        font-size: 90%;
     }
 }
 /*Medium devices (tablets, 768px and up)*/
@@ -247,6 +254,7 @@ tr.head{
     div#landing-login{
         text-align: center;
         margin: 10% 0 0 -10%;
+        font-size: 100%;
     }
     img#profile{
         width: 30%;
@@ -270,7 +278,7 @@ tr.head{
     div#landing-login{
         text-align: center;
         margin: 5% 0 0 -10%;
-        font-size: 90%;
+        font-size: 100%;
     }
     img#profile{
         width: 50%;
@@ -296,5 +304,6 @@ tr.head{
     }
     div#landing-login{
         margin: -2% 0 0 80%;
+        font-size: 100%;
     }
 }
