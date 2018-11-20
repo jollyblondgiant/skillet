@@ -70,7 +70,8 @@ def registerUser(request):
             #Make an empty pantry for the new user
             pantry = Pantry.objects.create()
             user = User.objects.create(first_name = request.POST['first_name'], last_name=request.POST['last_name'], email=request.POST['email'], password=bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt()),access_level=access_level, pantry=pantry)
-
+            #Make an empty shopping list for new user
+            shopping_list= GroceryList.objects.create(user=user)
             request.session['user_id'] = user.id
             if user.access_level==9 or user.access_level==7:
                 return redirect('/admin_dash')
@@ -91,6 +92,7 @@ def dashboard(request):
         return redirect('/')
     user=User.objects.get(id=request.session['user_id'])
     name=user.first_name+" "+user.last_name
+    print(name)
     pantrylist=[]
     for product in user.pantry.product.order_by('name'):
         temp={
@@ -110,35 +112,44 @@ def dashboard(request):
 
 # Take user to the page for profile editing
 def editProfile(request,id):
-    context = {}
+    user=User.objects.get(id=id)
+    context = {
+        'user':{
+            'first_name':user.first_name,
+            'last_name':user.last_name,
+            'email':user.email,
+            'id':id
+        }
+    }    
     return render(request,"edit.html", context)
 
 # Processes whatever changes the users submits
 def update_profile(request,id):
+    request.session['errors']={}
+    if request.method=="POST":
+        errors = User.objects.update_validator(request.POST)
+        if len(errors):
+            request.session['errors']=errors
+            route = '/myaccount/' + str(request.POST['id'])
+            return redirect(route)
+        else:
+            user = User.objects.get(id=request.POST['id'])
+            user.first_name=request.POST['first_name']
+            user.last_name=request.POST['last_name']
+            user.email=request.POST['email']
+            user.save()
     return redirect('/dashboard') 
 #**********************************************************
 
 def myPantry(request):
     # Needs an user id number
     response = "My Pantry"
-    return render(request,"user-templates/pantry.html", context)
+    return render(request,"pantry.html", context)
 
 def editPantry(request):
     # Needs an user id number
     response = "My Pantry"
     return redirect('/myPantry')
-#**********************************************************
-
-# Needs an user id number
-def shoppingList(request):
-    response = "Shopping List"
-    return HttpResponse(response)
-
-def editShoppingList(request):
-    # Needs an user id number
-    # needs a shoppingList id ?????
-    response = "Shopping List"
-    return HttpResponse(response)
 #**********************************************************
 
 def admin_dash(request):
@@ -201,6 +212,8 @@ def add_product(request):
     return redirect('/admin_dash')
 
 def recipe_builder(request):
+    print(request.session['recipe_search'], "line 204")
+    print("#"*80)
     if 'recipe' not in request.session:
         print('^'*80)
         request.session['recipe']={
@@ -213,8 +226,8 @@ def recipe_builder(request):
         temp = {
             'id': product.id,
             'name':product.name,
-            'desc':product.desc,
-            'unit':product.unit,
+            'desc':product.description,
+            'unit':product.measure,
             'shelf_life':product.shelf_life,
             'price':product.price
         }
@@ -250,6 +263,22 @@ def recipe_clear(request):
             'desc':'',
             'components':{}
         }
+    return redirect('/recipe_builder')
+
+def recipe_search(request):
+    request.session['recipe_search'].clear()
+    recipe_search = Product.objects.filter(name__contains=request.POST['recipe_search'])
+    for product in Product.objects.filter(name__contains=request.POST['recipe_search']):
+        temp = {
+            'id': product.id,
+            'name':product.name,
+            'desc':product.description,
+            'unit':product.measure,
+            'shelf_life':product.shelf_life,
+            'price':product.price
+        }
+        request.session['recipe_search'].append(temp)
+    request.session['recipe_search'] = request.session['recipe_search']
     return redirect('/recipe_builder')
 
 def complete_recipe(request):
