@@ -133,7 +133,7 @@ def editProfile(request,id):
 def update_profile(request,id):
     request.session['errors']={}
     if request.method=="POST":
-        errors = User.objects.update_validator(request.POST)
+        errors = User.objects.updator_validator(request.POST)
         if len(errors):
             print(errors)
             print("!!!!!!!!!!!!!!!!!!!!!!!!!!"*10)

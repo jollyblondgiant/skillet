@@ -48,13 +48,8 @@ class Validator(models.Manager):
         elif not bcrypt.checkpw(postData['loginPassword'].encode(), User.objects.get(email=postData['loginEmail']).password.encode()):
             errors['bad_pw']="Incorrect Password"
         return errors
-<<<<<<< HEAD
         
     def updator_validator(self, postData):
-=======
-
-    def update_validator(self, postData):
->>>>>>> b2170ec7aa3752908cc35efa6f171f9595ca8684
         regex_email_valid = re.compile('^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$')
         emailCheckTable = []
         email = User.objects.get(id = postData['id']).email
