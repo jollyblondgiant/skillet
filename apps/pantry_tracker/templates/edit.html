@@ -23,7 +23,6 @@
                 <h1 id="skillet"><span>S</span><span id="turn">K</span><span>I</span><span>L</span><span>L</span><span>E</span><span>T</span></h1>
             </div>
             <div class="col-12 col-sm-2 col-md-2 col-xl-2" id="landing-login">
-                <a href="/dashboard">Go Back To Dashboard</a>
                 <a href="/logout">Sign Out</a>
             </div>
         </div>
@@ -51,19 +50,25 @@
                         <div class="container">
                             <div class="row justify-content-between">
                                 <div class="col-12 checkbox form-group">
+                                    <div class="col-12">
                                     <label>Vegetarian</label>
                                     <input class="checkbox" type="checkbox" name="vegetarian">
+                                    </div>
+                                    <div class="col-12">
                                     <label>Gluten Free</label>
                                     <input class="checkbox" type="checkbox" name="gluten_free">
+                                    </div>
+                                    <div class="col-12">
                                     <label>Lactose Intolerant</label>
                                     <input class="checkbox" type="checkbox" name="lactose_intolerant">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                         <input type="hidden" value="{{ request.session.user_id }}" name="id" id="id">
                     </form>
-                    <a class="reroute" href="/login">Sign In</a>
+                    <a class="reroute" href="/dashboard">Dashboard</a>
                 </div>
                 {% if messages %}
                 <div class="validator_error_messages">
