@@ -49,6 +49,7 @@
                             <input type="email" class="form-control" id="InputEmail1" name="email" value="{{ user.email }}">
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
+                        <input type="hidden" value="{{ request.session.user_id }}" name="id" id="id">
                     </form>
                     <a class="reroute" href="/login">Sign In</a>
                 </div>
