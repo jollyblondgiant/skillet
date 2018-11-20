@@ -30,14 +30,14 @@
         <!--Ends Header-->
         <div class="container">
             <div id="item-table" class="row justify-content-between">
-                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12">
+                <div class="products_available col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                     <table>
                         <h5>Products Available</h5>
                         <form action="/add_groceries" method="POST">
                             {% csrf_token %}
-                            <input type="search" name="shopping_search" value="{{ request.session.shop_search }}">
+                            <input class="search" type="search" name="shopping_search" value="{{ request.session.shop_search }}">
                             <input type="submit" value="Search">
-                            <a href="/shop_search_clear">Clear Search</a>
+                            <a class="search" href="/shop_search_clear">Clear Search</a>
                         </form>
                         <form action="#" method="POST">
                             {% csrf_token %}
@@ -47,7 +47,7 @@
                                 <th>Quantity</th>
                                 <th>Price</th>
                                 <th>Category</th>
-                                <th>Add to List</th>
+                                <th>Add</th>
                             </tr>
                             {% for product in shopping_options %}
                             <tr>
@@ -69,7 +69,7 @@
                                 <td>{{ product.price }}</td>
                                 <td>{{ product.product_category }}</td>
                                 <td>
-                                    <input type="submit" value="BUY!!!">
+                                    <input class="buy" type="submit" value="BUY!!!">
                                 </td>
                             </tr>
                             {% endfor %}
