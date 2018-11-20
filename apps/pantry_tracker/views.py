@@ -143,8 +143,11 @@ def update_profile(request,id):
     if request.method=="POST":
         errors = User.objects.updator_validator(request.POST)
         if len(errors):
+            print(errors)
+            print("!!!!!!!!!!!!!!!!!!!!!!!!!!"*10)
+            print(User.objects.get(id = request.session['user_id']).email)
             request.session['errors']=errors
-            route = '/myaccount/' + str(request.POST['id'])
+            route = '/editProfile/' + str(request.session['user_id'])
             return redirect(route)
         else:
             user = User.objects.get(id=request.session['user_id'])

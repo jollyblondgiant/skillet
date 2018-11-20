@@ -1,5 +1,5 @@
 *{
-    outline: 1px solid red;
+    /*outline: 1px solid red;*/
 
 }
 
@@ -157,12 +157,16 @@ footer{
     background-color: whitesmoke;
     color: black;
     text-align: center;
+
 }
-.shopping-list-box p{
-    margin: 0 0 0 10%;
-    text-align: left;
-    font-size: 100%;
+tr.underline{
+    border-bottom: 2px solid blue;
 }
+tr.head{
+    border-bottom: 2px solid black;
+}
+
+
 hr{
     margin: 0;
     color: black;

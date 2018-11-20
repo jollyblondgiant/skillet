@@ -50,15 +50,31 @@
 
                 <div class="container col-xs-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 text-white">
                     <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                            <div class="shopping-list-box">
-                                <h3>Grocery List</h3>
-                                <hr id='title'>
-                                {% for product in grocerylist %}
-                                <hr>
-                                <p>{{product.quantity}}x{{product.name}}</p>
+
+                        <div class="shopping-list-box col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                            <h3>Grocery List</h3>
+                            <table class="shopping-list-box col-12">
+                                <tr class="head">
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Actions</th>
+                                </tr>
+                                {% for products in grocerylist %}
+                                <tr class="underline">
+                                    <td>{{ product.name }}</td>
+                                    <td>
+                                        <a href="/grocery_decr/{{ product.id }}">- 1</a>
+                                        <p>{{ produect.quantity }}</p>
+                                        <a href="/grocery_incr/{{ product.id }}">+ 1</a>
+                                    </td>
+                                    <td>
+                                        <a href="/grocery_remove/{{ product.id }}">Remove</a>
+                                    </td>
+                                </tr>
                                 {% endfor %}
-                            </div>
+
+                            </table>
+
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
                             <h2 class="display-4">PANTRY</h2>

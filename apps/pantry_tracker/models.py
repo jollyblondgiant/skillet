@@ -48,9 +48,11 @@ class Validator(models.Manager):
         elif not bcrypt.checkpw(postData['loginPassword'].encode(), User.objects.get(email=postData['loginEmail']).password.encode()):
             errors['bad_pw']="Incorrect Password"
         return errors
-    def updator_validator(self, postData):
+
+    def update_validator(self, postData):
         regex_email_valid = re.compile('^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$')
         emailCheckTable = []
+        email = User.objects.get(id = postData['id']).email
         for user in User.objects.all():
             emailCheckTable.append(user.email)
         errors ={}
@@ -66,18 +68,21 @@ class Validator(models.Manager):
             errors['name_alpha'] = "'Name' fields can only contain letters"
         if len(postData['email'])==False:
             errors['email_null'] = "'Email' field is required"
+        if postData['email'] == email:
+            return errors
         elif postData['email'] in emailCheckTable:
             errors['dup_email'] = "Email already in use"
+            return errors
         elif regex_email_valid.match(postData['email']) == None:
             errors['invalid_email'] = "Email format invalid"
-        if len(postData['password'])==False:
-            errors['password_null'] = "'Password' field is required"
-        elif len(postData['password']) < 8:
-            errors['password_len'] = "Choose a password at elast 8 characters in length"
-        if 'password_confirm' not in postData:
-            errors['password_confirm_null'] = "confirm password"
-        elif postData['password'] != postData['password_confirm']:
-            errors['password_confirm_mismatch'] = "'Password' and 'Confirm Password' must match"
+        # if len(postData['password'])==False:
+        #     errors['password_null'] = "'Password' field is required"
+        # elif len(postData['password']) < 8:
+        #     errors['password_len'] = "Choose a password at elast 8 characters in length"
+        # if 'password_confirm' not in postData:
+        #     errors['password_confirm_null'] = "confirm password"
+        # elif postData['password'] != postData['password_confirm']:
+        #     errors['password_confirm_mismatch'] = "'Password' and 'Confirm Password' must match"
         return errors
     
 
