@@ -57,7 +57,7 @@ def registerUser(request):
         if len(errors):
             for tag, error in errors.items():
                 messages.error(request, error, extra_tags = tag)
-            return redirect('/')
+            return redirect('/register')
         else:
             #new addition, for establishing admins
             #admins will be able to promote others
@@ -125,7 +125,7 @@ def editProfile(request,id):
 def update_profile(request,id):
     request.session['errors']={}
     if request.method=="POST":
-        errors = User.objects.update_validator(request.POST)
+        errors = User.objects.updator_validator(request.POST)
         if len(errors):
             request.session['errors']=errors
             route = '/myaccount/' + str(request.POST['id'])
@@ -381,14 +381,20 @@ def add_groceries(request):
             product.pk=None
             product.pantry=shopping_list
             product.save()
-        
-    return redirect('shopping_list')
+    route = 'shopping_list/'+request.session['user_id']
+    return redirect(route)
 
 def grocery_incr(request,id):
-    return redirect('shopping_list')
+    route = 'shopping_list/'+request.session['user_id']
+    return redirect(route)
 
 def grocery_decr(request,id):
-    return redirect('shopping_list')
+    route = 'shopping_list/'+request.session['user_id']
+    return redirect(route)
+
+def grocery_remove(request,id):
+    route = 'shopping_list/'+request.session['user_id']
+    return redirect(route)
 
 def done_shopping(request):
     return redirect('dashboard')
