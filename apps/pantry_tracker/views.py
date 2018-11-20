@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
+from datetime import datetime, timezone
 from .models import *
 import re, bcrypt
 
@@ -9,6 +10,13 @@ def landing(request):
     if 'current_user' in request.session:
         return redirect('/dashboard')
     else:
+        shelfLife = Product.objects.get(id = 2).shelf_life 
+        today = datetime.now(timezone.utc)
+        boughtItemOn = Product.objects.get(id = 2).created_at
+        timeToSpoil = today - boughtItemOn
+        print(timeToSpoil.days)
+        if timeToSpoil >= shelfLife:
+            print("Product about to spoil")
         return render(request,"landing.html")
 
 #Logout wipes the session out, dumps user back to landing
