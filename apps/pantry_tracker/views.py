@@ -235,8 +235,8 @@ def recipe_builder(request):
         temp = {
             'id': product.id,
             'name':product.name,
-            'desc':product.desc,
-            'unit':product.unit,
+            'desc':product.description,
+            'unit':product.measure,
             'shelf_life':product.shelf_life,
             'price':product.price
         }
