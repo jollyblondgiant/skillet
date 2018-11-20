@@ -70,7 +70,8 @@ def registerUser(request):
             #Make an empty pantry for the new user
             pantry = Pantry.objects.create()
             user = User.objects.create(first_name = request.POST['first_name'], last_name=request.POST['last_name'], email=request.POST['email'], password=bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt()),access_level=access_level, pantry=pantry)
-
+            #Make an empty shopping list for new user
+            shopping_list= GroceryList.objects.create(user=user)
             request.session['user_id'] = user.id
             if user.access_level==9 or user.access_level==7:
                 return redirect('/admin_dash')
