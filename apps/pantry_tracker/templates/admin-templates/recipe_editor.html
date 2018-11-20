@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Recipe editor</title>
 </head>
+
 <body>
     <div>
         <h2>Recipe Builder</h2>
@@ -13,64 +15,84 @@
         <form action="/add_recipe" method="POST">
             <input type="text" name="name" value="{{request.session.recipe.name}}" placeholder="Name of the recipe">
             <br>
-            <textarea name="desc" rows="10" value="{{request.session.recipe.desc}}"></textarea>
-            <table>
-                <tr>
-                    <th>ID</th>
-                    <th>Product</th>
-                    <th>Quantity</th>
-                    <th>Note</th>
-                    <th>Actions</th>
-                </tr>
-                {% for component in request.session.recipe.components %}
-                <tr>
-                    <td>{{component.id}}</td>
-                    <td>{{component.name}}</td>
-                    <td>{{component.quantity}}</td>
-                    <td>{{component.note}}</td>
-                    <td>
-                        <a href="">more</a>
-                        <a href="">less</a>
-                        <a href="">remove</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </table>
-        </form>
-
-        <!--until we figure out how to do a search or filter - list EVERYTHING-->
-        <form action="/search_product" method="POST">
-            <input type="search">
+            <textarea name="desc" rows="10" value="{{request.session.recipe.desc}}"" placeholder="row1"></textarea>
         </form>
         <table>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Quantity</th>
-                    <th>Unit of measure</th>
-                    <th>ACTION</th>
-                </tr>
-                {% for product in productlist %}
-                <tr>
-                    <form action="/add_to_recipe" method="POST">
-                        {% csrf_token %}
-                        <td>{{product.id}}
-                            <input type="hidden" name="id" value="{{product.id}}">
-                        </td>
-                        <td>{{product.name}}</td>
-                        <td>
-                            <input type="number" name="quantity" value="1">
-                        </td>
-                        <td>{{product.unit}}</td>
-                        <td>
-                            <button type="submit">Add</button>
-                        </td>
-                    </form>
-                </tr>
-                {% endfor %}
-            </table>
-            <a href="/complete_recipe">Finish Recipe</a>
-            <a href="/admin_dash">back to the dashboard</a>
+            <tr>
+                <th>ID</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Note</th>
+                <th>Actions</th>
+            </tr>
+            {% for component in request.session.recipe_search %}
+            <tr>
+                <td>{{component.id}}</td>
+                <td>{{component.name}}</td>
+                <td>{{component.unit}}</td>
+                <td>{{component.desc}}</td>
+                <td>
+                    <a href="">more</a>
+                    <a href="">less</a>
+                    <a href="">remove</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <!--until we figure out how to do a search or filter - list EVERYTHING-->
+        <form action="/recipe_search" method="POST">
+            {% csrf_token %}
+            <input type="search" name="recipe_search">
+        </form>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Unit of measure</th>
+                <th>ACTION</th>
+            </tr>
+            {% for product in request.session.recipe_search %}
+            <tr>
+                <form action="/add_to_recipe" method="POST">
+                    {% csrf_token %}
+                    <td>{{product.id}}
+                        <input type="hidden" name="id" value="{{product.id}}">
+                    </td>
+                    <td>{{product.name}}</td>
+                    <td>
+                        <input type="number" name="quantity" value="1">
+                    </td>
+                    <td>{{product.unit}}</td>
+                    <td>
+                        <button type="submit">Add</button>
+                    </td>
+                </form>
+            </tr>
+            {% endfor %}
+            {% for product in productlist %}
+            <tr>
+                <form action="/add_to_recipe" method="POST">
+                    {% csrf_token %}
+                    <td>{{product.id}}
+                        <input type="hidden" name="id" value="{{product.id}}">
+                    </td>
+                    <td>{{product.name}}</td>
+                    <td>
+                        <input type="number" name="quantity" value="1">
+                    </td>
+                    <td>{{product.unit}}</td>
+                    <td>
+                        <button type="submit">Add</button>
+                    </td>
+                </form>
+            </tr>
+            {% endfor %}
+        </table>
+        <a href="/complete_recipe">Finish Recipe</a>
+        <a href="/admin_dash">back to the dashboard</a>
     </div>
 </body>
+
 </html>

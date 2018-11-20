@@ -65,7 +65,11 @@ urlpatterns = [
 
     #render separate page for complex recipe building
     url(r'recipe_builder$',views.recipe_builder),
-#**********************************************************
+
+
+    #Searching for a product redirect
+    url(r'recipe_search$', views.recipe_search),
+
     #render shopping list page
     url(r'shopping_list$',views.shopping_list),
 
@@ -74,4 +78,5 @@ urlpatterns = [
 
     #submit shopping list to the pantry
     url(r'done_shopping$',views.done_shopping),
+
 ]
