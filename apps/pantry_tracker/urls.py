@@ -27,7 +27,7 @@ urlpatterns = [
 #**********************************************************
 
     #Allows user to edit their profile
-    url(r'editProfile$(?P<id>\d+)$', views.editProfile),
+    url(r'editProfile/(?P<id>\d+)$', views.editProfile),
 
     #Send changed user data to the DB
     url(r'update_profile$', views.update_profile),
@@ -53,7 +53,8 @@ urlpatterns = [
 
     #Add a Product to the DB
     url(r'add_product$', views.add_product),
-
+    
+#**********************************************************
     #add a built recipe to the db
     url(r'complete_recipe$',views.complete_recipe),
 
@@ -65,6 +66,17 @@ urlpatterns = [
     #render separate page for complex recipe building
     url(r'recipe_builder$',views.recipe_builder),
 
+
     #Searching for a product redirect
     url(r'recipe_search$', views.recipe_search),
+
+    #render shopping list page
+    url(r'shopping_list$',views.shopping_list),
+
+    #chosen groceries go to the list
+    url(r'add_groceries$',views.add_groceries),
+
+    #submit shopping list to the pantry
+    url(r'done_shopping$',views.done_shopping),
+
 ]

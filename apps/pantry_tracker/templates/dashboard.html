@@ -23,13 +23,14 @@
                 <h1 id="skillet"><span>S</span><span id="turn">K</span><span>I</span><span>L</span><span>L</span><span>E</span><span>T</span></h1>
             </div>
             <div class="col-12 col-sm-2 col-md-2 col-xl-2" id="landing-login">
+                <a href="/editProfile/{{ request.session.user_id }}">Edit Profile</a>
                 <a href="/logout">Sign Out</a>
             </div>
         </div>
         <!--Ends Header-->
         <div id="main-dash" class="row justify-content-between">
             <div id="profile-box" class="col-xl-4 col-lg-6 col-sm-12 box">
-                <h2>Welcome User!!!</h2>
+                <h2>{{ username }}</h2>
                 <img id="profile" src="../static/img/profile-placeholder.jpg" alt="Profile Pic">
             </div>
             <div id="about-user" class="col-xl-8 col-lg-6 col-sm-12 col-md-12 box">
@@ -51,9 +52,9 @@
                     <p class="lead">Here is a list of all your pantry items.</p>
                     <hr class="my-4">
                     <div class="row justify-content-between">
-                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+                        <div class="pantry-box col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
                             <table>
-                                <h5>Fruits/Veggies</h5>
+                                <h5>Produce</h5>
                                 <tr>
                                     <th>Item</th>
                                     <th>Quantity</th>
@@ -61,7 +62,7 @@
                                 </tr>
                             </table>
                         </div>
-                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+                        <div class="pantry-box col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
                             <table>
                                 <h5>Protein</h5>
                                 <tr>
@@ -71,7 +72,7 @@
                                 </tr>
                             </table>
                         </div>
-                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+                        <div class="pantry-box col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
                             <table>
                                 <h5>Dairy</h5>
                                 <tr>
@@ -83,9 +84,9 @@
                         </div>
                     </div>
                     <div class="row justify-content-between">
-                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+                            <div class="pantry-box col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
                                 <table>
-                                    <h5>Perishable</h5>
+                                    <h5>Grains</h5>
                                     <tr>
                                         <th>Item</th>
                                         <th>Quantity</th>
@@ -93,7 +94,7 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+                            <div class="pantry-box col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
                                 <table>
                                     <h5>Spices/Herbs</h5>
                                     <tr>
@@ -103,7 +104,7 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+                            <div class="pantry-box col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
                                 <table>
                                     <h5>Specialty</h5>
                                     <tr>

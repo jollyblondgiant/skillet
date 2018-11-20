@@ -91,6 +91,7 @@ def dashboard(request):
         return redirect('/')
     user=User.objects.get(id=request.session['user_id'])
     name=user.first_name+" "+user.last_name
+    print(name)
     pantrylist=[]
     for product in user.pantry.product.order_by('name'):
         temp={
@@ -110,11 +111,32 @@ def dashboard(request):
 
 # Take user to the page for profile editing
 def editProfile(request,id):
-    context = {}
+    user=User.objects.get(id=id)
+    context = {
+        'user':{
+            'first_name':user.first_name,
+            'last_name':user.last_name,
+            'email':user.email,
+            'id':id
+        }
+    }    
     return render(request,"edit.html", context)
 
 # Processes whatever changes the users submits
 def update_profile(request,id):
+    request.session['errors']={}
+    if request.method=="POST":
+        errors = User.objects.update_validator(request.POST)
+        if len(errors):
+            request.session['errors']=errors
+            route = '/myaccount/' + str(request.POST['id'])
+            return redirect(route)
+        else:
+            user = User.objects.get(id=request.POST['id'])
+            user.first_name=request.POST['first_name']
+            user.last_name=request.POST['last_name']
+            user.email=request.POST['email']
+            user.save()
     return redirect('/dashboard') 
 #**********************************************************
 
@@ -273,6 +295,17 @@ def recipe_search(request):
 def complete_recipe(request):
     return redirect('/admin_dash')
 
+
+#render shopping list page
+def shopping_list(request):
+    context={}
+    return render(request,"grocery.html",context)
+
+def add_groceries(request):
+    return redirect('shopping_list')
+
+def done_shopping(request):
+    return redirect('dashboard')
 
 # def index(request):
 #     request.session['servercheck'] = "Success!"
