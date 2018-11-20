@@ -338,7 +338,7 @@ def shopping_list(request,id):
     #when we have more than one user per list this
     #part will become essential
     user=User.objects.get(id=id)
-
+    
     grocerylist=user.user_grocery_list.product.all()
     if 'shop_search' not in request.session:
         request.session['shop_search']=''
@@ -346,7 +346,7 @@ def shopping_list(request,id):
         #Make a list for rendering the objects already
     #in our 'shopping cart'
     list_to_show=[]
-    for grocery in grocerylist.product.all():
+    for grocery in grocerylist:
         temp = {
             'id':grocery.id,
             'quantity':grocery.quantity,
