@@ -357,20 +357,6 @@ def shopping_list(request,id):
             'shelf_life':product.shelf_life,
             'price':product.price
         }
-
-        request.session['recipe_search'].append(temp)
-    request.session['recipe_search'] = request.session['recipe_search']
-    return redirect('/recipe_builder')
-
-def complete_recipe(request):
-    return redirect('/admin_dash')
-
-
-#render shopping list page
-def shopping_list(request, id):
-    user= User.objects.get(id=request.session['user_id'])
-    context={}
-
         shopping_options.append(temp)
     context={
         'username':user.first_name,
