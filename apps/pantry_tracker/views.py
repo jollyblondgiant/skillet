@@ -286,7 +286,7 @@ def complete_recipe(request):
 
 
 #render shopping list page
-def shopping_list(request):
+def shopping_list(request, id):
     context={}
     return render(request,"grocery.html",context)
 

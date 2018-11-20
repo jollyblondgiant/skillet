@@ -120,7 +120,7 @@ class GroceryList(models.Model):
     updated_at = models.DateTimeField(auto_now = True)
     
 class Diet(models.Model):
-    user = models.ForeignKey(User, related_name = "diet")
+    users = models.ManyToManyField(User, related_name = "diets")
     preference = models.CharField(max_length = 255)
     products = models.ManyToManyField(Product, related_name="diets")
     # ManyToMany with Product, as explained above
