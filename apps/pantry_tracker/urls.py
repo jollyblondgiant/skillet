@@ -27,7 +27,7 @@ urlpatterns = [
 #**********************************************************
 
     #Allows user to edit their profile
-    url(r'editProfile$(?P<id>\d+)$', views.editProfile),
+    url(r'editProfile/(?P<id>\d+)$', views.editProfile),
 
     #Send changed user data to the DB
     url(r'update_profile$', views.update_profile),

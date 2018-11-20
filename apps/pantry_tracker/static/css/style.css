@@ -117,6 +117,18 @@ footer{
     background-size: 110%;
     padding: 1%;
 }
+#edit-wrapper{
+    background-image: url(../img/edit_profile.jpg);
+    background-size: 100%;
+}
+#edit-box{
+    background-color: rgba(245, 245, 245, 0.582);
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 2%;
+    margin-bottom: 5%;
+
+}
 #profile-box h2{
     margin: -2% 1% 1% 25%;
     text-align: center;
@@ -127,6 +139,13 @@ footer{
     border: 5px solid black;
     border-radius: 15px;
     font-size: 200%;
+}
+.pantry-box{
+    border: 2px solid black;
+    border-radius: 5px;
+    background-color: rgba(128, 128, 128, 0.479);
+    margin: 1%;
+    font-family: Andale Mono;
 }
 /*Small devices (portrait phones, 400 and up)*/
 @media (min-width: 320px){

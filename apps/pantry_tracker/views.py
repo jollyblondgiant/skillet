@@ -91,6 +91,7 @@ def dashboard(request):
         return redirect('/')
     user=User.objects.get(id=request.session['user_id'])
     name=user.first_name+" "+user.last_name
+    print(name)
     pantrylist=[]
     for product in user.pantry.product.order_by('name'):
         temp={
@@ -134,8 +135,6 @@ def update_profile(request,id):
             user = User.objects.get(id=request.POST['id'])
             user.first_name=request.POST['first_name']
             user.last_name=request.POST['last_name']
-            if user.email == request.session['current_user']:
-                request.session['current_user']=request.POST['email']
             user.email=request.POST['email']
             user.save()
     return redirect('/dashboard') 
