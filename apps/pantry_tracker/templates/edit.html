@@ -34,7 +34,7 @@
             <div class="row">
                 <div id="edit-box" class="col-lg-6 col-md-8 col-sm-8 col-10 mx-auto mt-5">
                     <h3>Edit {{ user.first_name }}'s Profile</h3>
-                    <form action="/update_profile" method="POST">
+                    <form action="/update_profile/{{ request.session.user_id }}" method="POST">
                         {% csrf_token %}
                         <div class="form-group">
                             <label>First Name</label>
@@ -49,6 +49,7 @@
                             <input type="email" class="form-control" id="InputEmail1" name="email" value="{{ user.email }}">
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
+                        <input type="hidden" value="{{ request.session.user_id }}" name="id" id="id">
                     </form>
                     <a class="reroute" href="/login">Sign In</a>
                 </div>

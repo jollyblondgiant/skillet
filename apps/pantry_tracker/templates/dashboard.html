@@ -13,9 +13,9 @@
 
 </head>
 
-<body class="container-fluid">
+<body class="internal">
     <div id="wrapper" class="conatiner-fluid">
-        <div id="header" class="row justify-content-start">
+        <div id="header" class=" fixed-top row justify-content-start">
             <div class="col-lg-3 col-md-3 col-sm-3 col-2">
                 <img id="logo" class="img-thumbnail" src="../static/img/logo.png" alt="Skillet Logo">
             </div>
@@ -23,104 +23,135 @@
                 <h1 id="skillet"><span>S</span><span id="turn">K</span><span>I</span><span>L</span><span>L</span><span>E</span><span>T</span></h1>
             </div>
             <div class="col-12 col-sm-2 col-md-2 col-xl-2" id="landing-login">
-                <a href="/editProfile/{{ request.session.user_id }}">Edit Profile</a>
+                <a class="first-a" href="/editProfile/{{ request.session.user_id }}">Edit Profile</a>
                 <a href="/logout">Sign Out</a>
             </div>
         </div>
         <!--Ends Header-->
-        <div id="main-dash" class="row justify-content-between">
-            <div id="profile-box" class="col-xl-4 col-lg-6 col-sm-12 box">
-                <h2>{{ username }}</h2>
-                <img id="profile" src="../static/img/profile-placeholder.jpg" alt="Profile Pic">
-            </div>
-            <div id="about-user" class="col-xl-8 col-lg-6 col-sm-12 col-md-12 box">
-                <p>About: This is where the user would say something about themselves.</p>
-                <p>Joined Skillet: The created date would be put here.</p>
-                <ul>Dietary Restrictions/Preferences:
-                    <li>Vegan</li>
-                    <li>Lactose Intolerant</li>
-                    <li>Anything Bland</li>
-                </ul>
+        <div id="profile-wrapper" class="container-fluid">
+            <div id="main-dash" class="row justify-content-between">
+                <div id="profile-box" class="col-xl-4 col-lg-6 col-sm-12 box">
+                    <h2>{{ username }}</h2>
+                    <img id="profile" src="../static/img/profile-placeholder.jpg" alt="Profile Pic">
+                </div>
+                <div id="about-user" class="col-xl-8 col-lg-6 col-sm-12 col-md-12 box">
+                    <p>About: This is where the user would say something about themselves.</p>
+                    <p>Joined Skillet: The created date would be put here.</p>
+                    <ul>Dietary Restrictions/Preferences:
+                        <li>Vegan</li>
+                        <li>Lactose Intolerant</li>
+                        <li>Anything Bland</li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div id="main" class="row justify-content-start">
             <div id="pantry" class="jumbotron jumbotron-fluid">
 
-                <div class="container text-white">
+                <div class="container col-xs-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 text-white">
+                    <div class="row">
 
-                    <h2 class="display-4">PANTRY</h2>
-                    <p class="lead">Here is a list of all your pantry items.</p>
-                    <hr class="my-4">
-                    <div class="row justify-content-between">
-                        <div class="pantry-box col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
-                            <table>
-                                <h5>Produce</h5>
-                                <tr>
-                                    <th>Item</th>
+                        <div class="shopping-list-box col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                            <h3>Grocery List</h3>
+                            <table class="shopping-list-box col-12">
+                                <tr class="head">
+                                    <th>Product</th>
                                     <th>Quantity</th>
-                                    <th>Exp. Date</th>
+                                    <th>Actions</th>
                                 </tr>
-                            </table>
-                        </div>
-                        <div class="pantry-box col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
-                            <table>
-                                <h5>Protein</h5>
-                                <tr>
-                                    <th>Item</th>
-                                    <th>Quantity</th>
-                                    <th>Exp. Date</th>
+                                {% for products in grocerylist %}
+                                <tr class="underline">
+                                    <td>{{ product.name }}</td>
+                                    <td>
+                                        <a href="/grocery_decr/{{ product.id }}">- 1</a>
+                                        <p>{{ produect.quantity }}</p>
+                                        <a href="/grocery_incr/{{ product.id }}">+ 1</a>
+                                    </td>
+                                    <td>
+                                        <a href="/grocery_remove/{{ product.id }}">Remove</a>
+                                    </td>
                                 </tr>
+                                {% endfor %}
+
                             </table>
+
                         </div>
-                        <div class="pantry-box col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
-                            <table>
-                                <h5>Dairy</h5>
-                                <tr>
-                                    <th>Item</th>
-                                    <th>Quantity</th>
-                                    <th>Exp. Date</th>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="row justify-content-between">
-                            <div class="pantry-box col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
-                                <table>
-                                    <h5>Grains</h5>
-                                    <tr>
-                                        <th>Item</th>
-                                        <th>Quantity</th>
-                                        <th>Exp. Date</th>
-                                    </tr>
-                                </table>
+                        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                            <h2 class="display-4">PANTRY</h2>
+                            <p class="lead">Here is a list of all your pantry items.</p>
+                            <hr class="my-4">
+                            <div class="row justify-content-between">
+                                <div class="pantry-box col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+                                    <table>
+                                        <h5>Produce</h5>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Quantity</th>
+                                            <th>Exp. Date</th>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="pantry-box col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+                                    <table>
+                                        <h5>Protein</h5>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Quantity</th>
+                                            <th>Exp. Date</th>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="pantry-box col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+                                    <table>
+                                        <h5>Dairy</h5>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Quantity</th>
+                                            <th>Exp. Date</th>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
-                            <div class="pantry-box col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
-                                <table>
-                                    <h5>Spices/Herbs</h5>
-                                    <tr>
-                                        <th>Item</th>
-                                        <th>Quantity</th>
-                                        <th>Exp. Date</th>
-                                    </tr>
-                                </table>
-                            </div>
-                            <div class="pantry-box col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
-                                <table>
-                                    <h5>Non-perishable</h5>
-                                    <tr>
-                                        <th>Item</th>
-                                        <th>Quantity</th>
-                                        <th>Exp. Date</th>
-                                    </tr>
-                                </table>
+                            <div class="row justify-content-between">
+                                <div class="pantry-box col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+                                    <table>
+                                        <h5>Grains</h5>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Quantity</th>
+                                            <th>Exp. Date</th>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="pantry-box col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+                                    <table>
+                                        <h5>Spices/Herbs</h5>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Quantity</th>
+                                            <th>Exp. Date</th>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="pantry-box col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+                                    <table>
+                                        <h5>Non-perishable</h5>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Quantity</th>
+                                            <th>Exp. Date</th>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
                             <a href="/shopping_list/{{request.session.user_id}}">Go Shopping</a>
                         </div>
                     </div>
                 </div>
-                <!-- /.container -->
             </div>
+            <!-- /.container -->
         </div>
+    </div>
 
     </div>
 

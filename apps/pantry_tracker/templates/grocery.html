@@ -13,7 +13,7 @@
 
 </head>
 
-<body class="container-fluid">
+<body class="internal container-fluid">
     <div id="wrapper" class="conatiner-fluid">
         <div id="header" class="row justify-content-start">
             <div class="col-lg-3 col-md-3 col-sm-3 col-2">
@@ -23,89 +23,88 @@
                 <h1 id="skillet"><span>S</span><span id="turn">K</span><span>I</span><span>L</span><span>L</span><span>E</span><span>T</span></h1>
             </div>
             <div class="col-12 col-sm-2 col-md-2 col-xl-2" id="landing-login">
-                <a href="/editProfile/{{ request.session.user_id }}">Edit Profile</a>
+                <a class="first-a" href="/dashboard">Back to Dashboard</a>
                 <a href="/logout">Sign Out</a>
             </div>
         </div>
         <!--Ends Header-->
-        <div id="item-table" class="row">
-            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
-                <table>
-                    <h5>Produce</h5>
-                    <tr>
-                        <th>Item</th>
-                        <th>Quantity</th>
-                    </tr>
-                </table>
-            </div>
-            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
-                <table>
-                    <h5>Protien</h5>
-                    <tr>
-                        <th>Item</th>
-                        <th>Quantity</th>
-                    </tr>
-                </table>
-            </div>
-            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
-                <table>
-                    <h5>Dairy</h5>
-                    <tr>
-                        <th>Item</th>
-                        <th>Quantity</th>
-                    </tr>
-                </table>
-            </div>
-            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
-                <table>
-                    <h5>Grains</h5>
-                    <tr>
-                        <th>Item</th>
-                        <th>Quantity</th>
-                    </tr>
-                </table>
-            </div>
-            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
-                <table>
-                    <h5>Spices/Herbs</h5>
-                    <tr>
-                        <th>Item</th>
-                        <th>Quantity</th>
-                    </tr>
-                </table>
-            </div>
-            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
-                <table>
-                    <h5>Non-perishable</h5>
-                    <tr>
-                        <th>Item</th>
-                        <th>Quantity</th>
-                    </tr>
-                    <form action="##" method="POST">
-                        <tr>
-                            <td>item.name</td>
-                            <td>
-                                <select>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                </select>
-                            </td>
-
+        <div class="container">
+            <div id="item-table" class="row justify-content-between">
+                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12">
+                    <table>
+                        <h5>Products Available</h5>
+                        <form action="/add_groceries" method="POST">
+                            {% csrf_token %}
+                            <input type="search" name="shopping_search" value="{{ request.session.shop_search }}">
+                            <input type="submit" value="Search">
+                            <a href="/shop_search_clear">Clear Search</a>
+                        </form>
+                        <form action="#" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="id" value="{{ product.id }}">
+                            <tr>
+                                <th>Item</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Category</th>
+                                <th>Add to List</th>
+                            </tr>
+                            {% for product in shopping_options %}
+                            <tr>
+                                <td>{{ product.name }}</td>
+                                <td>
+                                    <select name="quantity">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </td>
+                                <td>{{ product.price }}</td>
+                                <td>{{ product.product_category }}</td>
+                                <td>
+                                    <input type="submit" value="BUY!!!">
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </form>
+                    </table>
+                </div>
+                <div class="shopping-list-box col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12">
+                    <h3>Grocery List</h3>
+                    <table class="shopping-list-box col-12">
+                        <tr class="head">
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Actions</th>
                         </tr>
-                    </form>
-                </table>
+                        {% for products in grocerylist %}
+                        <tr class="underline">
+                            <td>{{ product.name }}</td>
+                            <td>
+                                <a href="/grocery_decr/{{ product.id }}">- 1</a>
+                                <p>{{ produect.quantity }}</p>
+                                <a href="/grocery_incr/{{ product.id }}">+ 1</a>
+                            </td>
+                            <td>
+                                <a href="/grocery_remove/{{ product.id }}">Remove</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                    </table>
+                </div>
             </div>
 
 
         </div>
+    </div>
 
     </div>
 
