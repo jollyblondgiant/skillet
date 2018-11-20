@@ -57,7 +57,7 @@ def registerUser(request):
         if len(errors):
             for tag, error in errors.items():
                 messages.error(request, error, extra_tags = tag)
-            return redirect('/')
+            return redirect('/register')
         else:
             #new addition, for establishing admins
             #admins will be able to promote others
