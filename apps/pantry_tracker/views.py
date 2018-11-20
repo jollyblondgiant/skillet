@@ -223,6 +223,8 @@ def add_product(request):
     return redirect('/admin_dash')
 
 def recipe_builder(request):
+    print(request.session['recipe_search'], "line 204")
+    print("#"*80)
     if 'recipe' not in request.session:
         print('^'*80)
         request.session['recipe']={
@@ -272,6 +274,22 @@ def recipe_clear(request):
             'desc':'',
             'components':{}
         }
+    return redirect('/recipe_builder')
+
+def recipe_search(request):
+    request.session['recipe_search'].clear()
+    recipe_search = Product.objects.filter(name__contains=request.POST['recipe_search'])
+    for product in Product.objects.filter(name__contains=request.POST['recipe_search']):
+        temp = {
+            'id': product.id,
+            'name':product.name,
+            'desc':product.description,
+            'unit':product.measure,
+            'shelf_life':product.shelf_life,
+            'price':product.price
+        }
+        request.session['recipe_search'].append(temp)
+    request.session['recipe_search'] = request.session['recipe_search']
     return redirect('/recipe_builder')
 
 def complete_recipe(request):
