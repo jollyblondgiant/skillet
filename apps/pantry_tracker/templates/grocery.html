@@ -23,21 +23,21 @@
                 <h1 id="skillet"><span>S</span><span id="turn">K</span><span>I</span><span>L</span><span>L</span><span>E</span><span>T</span></h1>
             </div>
             <div class="col-12 col-sm-2 col-md-2 col-xl-2" id="landing-login">
-                <a class="first-a" href="/editProfile/{{ request.session.user_id }}">Edit Profile</a>
+                <a class="first-a" href="/dashboard">Back to Dashboard</a>
                 <a href="/logout">Sign Out</a>
             </div>
         </div>
         <!--Ends Header-->
         <div class="container">
             <div id="item-table" class="row justify-content-between">
-                <div class="col-xl-10 col-lg-10 col-md-10 col-sm-12 col-12">
+                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12">
                     <table>
                         <h5>Products Available</h5>
-                        <form action="##" method="POST">
-                        {% csrf_token %}
-                        <input type="search" name="shopping_search" value="{{ request.session.shop_search }}">
-                        <input type="submit" value="Search">
-                        <a href="/shop_search_clear">Clear Search</a>
+                        <form action="/add_groceries" method="POST">
+                            {% csrf_token %}
+                            <input type="search" name="shopping_search" value="{{ request.session.shop_search }}">
+                            <input type="submit" value="Search">
+                            <a href="/shop_search_clear">Clear Search</a>
                         </form>
                         <form action="#" method="POST">
                             {% csrf_token %}
@@ -53,7 +53,7 @@
                             <tr>
                                 <td>{{ product.name }}</td>
                                 <td>
-                                    <select>
+                                    <select name="quantity">
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
@@ -74,6 +74,30 @@
                             </tr>
                             {% endfor %}
                         </form>
+                    </table>
+                </div>
+                <div class="shopping-list-box col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12">
+                    <h3>Grocery List</h3>
+                    <table class="shopping-list-box col-12">
+                        <tr class="head">
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Actions</th>
+                        </tr>
+                        {% for products in grocerylist %}
+                        <tr class="underline">
+                            <td>{{ product.name }}</td>
+                            <td>
+                                <a href="/grocery_decr/{{ product.id }}">- 1</a>
+                                <p>{{ produect.quantity }}</p>
+                                <a href="/grocery_incr/{{ product.id }}">+ 1</a>
+                            </td>
+                            <td>
+                                <a href="/grocery_remove/{{ product.id }}">Remove</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
                     </table>
                 </div>
             </div>
