@@ -118,8 +118,8 @@ class User(models.Model):
     objects = Validator()
 
 class GroceryList(models.Model):
-    product = models.ForeignKey(Product, related_name = "product_grocery_list",null=True)
-    user = models.OneToOneField(User, related_name = "user_grocery_list")
+    product = models.ManyToManyField(Product, related_name = "product_grocery_list",null=True)
+    user = models.OneToOneField(User, related_name = "user_grocery_list", null=True)
     
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
