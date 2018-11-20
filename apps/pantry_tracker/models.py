@@ -49,7 +49,7 @@ class Validator(models.Manager):
             errors['bad_pw']="Incorrect Password"
         return errors
     
-        def updator_validator(self, postData):
+    def updator_validator(self, postData):
         regex_email_valid = re.compile('^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$')
         emailCheckTable = []
         for user in User.objects.all():
