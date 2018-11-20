@@ -54,15 +54,19 @@ urlpatterns = [
 
     #push some product instances into the session
     url(r'add_to_recipe$',views.add_to_recipe),
+    url(r'recip_incr/(?P<id>\d+)$',views.recip_incr),
+    url(r'recip_decr/(?P<id>\d+)$',views.recip_decr),
+    url(r'recip_remove/(?P<id>\d+)$',views.recip_remove),
 
     url(r'recipe_clear$',views.recipe_clear),
 
     #render separate page for complex recipe building
     url(r'recipe_builder$',views.recipe_builder),
 
-
     #Searching for a product redirect
     url(r'recipe_search$', views.recipe_search),
+    url(r'recipe_search_clear$',views.recipe_search_clear),
+    
 #**********************************************************
     #render shopping list page
     url(r'shopping_list/(?P<id>\d+)$',views.shopping_list),

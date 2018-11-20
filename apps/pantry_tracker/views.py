@@ -70,8 +70,6 @@ def registerUser(request):
             #Make an empty pantry for the new user
             pantry = Pantry.objects.create()
             user = User.objects.create(first_name = request.POST['first_name'], last_name=request.POST['last_name'], email=request.POST['email'], password=bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt()),access_level=access_level, pantry=pantry)
-            #Make an empty shopping list for new user
-            GroceryList.objects.create(user=user)
             request.session['user_id'] = user.id
             if user.access_level==9 or user.access_level==7:
                 return redirect('/admin_dash')
@@ -212,17 +210,30 @@ def add_product(request):
     return redirect('/admin_dash')
 
 def recipe_builder(request):
-    print(request.session['recipe_search'], "line 204")
-    print("#"*80)
     if 'recipe' not in request.session:
-        print('^'*80)
         request.session['recipe']={
             'name':'',
             'desc':'',
             'components':{}
         }
+    complist = []
+    for comp in request.session['recipe']['components']:
+        p=Product.objects.get(id=comp)
+        q=request.session['recipe']['components'][comp]
+        temp = {
+            'id':comp,
+            'name':p.name,
+            'unit':p.measure,
+            'quantity':q
+        }
+        complist.append(temp)
+
+    if 'recipe_search' not in request.session:
+        request.session['recipe_search']=''
+
     productlist=[]
-    for product in Product.objects.all():
+    p = User.objects.get(id=1).pantry.product
+    for product in p.filter(name__contains=request.session['recipe_search']):
         temp = {
             'id': product.id,
             'name':product.name,
@@ -233,32 +244,69 @@ def recipe_builder(request):
         }
         productlist.append(temp)
     context = {
+        'complist':complist,
         'productlist':productlist
     }
     return render(request,"admin-templates/recipe_editor.html",context)
 
-#GAAAAAH!!!! What am I doing wrong?
+#**********************************************************
+#prepares components to go into the recipe
 def add_to_recipe(request):
     if request.method == 'POST':
         product_id=request.POST['id']
-        print(product_id)
         quantity=int(request.POST['quantity'])
-        print(quantity)
-        print('Session recipe:')
-        print(request.session['recipe'])
         if product_id not in request.session['recipe']['components']:
             print('product id not in session')
             request.session['recipe']['components'][product_id]=quantity
         else:
             request.session['recipe']['components'][product_id]+=quantity
-        print("*"*80)
-        print(request.session['recipe'])
         request.session['recipe']=request.session['recipe']
+        print('%'*80)
+        print(request.session['recipe'])
     return redirect('/recipe_builder')
 
+#decrease the amount of current component in the recipe
+def recip_decr(request,id):
+    print("%"*80)
+    request.session['recipe']['components'][id]-=1
+    count=request.session['recipe']['components'][id]
+    print(request.session['recipe']['components'])
+    print(count)
+    request.session['recipe']=request.session['recipe']
+
+    if count==0:
+        request.session['recipe']['components'].pop(id,None)
+    
+    return redirect('/recipe_builder')
+
+#increase the amount of current component in the recipe
+def recip_incr(request,id):
+    request.session['recipe']['components'][id]+=1
+    request.session['recipe']=request.session['recipe']
+
+    return redirect('/recipe_builder')
+
+#remove the current component in the recipe
+def recip_remove(request,id):
+    request.session['recipe']['components'].pop(id,None)
+    request.session['recipe']=request.session['recipe']
+
+    return redirect('/recipe_builder')
+#**********************************************************
+
+#response to the search filter
+def recipe_search(request):
+    if request.method=='POST':
+        request.session['recipe_search']=param=request.POST['recipe_search']
+    return redirect('/recipe_builder')
+
+#ditch the filter, show every product available
+def recipe_search_clear(request):
+    request.session['recipe_search']=""
+    return redirect('/recipe_builder')
+
+#clear out everything, but keep the session to start again
 def recipe_clear(request):
-    print("#"*80)
-    print('recipe clear')
     request.session['recipe']={
             'name':'',
             'desc':'',
@@ -266,41 +314,79 @@ def recipe_clear(request):
         }
     return redirect('/recipe_builder')
 
-def recipe_search(request):
-    request.session['recipe_search']=[]
-    recipe_search = Product.objects.filter(name__contains=request.POST['recipe_search'])
-    for product in Product.objects.filter(name__contains=request.POST['recipe_search']):
-        temp = {
-            'id': product.id,
-            'name':product.name,
-            'desc':product.description,
-            'unit':product.measure,
-            'shelf_life':product.shelf_life,
-            'price':product.price
-        }
-        request.session['recipe_search'].append(temp)
-    request.session['recipe_search'] = request.session['recipe_search']
-    return redirect('/recipe_builder')
-
 def complete_recipe(request):
     return redirect('/admin_dash')
 
-
+#**********************************************************
 #render shopping list page
 def shopping_list(request,id):
+    #set up a blank filter
     if 'shop_search' not in request.session:
-        request.session['shop_search']
+        request.session['shop_search']=''
+    #when we have more than one user per list this
+    #part will become essential
     user=User.objects.get(id=id)
-    grocerylist=GroceryList.objects.get(user=user)
+    if 'grocery_list' not in request.session:
+        grocerylist=Pantry.objects.create()
+        request.session['grocery_list']=grocerylist.id
+    else:
+        grocerylist=Pantry.objects.get(id=request.session['grocery_list'])
+    print("&"*80)
+    print(grocerylist)
+    #Make a list for rendering the objects already
+    #in our 'shopping cart'
+    list_to_show=[]
+    for grocery in grocerylist.product.all():
+        temp = {
+            'id':grocery.id,
+            'quantity':grocery.quantity,
+            'name':grocery.name,
+            'image':grocery.image
+        }
+        list_to_show.append(temp)
+    #Make a list for 'buying options'
     shopping_options = []
+
+    vendor = User.objects.get(id=1).pantry
+    for product in vendor.product.filter(name__contains=request.session['shop_search']):
+        temp = {
+            'id': product.id,
+            'name':product.name,
+            'description':product.description,
+            'measure':product.measure,
+            'shelf_life':product.shelf_life,
+            'price':product.price
+        }
+        shopping_options.append(temp)
     context={
         'username':user.first_name,
-        'grocerylist':grocerylist,
+        'grocerylist':list_to_show,
         'shopping_options':shopping_options,
     }
     return render(request,"grocery.html",context)
 
 def add_groceries(request):
+    if request.method == 'POST':
+        p_id = request.POST['id']
+        p_quant = request.POST['quantity']
+        product = Product.objects.get(id=p_id)
+        p_name=product.name
+        shopping_list = Pantry.objects.get(id=request.session['grocery_list'])
+        check = shopping_list.product.filter(name=p_name)
+        if check:
+            product = shopping_list.product.get(name=p_name)
+            product.quantity += p_quant
+        else:
+            product.pk=None
+            product.pantry=shopping_list
+            product.save()
+        
+    return redirect('shopping_list')
+
+def grocery_incr(request,id):
+    return redirect('shopping_list')
+
+def grocery_decr(request,id):
     return redirect('shopping_list')
 
 def done_shopping(request):
