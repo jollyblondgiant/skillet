@@ -39,12 +39,6 @@ urlpatterns = [
     #Submit changes to the pantry
     url(r'editPantry$', views.editPantry),
 #**********************************************************
-    #Displays the current ShoppingList
-    url(r'shoppingList$', views.shoppingList),
-
-    #Updates the shopping list
-    url(r'editShoppingList$', views.editShoppingList),
-#**********************************************************
 
     #Admin page for User, Product, Recipe CRUD
     url(r'admin_dash$', views.admin_dash),
@@ -69,9 +63,9 @@ urlpatterns = [
 
     #Searching for a product redirect
     url(r'recipe_search$', views.recipe_search),
-
+#**********************************************************
     #render shopping list page
-    url(r'shopping_list$',views.shopping_list),
+    url(r'shopping_list/(?P<id>\d+)$',views.shopping_list),
 
     #chosen groceries go to the list
     url(r'add_groceries$',views.add_groceries),

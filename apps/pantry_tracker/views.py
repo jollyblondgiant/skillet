@@ -143,24 +143,12 @@ def update_profile(request,id):
 def myPantry(request):
     # Needs an user id number
     response = "My Pantry"
-    return render(request,"user-templates/pantry.html", context)
+    return render(request,"pantry.html", context)
 
 def editPantry(request):
     # Needs an user id number
     response = "My Pantry"
     return redirect('/myPantry')
-#**********************************************************
-
-# Needs an user id number
-def shoppingList(request):
-    response = "Shopping List"
-    return HttpResponse(response)
-
-def editShoppingList(request):
-    # Needs an user id number
-    # needs a shoppingList id ?????
-    response = "Shopping List"
-    return HttpResponse(response)
 #**********************************************************
 
 def admin_dash(request):
