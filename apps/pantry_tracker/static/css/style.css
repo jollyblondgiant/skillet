@@ -1,5 +1,5 @@
 *{
-    /*outline: 1px solid red;*/
+    outline: 1px solid red;
 
 }
 
@@ -8,9 +8,6 @@ body{
 }
 body.internal{
     background-image: url(../img/pantry.png)
-}
-#main-dash{
-    margin-top: 6.5%;
 }
 .img-thumbnail {
     background-color: black;
@@ -133,7 +130,19 @@ footer{
     border-radius: 10px;
     padding: 2%;
     margin-bottom: 5%;
-
+}
+.checkbox{
+    margin: 1%;
+    padding: 1%;
+    color: black;
+    border-radius: 5px;
+}
+input[type='checkbox']{
+    width: 7%;
+    height: 50%;
+}
+#item-table{
+    margin: 5%;
 }
 #profile-box h2{
     margin: -2% 1% 1% 25%;
@@ -159,18 +168,26 @@ footer{
     text-align: center;
 
 }
+input.buy{
+    background-color: rgb(25, 83, 241);
+    padding: 5%;
+    border-radius: 5px;
+    color: whitesmoke;
+}
+.products_available{
+    background-color: #e17f1d96;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+.search{
+    margin: 1%;
+}
+
 tr.underline{
     border-bottom: 2px solid blue;
 }
 tr.head{
     border-bottom: 2px solid black;
-}
-
-
-hr{
-    margin: 0;
-    color: black;
-    background-color: blue;
 }
 #title{
     background-color: black;

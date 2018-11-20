@@ -48,6 +48,18 @@
                             <label>Email address</label>
                             <input type="email" class="form-control" id="InputEmail1" name="email" value="{{ user.email }}">
                         </div>
+                        <div class="container">
+                            <div class="row justify-content-between">
+                                <div class="col-12 checkbox form-group">
+                                    <label>Vegetarian</label>
+                                    <input class="checkbox" type="checkbox" name="vegetarian">
+                                    <label>Gluten Free</label>
+                                    <input class="checkbox" type="checkbox" name="gluten_free">
+                                    <label>Lactose Intolerant</label>
+                                    <input class="checkbox" type="checkbox" name="lactose_intolerant">
+                                </div>
+                            </div>
+                        </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                         <input type="hidden" value="{{ request.session.user_id }}" name="id" id="id">
                     </form>
@@ -67,7 +79,6 @@
     </div>
 
     {% load static %}
-    x
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
