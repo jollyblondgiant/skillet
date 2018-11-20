@@ -33,13 +33,13 @@
                 <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12">
                     <table>
                         <h5>Products Available</h5>
-                        <form action="/add_groceries" method="POST">
+                        <form action="/grocery_search" method="POST">
                             {% csrf_token %}
                             <input type="search" name="shopping_search" value="{{ request.session.shop_search }}">
                             <input type="submit" value="Search">
                             <a href="/shop_search_clear">Clear Search</a>
                         </form>
-                        <form action="#" method="POST">
+                        <form action="/add_groceries" method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="id" value="{{ product.id }}">
                             <tr>
