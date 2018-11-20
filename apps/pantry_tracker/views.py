@@ -71,7 +71,7 @@ def registerUser(request):
             pantry = Pantry.objects.create()
             user = User.objects.create(first_name = request.POST['first_name'], last_name=request.POST['last_name'], email=request.POST['email'], password=bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt()),access_level=access_level, pantry=pantry)
             #Make an empty shopping list for new user
-            shopping_list= GroceryList.objects.create(user=user)
+            GroceryList.objects.create(user=user)
             request.session['user_id'] = user.id
             if user.access_level==9 or user.access_level==7:
                 return redirect('/admin_dash')
@@ -253,6 +253,7 @@ def add_to_recipe(request):
             request.session['recipe']['components'][product_id]+=quantity
         print("*"*80)
         print(request.session['recipe'])
+        request.session['recipe']=request.session['recipe']
     return redirect('/recipe_builder')
 
 def recipe_clear(request):
@@ -266,7 +267,7 @@ def recipe_clear(request):
     return redirect('/recipe_builder')
 
 def recipe_search(request):
-    request.session['recipe_search'].clear()
+    request.session['recipe_search']=[]
     recipe_search = Product.objects.filter(name__contains=request.POST['recipe_search'])
     for product in Product.objects.filter(name__contains=request.POST['recipe_search']):
         temp = {
@@ -286,8 +287,17 @@ def complete_recipe(request):
 
 
 #render shopping list page
-def shopping_list(request):
-    context={}
+def shopping_list(request,id):
+    if 'shop_search' not in request.session:
+        request.session['shop_search']
+    user=User.objects.get(id=id)
+    grocerylist=GroceryList.objects.get(user=user)
+    shopping_options = []
+    context={
+        'username':user.first_name,
+        'grocerylist':grocerylist,
+        'shopping_options':shopping_options,
+    }
     return render(request,"grocery.html",context)
 
 def add_groceries(request):
