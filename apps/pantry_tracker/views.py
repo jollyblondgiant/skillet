@@ -375,6 +375,7 @@ def shopping_list(request,id):
         'shopping_options':shopping_options,
     }
 
+
     return render(request,"grocery.html",context)
 
 def add_groceries(request):
