@@ -34,7 +34,7 @@
             <div class="row">
                 <div id="edit-box" class="col-lg-6 col-md-8 col-sm-8 col-10 mx-auto mt-5">
                     <h3>Edit {{ user.first_name }}'s Profile</h3>
-                    <form action="/update_profile" method="POST">
+                    <form action="/update_profile/{{ request.session.user_id }}" method="POST">
                         {% csrf_token %}
                         <div class="form-group">
                             <label>First Name</label>

@@ -49,6 +49,9 @@ class Validator(models.Manager):
             errors['bad_pw']="Incorrect Password"
         return errors
     
+    def update_validator(self,postData):
+        errors = {}
+        return errors
 
 class Pantry(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)

@@ -131,7 +131,7 @@ def update_profile(request,id):
             route = '/myaccount/' + str(request.POST['id'])
             return redirect(route)
         else:
-            user = User.objects.get(id=request.POST['id'])
+            user = User.objects.get(id=request.session['user_id'])
             user.first_name=request.POST['first_name']
             user.last_name=request.POST['last_name']
             user.email=request.POST['email']

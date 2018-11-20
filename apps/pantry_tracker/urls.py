@@ -30,7 +30,7 @@ urlpatterns = [
     url(r'editProfile/(?P<id>\d+)$', views.editProfile),
 
     #Send changed user data to the DB
-    url(r'update_profile$', views.update_profile),
+    url(r'update_profile/(?P<id>\d+)$', views.update_profile),
 
 #**********************************************************
     #Render the pantry page
