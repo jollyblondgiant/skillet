@@ -357,12 +357,27 @@ def shopping_list(request,id):
             'shelf_life':product.shelf_life,
             'price':product.price
         }
+
+        request.session['recipe_search'].append(temp)
+    request.session['recipe_search'] = request.session['recipe_search']
+    return redirect('/recipe_builder')
+
+def complete_recipe(request):
+    return redirect('/admin_dash')
+
+
+#render shopping list page
+def shopping_list(request, id):
+    user= User.objects.get(id=request.session['user_id'])
+    context={}
+
         shopping_options.append(temp)
     context={
         'username':user.first_name,
         'grocerylist':list_to_show,
         'shopping_options':shopping_options,
     }
+
     return render(request,"grocery.html",context)
 
 def add_groceries(request):
@@ -392,59 +407,4 @@ def grocery_decr(request,id):
 def done_shopping(request):
     return redirect('dashboard')
 
-# def index(request):
-#     request.session['servercheck'] = "Success!"
-#     return render(request, 'index.html')
-    # del request.session['user_id']
-   # return redirect('/')
-
-
-# **************************************************************************************************************************
-# ******************************BELOW IS THE VALIDATIONS WE WILL BE EDITING AND USING***************************************
-# **************************************************************************************************************************
-
-
-
-# def login(request):
-#     return(request, 'login.html')
-# def login(request):
-#     errors = User.objects.login_validator(request.POST)
-#     if len(errors):
-#         for tag, error in errors.items():
-#             messages.error(request, error, extra_tags = tag)
-#         return redirect('/')
-#     else:
-#         request.session['user_id'] = User.objects.get(email=request.POST['loginEmail']).id
-#         return redirect('/dashboard')
-
-# def register(request):
-#     errors = User.objects.registrator_validator(request.POST)
-#     if len(errors):
-#         for tag, error in errors.items():
-#             messages.error(request, error, extra_tags = tag)
-#         return redirect('/')
-#     else:
-#         user = User.objects.create(first_name = request.POST['first_name'], last_name=request.POST['last_name'], email=request.POST['email'], password=bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt()))
-#         request.session['user_id'] = user.id
-#         return redirect('/dashboard')
-   
-# def logout(request):
-#     del request.session['user_id']
-#     return redirect('/')
-# def index(request):
-#     request.session['servercheck'] = "Success!"
-#     return render(request, 'index.html')
-
-# def dashboard(request):
-#     if 'user_id' not in request.session:
-#         return redirect('/')
-#     else:
-#         user = User.objects.get(id=request.session['user_id'])
-#         context = {
-#             'id': user.id,
-#             'first_name':user.first_name,
-#             'last_name':user.last_name,
-#             'email': user.email
-#         }
-#     return render(request,'dashboard.html', context)
 

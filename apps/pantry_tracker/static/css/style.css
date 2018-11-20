@@ -1,10 +1,16 @@
 *{
-    /*outline: 1px solid red;*/
+    outline: 1px solid red;
 
 }
 
 body{
     background-color: rgb(133, 124, 124);
+}
+body.internal{
+    background-image: url(../img/pantry.png)
+}
+#main-dash{
+    margin-top: 6.5%;
 }
 .img-thumbnail {
     background-color: black;
@@ -17,9 +23,6 @@ body{
 div#header{
     background-color: black;
     padding: 0;
-}
-div.fixed{
-    position: relative;
 }
 h1{
     color: whitesmoke;
@@ -38,6 +41,9 @@ span#turn:hover{
 }
 span:hover{
     color: #e1801d;
+}
+.first-a{
+    margin: 10%;
 }
 .validator_error_messages{
     background-color:pink;
@@ -67,7 +73,7 @@ span:hover{
     position: relative;
 }
 div#pantry{
-    background-image: url('../img/pantry.png')
+    background-color: #e17f1da2;
 }
 #reg-box{
     background-color: rgb(97, 96, 96);
@@ -146,6 +152,25 @@ footer{
     background-color: rgba(128, 128, 128, 0.479);
     margin: 1%;
     font-family: Andale Mono;
+}
+.shopping-list-box{
+    background-color: whitesmoke;
+    color: black;
+    text-align: center;
+}
+.shopping-list-box p{
+    margin: 0 0 0 10%;
+    text-align: left;
+    font-size: 100%;
+}
+hr{
+    margin: 0;
+    color: black;
+    background-color: blue;
+}
+#title{
+    background-color: black;
+
 }
 /*Small devices (portrait phones, 400 and up)*/
 @media (min-width: 320px){
