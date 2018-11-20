@@ -54,14 +54,10 @@
                             <div class="shopping-list-box">
                                 <h3>Grocery List</h3>
                                 <hr id='title'>
+                                {% for product in grocerylist %}
                                 <hr>
-                                <p>Item one</p>
-                                <hr>
-                                <p>Item two</p>
-                                <hr>
-                                <p>Item three</p>
-                                <hr>
-
+                                <p>{{product.quantity}}x{{product.name}}</p>
+                                {% endfor %}
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
