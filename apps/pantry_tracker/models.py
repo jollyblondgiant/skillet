@@ -95,6 +95,9 @@ class Product(models.Model):
     pantry = models.ForeignKey(Pantry, related_name = "product")
     name = models.CharField(max_length=255)
     quantity = models.PositiveSmallIntegerField( default =1)
+    gluten_free = models.BooleanField(default = True)
+    lactose_free = models.BooleanField(default = True)
+    vegetarian = models.BooleanField(default = True)
     product_category = models.CharField(max_length=255, default = " ")
     measure = models.CharField(max_length = 255, default = "unit")        # use this attr. to establish values such as "quart" or "tsp" or "pound". we need to be DILLIGENT to be CONSISTENT so we can search/filter by this field
     description = models.CharField(max_length=255)
@@ -107,6 +110,7 @@ class Product(models.Model):
     updated_at = models.DateTimeField(auto_now = True)
 
 class User(models.Model):
+    diet = models.CharField(max_length=255, default = True)
     first_name = models.CharField(max_length=255)
     access_level = models.PositiveSmallIntegerField(default = 1)
     last_name = models.CharField(max_length=255)
@@ -121,7 +125,6 @@ class User(models.Model):
 class GroceryList(models.Model):
     product = models.ManyToManyField(Product, related_name = "product_grocery_list",blank=True)
     user = models.OneToOneField(User, related_name = "user_grocery_list", blank = True)
-    
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
     
