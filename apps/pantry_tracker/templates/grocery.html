@@ -39,18 +39,18 @@
                             <input type="submit" value="Search">
                             <a class="search" href="/shop_search_clear">Clear Search</a>
                         </form>
-                        <form action="/add_groceries" method="POST">
-                            {% csrf_token %}
-                            <input type="hidden" name="id" value="{{ product.id }}">
-                            <tr>
-                                <th>Item</th>
-                                <th>Quantity</th>
-                                <th>Price</th>
-                                <th>Category</th>
-                                <th>Add</th>
-                            </tr>
-                            {% for product in shopping_options %}
-                            <tr>
+                        <tr>
+                            <th>Item</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Category</th>
+                            <th>Add</th>
+                        </tr>
+                        {% for product in shopping_options %}
+                        <tr>
+                            <form action="/add_groceries" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="id" value="{{ product.id }}">
                                 <td>{{ product.name }}</td>
                                 <td>
                                     <select name="quantity">
@@ -71,9 +71,9 @@
                                 <td>
                                     <input class="buy" type="submit" value="BUY!!!">
                                 </td>
-                            </tr>
-                            {% endfor %}
+                        </tr>
                         </form>
+                        {% endfor %}
                     </table>
                 </div>
                 <div class="shopping-list-box col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12">
@@ -97,7 +97,6 @@
                             </td>
                         </tr>
                         {% endfor %}
-
                     </table>
                 </div>
             </div>
