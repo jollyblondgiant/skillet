@@ -33,9 +33,6 @@ urlpatterns = [
     url(r'update_profile/(?P<id>\d+)$', views.update_profile),
 
 #**********************************************************
-    #Render the pantry page
-    url(r'myPantry$', views.myPantry),
-
     #Submit changes to the pantry
     url(r'editPantry$', views.editPantry),
 #**********************************************************
