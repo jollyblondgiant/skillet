@@ -110,7 +110,7 @@ class Product(models.Model):
     updated_at = models.DateTimeField(auto_now = True)
 
 class User(models.Model):
-    diet = models.CharField(max_length=255, default = True)
+    # diet = models.CharField(max_length=255, default = True)
     first_name = models.CharField(max_length=255)
     access_level = models.PositiveSmallIntegerField(default = 1)
     last_name = models.CharField(max_length=255)

@@ -91,25 +91,40 @@ def dashboard(request):
         return redirect('/')
     user=User.objects.get(id=request.session['user_id'])
     name=user.first_name+" "+user.last_name
+    
+    list_to_show = []
+    if 'grocery_list' not in request.session:
+        request.session['grocery_list']={}
+    for item in request.session['grocery_list']:
+        prod = Product.objects.get(id=item)
+        qty = request.session['grocery_list'][item]
+        temp = {
+            'id':item,
+            'name':prod.name,
+            'quantity':qty,
+        }
+        list_to_show.append(temp)
+
     pantrylist=[]
     for product in user.pantry.product.order_by('name'):
-        shelfLife = pantry.objects.get(id = product).shelf_life 
-        today = datetime.now(timezone.utc)
-        boughtItemOn = pantry.objects.get(id = product).created_at
-        timeToSpoil = today - boughtItemOn
-        if timeToSpoil >= shelfLife:
-            print("Pantry List Product about to spoil")
+        # shelfLife = Pantry.objects.get(id = product).shelf_life 
+        # today = datetime.now(timezone.utc)
+        # boughtItemOn = pantry.objects.get(id = product).created_at
+        # timeToSpoil = today - boughtItemOn
+        # if timeToSpoil >= shelfLife:
+        #     print("Pantry List Product about to spoil")
         temp={
             'name':product.name,
             'id':product.id,
             'img':product.image,
-            'time': (shelfLife - timeToSpoil)
+            # 'time': (shelfLife - timeToSpoil)
         }
         pantrylist.append(temp)
     context = {
         'username':name,
         'access_level': user.access_level,
         'pantrylist':pantrylist,
+        'grocerylist':list_to_show,
     }
     return render(request, 'dashboard.html',context)
 #**********************************************************
@@ -324,28 +339,23 @@ def shopping_list(request,id):
     #set up a blank filter
     if 'shop_search' not in request.session:
         request.session['shop_search']=''
-    #when we have more than one user per list this
-    #part will become essential
-    user=User.objects.get(id=id)
-    
-    grocerylist=user.user_grocery_list.product.all()
-    if 'shop_search' not in request.session:
-        request.session['shop_search']=''
+    if 'grocery_list' not in request.session:
+        request.session['grocery_list']={}
 
-        #Make a list for rendering the objects already
-    #in our 'shopping cart'
-    list_to_show=[]
-    for grocery in grocerylist:
+    list_to_show = []
+    for item in request.session['grocery_list']:
+        prod = Product.objects.get(id=item)
+        qty = request.session['grocery_list'][item]
         temp = {
-            'id':grocery.id,
-            'quantity':grocery.quantity,
-            'name':grocery.name,
-            'image':grocery.image
+            'id':item,
+            'name':prod.name,
+            'quantity':qty,
         }
         list_to_show.append(temp)
+
     #Make a list for 'buying options'
     shopping_options = []
-
+    user=User.objects.get(id=id)
     vendor = User.objects.get(id=1).pantry
     for product in vendor.product.filter(name__contains=request.session['shop_search']):
         temp = {
@@ -370,14 +380,12 @@ def add_groceries(request):
     #May need update with p_id as integer
     if request.method == 'POST':
         p_id = request.POST['id']
-        p_quant = request.POST['quantity']
-        product = Product.objects.get(id=p_id)
-        p_name=product.name
-        shopping_list = User.objects.get(id=request.session['user_id']).user_grocery_list
-        check = shopping_list.product.filter(name=p_name)
-        if check:
-            product = shopping_list.product.get(name=p_name)
-            product.quantity += p_quant
+        p_quant = int(request.POST['quantity'])
+        if p_id in request.session['grocery_list']:
+            request.session['grocery_list'][p_id]+=p_quant
+        else:
+            request.session['grocery_list'][p_id]=p_quant
+        request.session['grocery_list']=request.session['grocery_list']
         # else:
         #     product.pk=None
         #     product.pantry=shopping_list
@@ -397,16 +405,36 @@ def shop_search_clear(request):
     return redirect(route)
 
 def grocery_incr(request,id):
+    request.session['grocery_list'][id]+=1
+    request.session['grocery_list']=request.session['grocery_list']
+
     route = 'shopping_list/'+str(request.session['user_id'])
     return redirect(route)
 
 def grocery_decr(request,id):
+    request.session['grocery_list'][id]-=1
+    if request.session['grocery_list'][id]==0:
+        request.session['grocery_list'].pop(id,None)
+    request.session['grocery_list']=request.session['grocery_list']
+
+
     route = 'shopping_list/'+str(request.session['user_id'])
     return redirect(route)
 
 def grocery_remove(request,id):
+    request.session['grocery_list'].pop(id,None)
+    request.session['grocery_list']=request.session['grocery_list']
     route = 'shopping_list/'+str(request.session['user_id'])
     return redirect(route)
 
 def done_shopping(request):
-    return redirect('dashboard')
+    user=User.objects.get(id=request.session['user_id'])
+    pan = Pantry.objects.get(user=user)
+    for shop_id in request.session['grocery_list']:
+        prod = Product.objects.get(id=shop_id)
+        prod.pk = None
+        prod.quantity = prod.quantity * request.session['grocery_list'][shop_id]
+        prod.pantry=pan
+        prod.save()
+    request.session['grocery_list']={}
+    return redirect('/dashboard')
