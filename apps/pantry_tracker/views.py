@@ -92,7 +92,6 @@ def dashboard(request):
         return redirect('/')
     user=User.objects.get(id=request.session['user_id'])
     name=user.first_name+" "+user.last_name
-    
     list_to_show = []
     if 'grocery_list' not in request.session:
         request.session['grocery_list']={}
@@ -108,20 +107,23 @@ def dashboard(request):
 
     pantrylist=[]
     for product in user.pantry.product.order_by('name'):
-        # shelfLife = Pantry.objects.get(id = product).shelf_life 
-        # today = datetime.now(timezone.utc)
-        # boughtItemOn = pantry.objects.get(id = product).created_at
-        # timeToSpoil = today - boughtItemOn
-        # if timeToSpoil >= shelfLife:
-        #     print("Pantry List Product about to spoil")
+        shelfLife = Product.objects.get(id = product.id).shelf_life 
+        today = datetime.now(timezone.utc)
+        boughtItemOn = product.created_at
+        timeToSpoil = today - boughtItemOn
+        if timeToSpoil.days >= shelfLife:
+            print("Pantry List Product about to spoil: ")
+            print(product)
         temp={
             'name':product.name,
             'id':product.id,
             'img':product.image,
             'quantity':product.quantity,
             'category':product.product_category,
-            # 'time': (shelfLife - timeToSpoil)
+            'time': (shelfLife - timeToSpoil.days)
         }
+        print('/////'*10)
+        print(temp['time'])
         pantrylist.append(temp)
     context = {
         'username':name,
