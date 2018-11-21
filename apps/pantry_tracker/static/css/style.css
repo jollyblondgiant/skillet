@@ -164,6 +164,7 @@ input[type='checkbox']{
     background-color: rgba(128, 128, 128, 0.479);
     margin: 1%;
     font-family: Andale Mono;
+    text-align: center;
 }
 .shopping-list-box{
     background-color: whitesmoke;
