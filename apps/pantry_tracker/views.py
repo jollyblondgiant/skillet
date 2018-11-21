@@ -87,6 +87,7 @@ def user_delete(request,id):
 
 #User main page - all the content except profile editing
 def dashboard(request):
+    request.session['location']="/dashboard"
     if 'user_id' not in request.session:
         return redirect('/')
     user=User.objects.get(id=request.session['user_id'])
@@ -117,6 +118,8 @@ def dashboard(request):
             'name':product.name,
             'id':product.id,
             'img':product.image,
+            'quantity':product.quantity,
+            'category':product.product_category,
             # 'time': (shelfLife - timeToSpoil)
         }
         pantrylist.append(temp)
@@ -131,6 +134,7 @@ def dashboard(request):
 
 # Take user to the page for profile editing
 def editProfile(request,id):
+    request.session['location']="/editProfile"
     user=User.objects.get(id=id)
     context = {
         'user':{
@@ -170,12 +174,6 @@ def update_profile(request,id):
             print(y.preference)
     return redirect('/dashboard') 
 #**********************************************************
-
-def myPantry(request):
-    # Needs an user id number
-    response = "My Pantry"
-    return render(request,"pantry.html", context)
-
 def editPantry(request):
     # Needs an user id number
     response = "My Pantry"
@@ -183,6 +181,7 @@ def editPantry(request):
 #**********************************************************
 
 def admin_dash(request):
+    request.session['location']="/admin_dash"
     u=User.objects.get(id=request.session['user_id'])
     if u.access_level == 1:
         return redirect('/dashboard')
@@ -243,6 +242,7 @@ def add_product(request):
     return redirect('/admin_dash')
 
 def recipe_builder(request):
+    request.session['location']="/recipe_builder"
     if 'recipe' not in request.session:
         request.session['recipe']={
             'name':'',
@@ -347,6 +347,7 @@ def complete_recipe(request):
 #**********************************************************
 #render shopping list page
 def shopping_list(request,id):
+    request.session['location']="grocery"
     #set up a blank filter
     if 'shop_search' not in request.session:
         request.session['shop_search']=''
@@ -384,7 +385,6 @@ def shopping_list(request,id):
         'shopping_options':shopping_options,
     }
 
-
     return render(request,"grocery.html",context)
 
 def add_groceries(request):
@@ -401,25 +401,37 @@ def add_groceries(request):
         #     product.pk=None
         #     product.pantry=shopping_list
         #     product.save()
-    route = 'shopping_list/'+str(request.session['user_id'])
+
+    if request.session['location']=="grocery":    
+        route = 'shopping_list/'+str(request.session['user_id'])
+    else:
+        route = request.session['location']
     return redirect(route)
 
 def grocery_search(request):
     if request.method=='POST':
         request.session['shop_search']=request.POST['shopping_search']
+
     route = 'shopping_list/'+str(request.session['user_id'])
     return redirect(route)
 
 def shop_search_clear(request):
     request.session['shop_search']=""
-    route = 'shopping_list/'+str(request.session['user_id'])
+
+    if request.session['location']=="grocery":
+        route = 'shopping_list/'+str(request.session['user_id'])
+    else:
+        route = request.session['location']
     return redirect(route)
 
 def grocery_incr(request,id):
     request.session['grocery_list'][id]+=1
     request.session['grocery_list']=request.session['grocery_list']
 
-    route = 'shopping_list/'+str(request.session['user_id'])
+    if request.session['location']=="grocery":
+        route = 'shopping_list/'+str(request.session['user_id'])
+    else:
+        route = request.session['location']
     return redirect(route)
 
 def grocery_decr(request,id):
@@ -428,24 +440,35 @@ def grocery_decr(request,id):
         request.session['grocery_list'].pop(id,None)
     request.session['grocery_list']=request.session['grocery_list']
 
-
-    route = 'shopping_list/'+str(request.session['user_id'])
+    if request.session['location']=="grocery":
+        route = 'shopping_list/'+str(request.session['user_id'])
+    else:
+        route = request.session['location']
     return redirect(route)
 
 def grocery_remove(request,id):
     request.session['grocery_list'].pop(id,None)
     request.session['grocery_list']=request.session['grocery_list']
-    route = 'shopping_list/'+str(request.session['user_id'])
+
+    if request.session['location']=="grocery":
+        route = 'shopping_list/'+str(request.session['user_id'])
+    else:
+        route = request.session['location']
     return redirect(route)
 
-def done_shopping(request):
+def done_shopping(request,id):
     user=User.objects.get(id=request.session['user_id'])
     pan = Pantry.objects.get(user=user)
-    for shop_id in request.session['grocery_list']:
-        prod = Product.objects.get(id=shop_id)
-        prod.pk = None
-        prod.quantity = prod.quantity * request.session['grocery_list'][shop_id]
-        prod.pantry=pan
-        prod.save()
-    request.session['grocery_list']={}
-    return redirect('/dashboard')
+    prod = Product.objects.get(id=id)
+    prod.pk = None
+    prod.quantity = prod.quantity * request.session['grocery_list'][id]
+    prod.pantry=pan
+    prod.save()
+    request.session['grocery_list'].pop(id,None)
+    request.session['grocery_list']=request.session['grocery_list']
+
+    if request.session['location']=="grocery":
+        route = 'shopping_list/'+str(request.session['user_id'])
+    else:
+        route = request.session['location']
+    return redirect(route)

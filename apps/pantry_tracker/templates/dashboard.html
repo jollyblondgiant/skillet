@@ -55,20 +55,24 @@
                             <h3>Grocery List</h3>
                             <table class="shopping-list-box col-12">
                                 <tr class="head">
+                                    <th>Remove</th>
                                     <th>Product</th>
                                     <th>Quantity</th>
-                                    <th>Actions</th>
+                                    <th>Bought</th>
                                 </tr>
                                 {% for product in grocerylist %}
                                 <tr class="underline">
+                                    <td>
+                                        <a class="remove_shopping" href="/grocery_remove/{{ product.id }}">Remove</a>
+                                    </td>
                                     <td>{{ product.name }}</td>
                                     <td>
-                                        <a href="/grocery_decr/{{ product.id }}">- 1</a>
                                         <p>{{ product.quantity }}</p>
-                                        <a href="/grocery_incr/{{ product.id }}">+ 1</a>
                                     </td>
                                     <td>
-                                        <a href="/grocery_remove/{{ product.id }}">Remove</a>
+                                        <a href="/done_shopping/{{ product.id }}">
+                                            <button>got it</button>
+                                        </a>
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -81,7 +85,7 @@
                             <p class="lead">Here is a list of all your pantry items.</p>
                             <hr class="my-4">
                             <div class="row justify-content-between">
-                                <div class="pantry-box col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+                                <div class="pantry-box col-xl-5 col-lg-5 col-md-6 col-sm-6 col-12">
                                     <table>
                                         <h5>Produce</h5>
                                         <tr>
@@ -89,9 +93,19 @@
                                             <th>Quantity</th>
                                             <th>Exp. Date</th>
                                         </tr>
+                                        {% for products in pantrylist %}
+                                        <tr>
+                                            {% if products.category == "Produce" %}
+                                            <td>{{ products.name }}</td>
+                                            <td>{{ products.quantity }}</td>
+                                            <td>5 days</td>
+                                        </tr>
+                                            {% endif %}
+                                        {% endfor %}
+
                                     </table>
                                 </div>
-                                <div class="pantry-box col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+                                <div class="pantry-box col-xl-5 col-lg-5 col-md-6 col-sm-6 col-12">
                                     <table>
                                         <h5>Protein</h5>
                                         <tr>
@@ -99,9 +113,18 @@
                                             <th>Quantity</th>
                                             <th>Exp. Date</th>
                                         </tr>
+                                        {% for products in pantrylist %}
+                                        <tr>
+                                            {% if products.category == "Protien" %}
+                                            <td>{{ products.name }}</td>
+                                            <td>{{ products.quantity }}</td>
+                                            <td>5 days</td>
+                                        </tr>
+                                            {% endif %}
+                                        {% endfor %}
                                     </table>
                                 </div>
-                                <div class="pantry-box col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+                                <div class="pantry-box col-xl-5 col-lg-5 col-md-6 col-sm-6 col-12">
                                     <table>
                                         <h5>Dairy</h5>
                                         <tr>
@@ -109,11 +132,20 @@
                                             <th>Quantity</th>
                                             <th>Exp. Date</th>
                                         </tr>
+                                        {% for products in pantrylist %}
+                                        <tr>
+                                            {% if products.category == "Dairy" %}
+                                            <td>{{ products.name }}</td>
+                                            <td>{{ products.quantity }}</td>
+                                            <td>5 days</td>
+                                        </tr>
+                                            {% endif %}
+                                        {% endfor %}
                                     </table>
                                 </div>
                             </div>
                             <div class="row justify-content-between">
-                                <div class="pantry-box col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+                                <div class="pantry-box col-xl-5 col-lg-5 col-md-6 col-sm-6 col-12">
                                     <table>
                                         <h5>Grains</h5>
                                         <tr>
@@ -121,9 +153,18 @@
                                             <th>Quantity</th>
                                             <th>Exp. Date</th>
                                         </tr>
+                                        {% for products in pantrylist %}
+                                        <tr>
+                                            {% if products.category == "Grains" %}
+                                            <td>{{ products.name }}</td>
+                                            <td>{{ products.quantity }}</td>
+                                            <td>5 days</td>
+                                        </tr>
+                                            {% endif %}
+                                        {% endfor %}
                                     </table>
                                 </div>
-                                <div class="pantry-box col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+                                <div class="pantry-box col-xl-5 col-lg-5 col-md-6 col-sm-6 col-12">
                                     <table>
                                         <h5>Spices/Herbs</h5>
                                         <tr>
@@ -131,9 +172,18 @@
                                             <th>Quantity</th>
                                             <th>Exp. Date</th>
                                         </tr>
+                                        {% for products in pantrylist %}
+                                        <tr>
+                                            {% if products.category == "Spices/Herbs" %}
+                                            <td>{{ products.name }}</td>
+                                            <td>{{ products.quantity }}</td>
+                                            <td>5 days</td>
+                                        </tr>
+                                            {% endif %}
+                                        {% endfor %}
                                     </table>
                                 </div>
-                                <div class="pantry-box col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+                                <div class="pantry-box col-xl-5 col-lg-5 col-md-6 col-sm-6 col-12">
                                     <table>
                                         <h5>Non-perishable</h5>
                                         <tr>
@@ -141,6 +191,15 @@
                                             <th>Quantity</th>
                                             <th>Exp. Date</th>
                                         </tr>
+                                        {% for products in pantrylist %}
+                                        <tr>
+                                            {% if products.category == "Non-Perishable" %}
+                                            <td>{{ products.name }}</td>
+                                            <td>{{ products.quantity }}</td>
+                                            <td>5 days</td>
+                                        </tr>
+                                            {% endif %}
+                                        {% endfor %}
                                     </table>
                                 </div>
                             </div>

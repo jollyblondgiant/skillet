@@ -33,9 +33,6 @@ urlpatterns = [
     url(r'update_profile/(?P<id>\d+)$', views.update_profile),
 
 #**********************************************************
-    #Render the pantry page
-    url(r'myPantry$', views.myPantry),
-
     #Submit changes to the pantry
     url(r'editPantry$', views.editPantry),
 #**********************************************************
@@ -79,6 +76,6 @@ urlpatterns = [
     url(r'grocery_search$',views.grocery_search),
     url(r'shop_search_clear',views.shop_search_clear),
     #submit shopping list to the pantry
-    url(r'done_shopping$',views.done_shopping),
+    url(r'done_shopping/(?P<id>\d+)$',views.done_shopping),
 
 ]
