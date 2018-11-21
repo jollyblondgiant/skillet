@@ -7,16 +7,9 @@ import re, bcrypt
 #Where we start. If logged in will redirect to dash
 #If not logged in - redirect to log in/register view
 def landing(request):
-    if 'current_user' in request.session:
+    if 'user_id' in request.session:
         return redirect('/dashboard')
     else:
-        shelfLife = Product.objects.get(id = 2).shelf_life 
-        today = datetime.now(timezone.utc)
-        boughtItemOn = Product.objects.get(id = 2).created_at
-        timeToSpoil = today - boughtItemOn
-        print(timeToSpoil.days)
-        if timeToSpoil >= shelfLife:
-            print("Product about to spoil")
         return render(request,"landing.html")
 
 #Logout wipes the session out, dumps user back to landing
@@ -43,14 +36,10 @@ def loginUser(request):
             user = User.objects.get(email=email)
             request.session['user_id'] = user.id
             access_level = user.access_level
-            print("&"*80)
-            print(user.__dict__)
             #check if the user logging in is the admin
             if access_level == 9 or access_level == 7:
-                print("Going to ADMIN")
                 return redirect('/admin_dash')
             else:
-                print("Going to userr")
                 return redirect('/dashboard')
     return redirect('/dashboard') 
 
@@ -80,9 +69,9 @@ def registerUser(request):
 
             user = User.objects.create(first_name = request.POST['first_name'], last_name=request.POST['last_name'], email=request.POST['email'], password=bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt()),access_level=access_level, pantry=pantry)
 
-            shopping_list = GroceryList.objects.create(user=user)
-
+            GroceryList.objects.create(user=user)
             request.session['user_id'] = user.id
+            
             if user.access_level==9 or user.access_level==7:
                 return redirect('/admin_dash')
     return redirect('/dashboard')
@@ -102,31 +91,24 @@ def dashboard(request):
         return redirect('/')
     user=User.objects.get(id=request.session['user_id'])
     name=user.first_name+" "+user.last_name
-    print(name)
-
-    grocerylist=[]
-    for product in user.user_grocery_list.product.all():
-        temp={
-            'name':product.name,
-            'id':product.id,
-            'image':product.image,
-            'quantity':product.quantity
-        }
-
     pantrylist=[]
     for product in user.pantry.product.order_by('name'):
+        shelfLife = pantry.objects.get(id = product).shelf_life 
+        today = datetime.now(timezone.utc)
+        boughtItemOn = pantry.objects.get(id = product).created_at
+        timeToSpoil = today - boughtItemOn
+        if timeToSpoil >= shelfLife:
+            print("Pantry List Product about to spoil")
         temp={
             'name':product.name,
             'id':product.id,
             'img':product.image,
-            'time':12
+            'time': (shelfLife - timeToSpoil)
         }
         pantrylist.append(temp)
-
     context = {
         'username':name,
         'access_level': user.access_level,
-        'grocery_list': grocerylist,
         'pantrylist':pantrylist,
     }
     return render(request, 'dashboard.html',context)
@@ -151,9 +133,6 @@ def update_profile(request,id):
     if request.method=="POST":
         errors = User.objects.updator_validator(request.POST)
         if len(errors):
-            print(errors)
-            print("!!!!!!!!!!!!!!!!!!!!!!!!!!"*10)
-            print(User.objects.get(id = request.session['user_id']).email)
             request.session['errors']=errors
             route = '/editProfile/' + str(request.session['user_id'])
             return redirect(route)
@@ -193,7 +172,8 @@ def admin_dash(request):
         }
         userlist.append(temp)
     productlist=[]
-    for product in Product.objects.all():
+    vendor=User.objects.first().pantry.product.all()
+    for product in vendor:
         temp = {
             'id': product.id,
             'name':product.name,
@@ -283,22 +263,16 @@ def add_to_recipe(request):
         product_id=request.POST['id']
         quantity=int(request.POST['quantity'])
         if product_id not in request.session['recipe']['components']:
-            print('product id not in session')
             request.session['recipe']['components'][product_id]=quantity
         else:
             request.session['recipe']['components'][product_id]+=quantity
         request.session['recipe']=request.session['recipe']
-        print('%'*80)
-        print(request.session['recipe'])
     return redirect('/recipe_builder')
 
 #decrease the amount of current component in the recipe
 def recip_decr(request,id):
-    print("%"*80)
     request.session['recipe']['components'][id]-=1
     count=request.session['recipe']['components'][id]
-    print(request.session['recipe']['components'])
-    print(count)
     request.session['recipe']=request.session['recipe']
 
     if count==0:
@@ -347,9 +321,18 @@ def complete_recipe(request):
 #**********************************************************
 #render shopping list page
 def shopping_list(request,id):
+    #set up a blank filter
+    if 'shop_search' not in request.session:
+        request.session['shop_search']=''
+    #when we have more than one user per list this
+    #part will become essential
     user=User.objects.get(id=id)
+    
     grocerylist=user.user_grocery_list.product.all()
-    #Make a list for rendering the objects already
+    if 'shop_search' not in request.session:
+        request.session['shop_search']=''
+
+        #Make a list for rendering the objects already
     #in our 'shopping cart'
     list_to_show=[]
     for grocery in grocerylist:
@@ -384,36 +367,46 @@ def shopping_list(request,id):
     return render(request,"grocery.html",context)
 
 def add_groceries(request):
+    #May need update with p_id as integer
     if request.method == 'POST':
         p_id = request.POST['id']
         p_quant = request.POST['quantity']
         product = Product.objects.get(id=p_id)
         p_name=product.name
-        shopping_list = Pantry.objects.get(id=request.session['grocery_list'])
+        shopping_list = User.objects.get(id=request.session['user_id']).user_grocery_list
         check = shopping_list.product.filter(name=p_name)
         if check:
             product = shopping_list.product.get(name=p_name)
             product.quantity += p_quant
-        else:
-            product.pk=None
-            product.pantry=shopping_list
-            product.save()
-    route = 'shopping_list/'+request.session['user_id']
+        # else:
+        #     product.pk=None
+        #     product.pantry=shopping_list
+        #     product.save()
+    route = 'shopping_list/'+str(request.session['user_id'])
+    return redirect(route)
+
+def grocery_search(request):
+    if request.method=='POST':
+        request.session['shop_search']=request.POST['shopping_search']
+    route = 'shopping_list/'+str(request.session['user_id'])
+    return redirect(route)
+
+def shop_search_clear(request):
+    request.session['shop_search']=""
+    route = 'shopping_list/'+str(request.session['user_id'])
     return redirect(route)
 
 def grocery_incr(request,id):
-    route = 'shopping_list/'+request.session['user_id']
+    route = 'shopping_list/'+str(request.session['user_id'])
     return redirect(route)
 
 def grocery_decr(request,id):
-    route = 'shopping_list/'+request.session['user_id']
+    route = 'shopping_list/'+str(request.session['user_id'])
     return redirect(route)
 
 def grocery_remove(request,id):
-    route = 'shopping_list/'+request.session['user_id']
+    route = 'shopping_list/'+str(request.session['user_id'])
     return redirect(route)
 
 def done_shopping(request):
     return redirect('dashboard')
-
-

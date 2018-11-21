@@ -9,9 +9,6 @@ body{
 body.internal{
     background-image: url(../img/pantry.png)
 }
-#main-dash{
-    margin-top: 6.5%;
-}
 .img-thumbnail {
     background-color: black;
     border-radius: 10px;
@@ -57,6 +54,7 @@ span:hover{
     background-color:black;
     padding: 10% 0 10% 0;
     width: 100%;
+    margin-bottom: 0;
 }
 .jumbotron video {
     position: absolute;
@@ -101,7 +99,7 @@ div#pantry{
 .reroute{
     margin-left: 80%;
     font-size: 110%;
-    color: white;
+    color: black;
 }
 div#footer{
     background-color: black;
@@ -111,7 +109,6 @@ footer{
     color: whitesmoke;
     padding-top: 2%;
     padding-bottom: 2%;
-
 }
 #profile{
     border: 5px solid black;
@@ -133,7 +130,19 @@ footer{
     border-radius: 10px;
     padding: 2%;
     margin-bottom: 5%;
-
+}
+.checkbox{
+    margin: 1%;
+    padding: 1%;
+    color: black;
+    border-radius: 5px;
+}
+input[type='checkbox']{
+    width: 7%;
+    height: 50%;
+}
+#item-table{
+    margin: 5%;
 }
 #profile-box h2{
     margin: -2% 1% 1% 25%;
@@ -157,20 +166,27 @@ footer{
     background-color: whitesmoke;
     color: black;
     text-align: center;
-
 }
+input.buy{
+    background-color: rgb(25, 83, 241);
+    padding: 5%;
+    border-radius: 5px;
+    color: whitesmoke;
+}
+.products_available{
+    background-color: #e17f1d96;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+.search{
+    margin: 1%;
+}
+
 tr.underline{
     border-bottom: 2px solid blue;
 }
 tr.head{
     border-bottom: 2px solid black;
-}
-
-
-hr{
-    margin: 0;
-    color: black;
-    background-color: blue;
 }
 #title{
     background-color: black;
@@ -189,7 +205,7 @@ hr{
     div#landing-login{
         text-align: center;
         margin: -3% 0 0 0;
-        font-size: 90%;
+        font-size: 100%;
     }
     img#profile{
         width: 50%;
@@ -198,6 +214,13 @@ hr{
         width: 50%;
         font-size: 150%;
         margin-left: 30%;
+    }
+    .reroute{
+        margin-left: 60%;
+
+    }
+    input[type='checkbox']{
+        padding: 7px;
     }
 }
 /*Small devices (landscape phones, 576px and up)*/
@@ -213,7 +236,7 @@ hr{
     div#landing-login{
         text-align: center;
         margin: 13% 0 0 0;
-        font-size: 70%;
+        font-size: 90%;
     }
 }
 /*Medium devices (tablets, 768px and up)*/
@@ -230,6 +253,7 @@ hr{
     div#landing-login{
         text-align: center;
         margin: 10% 0 0 -10%;
+        font-size: 100%;
     }
     img#profile{
         width: 30%;
@@ -253,7 +277,7 @@ hr{
     div#landing-login{
         text-align: center;
         margin: 5% 0 0 -10%;
-        font-size: 90%;
+        font-size: 100%;
     }
     img#profile{
         width: 50%;
@@ -279,5 +303,6 @@ hr{
     }
     div#landing-login{
         margin: -2% 0 0 80%;
+        font-size: 100%;
     }
 }
