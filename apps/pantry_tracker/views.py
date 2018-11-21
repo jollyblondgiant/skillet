@@ -117,6 +117,8 @@ def dashboard(request):
             'name':product.name,
             'id':product.id,
             'img':product.image,
+            'quantity':product.quantity,
+            'category':product.product_category,
             # 'time': (shelfLife - timeToSpoil)
         }
         pantrylist.append(temp)
