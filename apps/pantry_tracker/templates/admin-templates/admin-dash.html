@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/admin.css' %}">
     <title>Administrator Dashboard</title>
 </head>
 <body>
@@ -15,19 +17,6 @@
             <div>
                 <h3>Users</h3>
                 <h4>Create new user</h4>
-                <form action="/registerUser" method="POST">
-                    {% csrf_token %}
-                    <input type="text" name="first_name" placeholder="First name">
-                    <input type="text" name="last_name" placeholder="Last Name">
-                    <input type="email" name="email" placeholder="E-mail">
-                    <select name="access_level">
-                        <option value="1">User</option>
-                        <option value="7">Admin</option>
-                    </select>
-                    <input type="password" name="password" placeholder="Enter Password">
-                    <input type="password" name='password_confirm' placeholder="Confirm Password">
-                    <button type="submit">Submit</button>
-                </form>
             </div>
             <div>
                 <table>
@@ -38,8 +27,44 @@
                         <th>E-mail</th>
                         <th>Access Level</th>
                         <th>Pantry</th>
+                        <th>Password</th>
                         <th>ACTIONS</th>
                     </tr>
+                    <tr>
+
+                        <form action="/registerUser" method="POST">
+                            {% csrf_token %}
+                            <td>#</td>
+                            <td>
+                                <input type="text" name="first_name" placeholder="First name">
+                            </td>
+                            <td>
+                                <input type="text" name="last_name" placeholder="Last Name">
+                            </td>
+                            <td>
+                                <input type="email" name="email" placeholder="E-mail">
+                            </td>
+                            <td>
+                                <select name="access_level">
+                                    <option value="1">User</option>
+                                    <option value="7">Admin</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select name="pantry">
+                                    <option value="New">New</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="password" name="password" placeholder="Enter Password" style="display: block">
+                                <input type="password" name='password_confirm' placeholder="Confirm Password" style="display: block">
+                            </td>
+                            <td>
+                                <button type="submit">Submit</button>
+                            </td>
+                        </form>
+                    </tr>
+
                     {% for user in userlist %}
                     <tr>
                         <td>{{user.id}}</td>
@@ -48,6 +73,7 @@
                         <td>{{user.email}}</td>
                         <td>{{user.access_level}}</td>
                         <td>{{user.pantry}}</td>
+                        <td>pw</td>
                         <td>
                             <a href="">Edit</a>
                             <a href="/user_delete/{{user.id}}">Delete</a>
