@@ -470,7 +470,21 @@ def done_shopping(request,id):
     return redirect(route)
 
 def reduce_in_pantry(request,id):
+    user = User.objects.get(id=request.session['user_id'])
+    pantry = Pantry.objects.get(user=user)
+    product = pantry.product.get(id=id)
+    print("%"*80)
+    print(product.quantity)
+    product.quantity=product.quantity-1
+    print(product.quantity)
+    product.save()
+    if product.quantity == 0:
+        product.delete()
     return redirect('/dashboard')
 
 def remove_from_pantry(request,id):
+    user = User.objects.get(id=request.session['user_id'])
+    pantry = Pantry.objects.get(user=user)
+    product = pantry.product.get(id=id)
+    product.delete()
     return redirect('/dashboard')
