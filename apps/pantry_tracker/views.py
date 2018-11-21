@@ -109,20 +109,33 @@ def dashboard(request):
 
     pantrylist=[]
     for product in user.pantry.product.order_by('name'):
-        shelfLife = Product.objects.get(id = product.id).shelf_life 
-        today = datetime.now(timezone.utc)
-        boughtItemOn = product.created_at
-        timeToSpoil = today - boughtItemOn
-        # if timeToSpoil.days >= shelfLife:
-        #     print("Pantry List Product about to spoil: ")
-        #     print(product)
+        shelfLife = Product.objects.get(id = product.id).shelf_life
+        print("&"*80)
+        print(product.name)
+        print("Shelf Life")
+        print(shelfLife)
+        if shelfLife == 0:
+            time=0
+        else:
+            today = datetime.now(timezone.utc)
+            boughtItemOn = product.created_at
+            print(boughtItemOn)
+            timeOnShelf = today - boughtItemOn
+            print("Time on shelf", timeOnShelf)
+            timeToSpoil=shelfLife-timeOnShelf.days
+            print('Days to spoil:', timeToSpoil)
+            if timeToSpoil<1:
+                time=-1
+            else:
+                time=timeToSpoil
+            print('time: ',time)
         temp={
             'name':product.name,
             'id':product.id,
             'img':product.image,
             'quantity':product.quantity,
             'category':product.product_category,
-            'time': (shelfLife - timeToSpoil.days)
+            'time': time,
         }
         pantrylist.append(temp)
     context = {
