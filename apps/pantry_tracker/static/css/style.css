@@ -140,10 +140,6 @@ footer{
     color: black;
     border-radius: 5px;
 }
-input[type='checkbox']{
-    width: 7%;
-    height: 50%;
-}
 #item-table{
     margin: 5%;
 }

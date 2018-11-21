@@ -52,15 +52,16 @@
                                 <div class="col-12 checkbox form-group">
                                     <div class="col-12">
                                     <label>Vegetarian</label>
-                                    <input class="checkbox" type="checkbox" name="vegetarian">
+                                    <input class="checkbox" type="checkbox" name="vegetarian"{{ user.vegCheck }}>
+                                    
                                     </div>
                                     <div class="col-12">
                                     <label>Gluten Free</label>
-                                    <input class="checkbox" type="checkbox" name="gluten_free">
+                                    <input class="checkbox" type="checkbox" name="gluten_free"{{ user.glutCheck }}>
                                     </div>
                                     <div class="col-12">
                                     <label>Lactose Intolerant</label>
-                                    <input class="checkbox" type="checkbox" name="lactose_intolerant">
+                                    <input class="checkbox" type="checkbox" name="lactose_intolerant" {{ user.lacCheck }}>
                                     </div>
                                 </div>
                             </div>
