@@ -139,7 +139,7 @@ def editProfile(request,id):
             'email':user.email,
             'id':id
         }
-    }    
+    }
     return render(request,"edit.html", context)
 
 # Processes whatever changes the users submits
@@ -157,6 +157,17 @@ def update_profile(request,id):
             user.last_name=request.POST['last_name']
             user.email=request.POST['email']
             user.save()
+        print(request.POST)
+        for x in request.POST:
+            if 'gluten_free' in request.POST:
+                Diet.objects.get(id = 2).users.add(User.objects.get(id = id))
+            if 'vegetarian' in request.POST:
+                Diet.objects.get(id = 1).users.add(User.objects.get(id = id))
+            if 'lactose_intolerant' in request.POST:
+                Diet.objects.get(id = 3).users.add(User.objects.get(id = id))
+            # How to find the diet preferences for the user          
+        for y in Diet.objects.filter(users = id):
+            print(y.preference)
     return redirect('/dashboard') 
 #**********************************************************
 
