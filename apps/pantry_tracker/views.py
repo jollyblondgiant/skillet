@@ -427,14 +427,14 @@ def grocery_remove(request,id):
     route = 'shopping_list/'+str(request.session['user_id'])
     return redirect(route)
 
-def done_shopping(request):
+def done_shopping(request,id):
     user=User.objects.get(id=request.session['user_id'])
     pan = Pantry.objects.get(user=user)
-    for shop_id in request.session['grocery_list']:
-        prod = Product.objects.get(id=shop_id)
-        prod.pk = None
-        prod.quantity = prod.quantity * request.session['grocery_list'][shop_id]
-        prod.pantry=pan
-        prod.save()
-    request.session['grocery_list']={}
+    prod = Product.objects.get(id=id)
+    prod.pk = None
+    prod.quantity = prod.quantity * request.session['grocery_list'][shop_id]
+    prod.pantry=pan
+    prod.save()
+    request.session['grocery_list'].pop(id,None)
+    request.session['grocery_list']=request.session['grocery_list']
     return redirect('/dashboard')

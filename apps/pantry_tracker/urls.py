@@ -79,6 +79,6 @@ urlpatterns = [
     url(r'grocery_search$',views.grocery_search),
     url(r'shop_search_clear',views.shop_search_clear),
     #submit shopping list to the pantry
-    url(r'done_shopping$',views.done_shopping),
+    url(r'done_shopping/(?P<id>\d+)$',views.done_shopping),
 
 ]
