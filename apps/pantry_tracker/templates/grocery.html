@@ -87,19 +87,17 @@
                         {% for product in grocerylist %}
                         <tr class="underline">
                             <td>{{ product.name }}</td>
-                            <td>
-                                <a href="/grocery_decr/{{ product.id }}">- 1</a>
-                                <p>{{ product.quantity }}</p>
-                                <a href="/grocery_incr/{{ product.id }}">+ 1</a>
+                            <td class="plus_min">
+                                <a href="/grocery_decr/{{ product.id }}">-</a><p>{{ product.quantity }}</p><a href="/grocery_incr/{{ product.id }}">+</a>
                             </td>
                             <td>
-                                <a href="/grocery_remove/{{ product.id }}">Remove</a>
+                                <a class="remove_shopping" href="/grocery_remove/{{ product.id }}">Remove</a>
                             </td>
                         </tr>
                         {% endfor %}
                     </table>
-                    <a href="/done_shopping">
-                        <button style="width: 100%;padding:30px">DONE SHOPPING</button>
+                    <a href="/dashboard">
+                        <button>Back to Dashboard</button>
                     </a>
                 </div>
             </div>

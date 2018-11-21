@@ -55,20 +55,24 @@
                             <h3>Grocery List</h3>
                             <table class="shopping-list-box col-12">
                                 <tr class="head">
+                                    <th>Remove</th>
                                     <th>Product</th>
                                     <th>Quantity</th>
-                                    <th>Actions</th>
+                                    <th>Bought</th>
                                 </tr>
                                 {% for product in grocerylist %}
                                 <tr class="underline">
+                                    <td>
+                                        <a class="remove_shopping" href="/grocery_remove/{{ product.id }}">Remove</a>
+                                    </td>
                                     <td>{{ product.name }}</td>
                                     <td>
-                                        <a href="/grocery_decr/{{ product.id }}">- 1</a>
                                         <p>{{ product.quantity }}</p>
-                                        <a href="/grocery_incr/{{ product.id }}">+ 1</a>
                                     </td>
                                     <td>
-                                        <a href="/grocery_remove/{{ product.id }}">Remove</a>
+                                        <a href="/done_shopping/{{ product.id }}">
+                                            <button>got it</button>
+                                        </a>
                                     </td>
                                 </tr>
                                 {% endfor %}

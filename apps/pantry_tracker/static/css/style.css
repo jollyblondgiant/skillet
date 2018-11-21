@@ -1,5 +1,8 @@
 *{
     /*outline: 1px solid red;*/
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 
 }
 
@@ -183,7 +186,7 @@ input.buy{
 }
 
 tr.underline{
-    border-bottom: 2px solid blue;
+    border-bottom: 2px solid lightblue;
 }
 tr.head{
     border-bottom: 2px solid black;
@@ -191,6 +194,13 @@ tr.head{
 #title{
     background-color: black;
 
+}
+.underline td *{
+    display: inline-block;
+    margin: 1%;
+}
+.remove_shopping{
+    font-size: 90%;
 }
 /*Small devices (portrait phones, 400 and up)*/
 @media (min-width: 320px){
