@@ -57,7 +57,7 @@
                                 <tr class="head">
                                     <th>Remove</th>
                                     <th>Product</th>
-                                    <th>Qty.</th>
+                                    <th>Quantity</th>
                                     <th>Bought</th>
                                 </tr>
                                 {% for product in grocerylist %}
@@ -71,7 +71,7 @@
                                     </td>
                                     <td>
                                         <a href="/done_shopping/{{ product.id }}">
-                                            <button>buy</button>
+                                            <button>Buy</button>
                                         </a>
                                     </td>
                                 </tr>
@@ -91,7 +91,7 @@
                                         <tr>
                                             <th>Item</th>
                                             <th>Qty.</th>
-                                            <th>Exp. Date</th>
+                                            <th>Exp.</th>
                                             <th>Actions</th>
                                         </tr>
                                         {% for products in pantrylist %}
@@ -99,9 +99,11 @@
                                             {% if products.category == "Produce" %}
                                             <td>{{ products.name }}</td>
                                             <td>{{ products.quantity }}</td>
-                                            <td>5 days</td>
+                                            <td>{{ products.time }}days</td>
+                                            <td><a href="/reduce_in_pantry/{{ product.id }}">-</a><a href="/remove_from_pantry/{{ product.id }}">Remove</a>
+                                            </td>
                                         </tr>
-                                            {% endif %}
+                                        {% endif %}
                                         {% endfor %}
 
                                     </table>
@@ -112,37 +114,19 @@
                                         <tr>
                                             <th>Item</th>
                                             <th>Qty.</th>
-                                            <th>Exp. Date</th>
+                                            <th>Exp.</th>
                                             <th>Actions</th>
                                         </tr>
                                         {% for products in pantrylist %}
                                         <tr>
-                                            {% if products.category == "Protien" %}
+                                            {% if products.category == "Protein" %}
                                             <td>{{ products.name }}</td>
                                             <td>{{ products.quantity }}</td>
-                                            <td>5 days</td>
+                                            <td>{{ products.time }}days</td>
+                                            <td><a href="/reduce_in_pantry/{{ product.id }}">-</a><a href="/remove_from_pantry/{{ product.id }}">Remove</a>
+                                            </td>
                                         </tr>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </table>
-                                </div>
-                                <div class="pantry-box col-xl-5 col-lg-5 col-md-6 col-sm-6 col-12">
-                                    <table>
-                                        <h5>Dairy</h5>
-                                        <tr>
-                                            <th>Item</th>
-                                            <th>Qty.</th>
-                                            <th>Exp. Date</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                        {% for products in pantrylist %}
-                                        <tr>
-                                            {% if products.category == "Dairy" %}
-                                            <td>{{ products.name }}</td>
-                                            <td>{{ products.quantity }}</td>
-                                            <td>5 days</td>
-                                        </tr>
-                                            {% endif %}
+                                        {% endif %}
                                         {% endfor %}
                                     </table>
                                 </div>
@@ -150,11 +134,33 @@
                             <div class="row justify-content-between">
                                 <div class="pantry-box col-xl-5 col-lg-5 col-md-6 col-sm-6 col-12">
                                     <table>
+                                        <h5>Dairy</h5>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Qty.</th>
+                                            <th>Exp.</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        {% for products in pantrylist %}
+                                        <tr>
+                                            {% if products.category == "Dairy" %}
+                                            <td>{{ products.name }}</td>
+                                            <td>{{ products.quantity }}</td>
+                                            <td>{{ products.time }} days</td>
+                                            <td><a href="/reduce_in_pantry/{{ product.id }}">-</a><a href="/remove_from_pantry/{{ product.id }}">Remove</a>
+                                            </td>
+                                        </tr>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                                <div class="pantry-box col-xl-5 col-lg-5 col-md-6 col-sm-6 col-12">
+                                    <table>
                                         <h5>Grains</h5>
                                         <tr>
                                             <th>Item</th>
                                             <th>Qty.</th>
-                                            <th>Exp. Date</th>
+                                            <th>Exp.</th>
                                             <th>Actions</th>
                                         </tr>
                                         {% for products in pantrylist %}
@@ -162,19 +168,23 @@
                                             {% if products.category == "Grains" %}
                                             <td>{{ products.name }}</td>
                                             <td>{{ products.quantity }}</td>
-                                            <td>5 days</td>
+                                            <td>{{ products.time }} days</td>
+                                            <td><a href="/reduce_in_pantry/{{ product.id }}">-</a><a href="/remove_from_pantry/{{ product.id }}">Remove</a>
+                                            </td>
                                         </tr>
-                                            {% endif %}
+                                        {% endif %}
                                         {% endfor %}
                                     </table>
                                 </div>
+                            </div>
+                            <div class="row justify-content-between">
                                 <div class="pantry-box col-xl-5 col-lg-5 col-md-6 col-sm-6 col-12">
                                     <table>
                                         <h5>Spices/Herbs</h5>
                                         <tr>
                                             <th>Item</th>
                                             <th>Qty.</th>
-                                            <th>Exp. Date</th>
+                                            <th>Exp.</th>
                                             <th>Actions</th>
                                         </tr>
                                         {% for products in pantrylist %}
@@ -182,9 +192,12 @@
                                             {% if products.category == "Spices/Herbs" %}
                                             <td>{{ products.name }}</td>
                                             <td>{{ products.quantity }}</td>
-                                            <td>5 days</td>
+                                            <td>{{ products.time }} days</td>
+                                            <td>
+                                                <a href="/reduce_in_pantry/{{ product.id }}">-</a><a href="/remove_from_pantry/{{ product.id }}">Remove</a>
+                                            </td>
                                         </tr>
-                                            {% endif %}
+                                        {% endif %}
                                         {% endfor %}
                                     </table>
                                 </div>
@@ -194,7 +207,7 @@
                                         <tr>
                                             <th>Item</th>
                                             <th>Qty.</th>
-                                            <th>Exp. Date</th>
+                                            <th>Exp.</th>
                                             <th>Actions</th>
                                         </tr>
                                         {% for products in pantrylist %}
@@ -202,9 +215,11 @@
                                             {% if products.category == "Non-Perishable" %}
                                             <td>{{ products.name }}</td>
                                             <td>{{ products.quantity }}</td>
-                                            <td>5 days</td>
+                                            <td>{{ products.time }} days</td>
+                                            <td><a href="/reduce_in_pantry/{{ product.id }}">-</a><a href="/remove_from_pantry/{{ product.id }}">Remove</a>
+                                            </td>
                                         </tr>
-                                            {% endif %}
+                                        {% endif %}
                                         {% endfor %}
                                     </table>
                                 </div>
