@@ -103,7 +103,17 @@
                                             {% if products.category == "Produce" %}
                                             <td>{{ products.name }}</td>
                                             <td>{{ products.quantity }}</td>
-                                            <td>{{ products.time }}days</td>
+                                            <td>
+                                                {% if products.time == 0 %}
+                                                Non-Perishable
+                                                {% elif products.time == -1 %}
+                                                SPOILED!!!
+                                                {% elif products.time == 1 %}
+                                                About to spoil!
+                                                {% else %}
+                                                In {{products.time}} days
+                                                {% endif %}
+                                            </td>
                                             <td><a href="/reduce_in_pantry/{{ products.id }}">-</a><a href="/remove_from_pantry/{{ products.id }}">Remove</a>
                                             </td>
                                         </tr>
@@ -126,7 +136,17 @@
                                             {% if products.category == "Protein" %}
                                             <td>{{ products.name }}</td>
                                             <td>{{ products.quantity }}</td>
-                                            <td>{{ products.time }}days</td>
+                                            <td>
+                                                {% if products.time == 0 %}
+                                                Non-Perishable
+                                                {% elif products.time == -1 %}
+                                                SPOILED!!!
+                                                {% elif products.time == 1 %}
+                                                About to spoil!
+                                                {% else %}
+                                                In {{products.time}} days
+                                                {% endif %}
+                                            </td>
                                             <td><a href="/reduce_in_pantry/{{ products.id }}">-</a><a href="/remove_from_pantry/{{ products.id }}">Remove</a>
                                             </td>
                                         </tr>
@@ -150,7 +170,17 @@
                                             {% if products.category == "Dairy" %}
                                             <td>{{ products.name }}</td>
                                             <td>{{ products.quantity }}</td>
-                                            <td>{{ products.time }} days</td>
+                                            <td>
+                                                {% if products.time == 0 %}
+                                                Non-Perishable
+                                                {% elif products.time == -1 %}
+                                                SPOILED!!!
+                                                {% elif products.time == 1 %}
+                                                About to spoil!
+                                                {% else %}
+                                                In {{products.time}} days
+                                                {% endif %}
+                                            </td>
                                             <td><a href="/reduce_in_pantry/{{ products.id }}">-</a><a href="/remove_from_pantry/{{ products.id }}">Remove</a>
                                             </td>
                                         </tr>
@@ -172,7 +202,17 @@
                                             {% if products.category == "Grains" %}
                                             <td>{{ products.name }}</td>
                                             <td>{{ products.quantity }}</td>
-                                            <td>{{ products.time }} days</td>
+                                            <td>
+                                                {% if products.time == 0 %}
+                                                Non-Perishable
+                                                {% elif products.time == -1 %}
+                                                SPOILED!!!
+                                                {% elif products.time == 1 %}
+                                                About to spoil!
+                                                {% else %}
+                                                In {{products.time}} days
+                                                {% endif %}
+                                            </td>
                                             <td><a href="/reduce_in_pantry/{{ products.id }}">-</a><a href="/remove_from_pantry/{{ products.id }}">Remove</a>
                                             </td>
                                         </tr>
@@ -196,7 +236,17 @@
                                             {% if products.category == "Spices/Herbs" %}
                                             <td>{{ products.name }}</td>
                                             <td>{{ products.quantity }}</td>
-                                            <td>{{ products.time }} days</td>
+                                            <td>
+                                                {% if products.time == 0 %}
+                                                Non-Perishable
+                                                {% elif products.time == -1 %}
+                                                SPOILED!!!
+                                                {% elif products.time == 1 %}
+                                                About to spoil!
+                                                {% else %}
+                                                In {{products.time}} days
+                                                {% endif %}
+                                            </td>
                                             <td>
                                                 <a href="/reduce_in_pantry/{{ products.id }}">-</a><a href="/remove_from_pantry/{{ products.id }}">Remove</a>
                                             </td>
@@ -219,7 +269,17 @@
                                             {% if products.category == "Non-Perishable" %}
                                             <td>{{ products.name }}</td>
                                             <td>{{ products.quantity }}</td>
-                                            <td>{{ products.time }} days</td>
+                                            <td>
+                                                {% if products.time == 0 %}
+                                                Non-Perishable
+                                                {% elif products.time == -1 %}
+                                                SPOILED!!!
+                                                {% elif products.time == 1 %}
+                                                About to spoil!
+                                                {% else %}
+                                                In {{products.time}} days
+                                                {% endif %}
+                                            </td>
                                             <td><a href="/reduce_in_pantry/{{ products.id }}">-</a><a href="/remove_from_pantry/{{ products.id }}">Remove</a>
                                             </td>
                                         </tr>
