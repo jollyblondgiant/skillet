@@ -91,6 +91,8 @@ def dashboard(request):
     if 'user_id' not in request.session:
         return redirect('/')
     user=User.objects.get(id=request.session['user_id'])
+    id = request.session['user_id']
+    request.session['diets'] = []
     name=user.first_name+" "+user.last_name
     list_to_show = []
     if 'grocery_list' not in request.session:
@@ -141,7 +143,12 @@ def dashboard(request):
         'access_level': user.access_level,
         'pantrylist':pantrylist,
         'grocerylist':list_to_show,
+        'joined': User.objects.get(id = id).created_at
     }
+    for y in Diet.objects.filter(users = id):
+        request.session['diets'].append(y.preference)
+    if request.session['diets'] == []:
+        request.session['diets'] = 'NONE!!!!'
     return render(request, 'dashboard.html',context)
 #**********************************************************
 
@@ -174,7 +181,6 @@ def update_profile(request,id):
             user.last_name=request.POST['last_name']
             user.email=request.POST['email']
             user.save()
-        print(request.POST)
         for x in request.POST:
             if 'gluten_free' in request.POST:
                 Diet.objects.get(id = 2).users.add(User.objects.get(id = id))
@@ -185,6 +191,8 @@ def update_profile(request,id):
             # How to find the diet preferences for the user          
         for y in Diet.objects.filter(users = id):
             print(y.preference)
+            print(y)
+            print("???????????????????????????")
     return redirect('/dashboard') 
 
 #**********************************************************
@@ -483,21 +491,7 @@ def done_shopping(request,id):
     return redirect(route)
 
 def reduce_in_pantry(request,id):
-    user = User.objects.get(id=request.session['user_id'])
-    pantry = Pantry.objects.get(user=user)
-    product = pantry.product.get(id=id)
-    print("%"*80)
-    print(product.quantity)
-    product.quantity=product.quantity-1
-    print(product.quantity)
-    product.save()
-    if product.quantity == 0:
-        product.delete()
     return redirect('/dashboard')
 
 def remove_from_pantry(request,id):
-    user = User.objects.get(id=request.session['user_id'])
-    pantry = Pantry.objects.get(user=user)
-    product = pantry.product.get(id=id)
-    product.delete()
     return redirect('/dashboard')

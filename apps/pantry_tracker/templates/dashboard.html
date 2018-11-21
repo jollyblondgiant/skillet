@@ -36,11 +36,15 @@
                 </div>
                 <div id="about-user" class="col-xl-8 col-lg-6 col-sm-12 col-md-12 box">
                     <p>About: This is where the user would say something about themselves.</p>
-                    <p>Joined Skillet: The created date would be put here.</p>
+                    <p>Joined Skillet: {{ joined }}</p>
                     <ul>Dietary Restrictions/Preferences:
-                        <li>Vegan</li>
-                        <li>Lactose Intolerant</li>
-                        <li>Anything Bland</li>
+                        {% if request.session.diets == 'NONE!!!!' %}
+                            {{ request.session.diets }}
+                        {% else %}
+                        {% for diet in request.session.diets %}
+                        <li>{{ diet }}</li>
+                        {% endfor %}
+                        {% endif %}
                     </ul>
                 </div>
             </div>
