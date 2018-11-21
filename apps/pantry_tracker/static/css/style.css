@@ -54,6 +54,7 @@ span:hover{
     background-color:black;
     padding: 10% 0 10% 0;
     width: 100%;
+    margin-bottom: 0;
 }
 .jumbotron video {
     position: absolute;
@@ -108,7 +109,6 @@ footer{
     color: whitesmoke;
     padding-top: 2%;
     padding-bottom: 2%;
-
 }
 #profile{
     border: 5px solid black;
@@ -166,7 +166,6 @@ input[type='checkbox']{
     background-color: whitesmoke;
     color: black;
     text-align: center;
-
 }
 input.buy{
     background-color: rgb(25, 83, 241);

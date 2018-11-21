@@ -7,7 +7,7 @@ import re, bcrypt
 #Where we start. If logged in will redirect to dash
 #If not logged in - redirect to log in/register view
 def landing(request):
-    if 'current_user' in request.session:
+    if 'user_id' in request.session:
         return redirect('/dashboard')
     else:
         return render(request,"landing.html")
@@ -36,14 +36,10 @@ def loginUser(request):
             user = User.objects.get(email=email)
             request.session['user_id'] = user.id
             access_level = user.access_level
-            print("&"*80)
-            print(user.__dict__)
             #check if the user logging in is the admin
             if access_level == 9 or access_level == 7:
-                print("Going to ADMIN")
                 return redirect('/admin_dash')
             else:
-                print("Going to userr")
                 return redirect('/dashboard')
     return redirect('/dashboard') 
 
@@ -95,14 +91,12 @@ def dashboard(request):
         return redirect('/')
     user=User.objects.get(id=request.session['user_id'])
     name=user.first_name+" "+user.last_name
-    print(name)
     pantrylist=[]
     for product in user.pantry.product.order_by('name'):
         shelfLife = pantry.objects.get(id = product).shelf_life 
         today = datetime.now(timezone.utc)
         boughtItemOn = pantry.objects.get(id = product).created_at
         timeToSpoil = today - boughtItemOn
-        print(timeToSpoil.days)
         if timeToSpoil >= shelfLife:
             print("Pantry List Product about to spoil")
         temp={
@@ -139,9 +133,6 @@ def update_profile(request,id):
     if request.method=="POST":
         errors = User.objects.updator_validator(request.POST)
         if len(errors):
-            print(errors)
-            print("!!!!!!!!!!!!!!!!!!!!!!!!!!"*10)
-            print(User.objects.get(id = request.session['user_id']).email)
             request.session['errors']=errors
             route = '/editProfile/' + str(request.session['user_id'])
             return redirect(route)
@@ -272,22 +263,16 @@ def add_to_recipe(request):
         product_id=request.POST['id']
         quantity=int(request.POST['quantity'])
         if product_id not in request.session['recipe']['components']:
-            print('product id not in session')
             request.session['recipe']['components'][product_id]=quantity
         else:
             request.session['recipe']['components'][product_id]+=quantity
         request.session['recipe']=request.session['recipe']
-        print('%'*80)
-        print(request.session['recipe'])
     return redirect('/recipe_builder')
 
 #decrease the amount of current component in the recipe
 def recip_decr(request,id):
-    print("%"*80)
     request.session['recipe']['components'][id]-=1
     count=request.session['recipe']['components'][id]
-    print(request.session['recipe']['components'])
-    print(count)
     request.session['recipe']=request.session['recipe']
 
     if count==0:
@@ -382,20 +367,21 @@ def shopping_list(request,id):
     return render(request,"grocery.html",context)
 
 def add_groceries(request):
+    #May need update with p_id as integer
     if request.method == 'POST':
         p_id = request.POST['id']
         p_quant = request.POST['quantity']
         product = Product.objects.get(id=p_id)
         p_name=product.name
-        shopping_list = User.objects.get(id=request.session['current_user']).user_grocery_list
+        shopping_list = User.objects.get(id=request.session['user_id']).user_grocery_list
         check = shopping_list.product.filter(name=p_name)
         if check:
             product = shopping_list.product.get(name=p_name)
             product.quantity += p_quant
-        else:
-            product.pk=None
-            product.pantry=shopping_list
-            product.save()
+        # else:
+        #     product.pk=None
+        #     product.pantry=shopping_list
+        #     product.save()
     route = 'shopping_list/'+str(request.session['user_id'])
     return redirect(route)
 
@@ -424,5 +410,3 @@ def grocery_remove(request,id):
 
 def done_shopping(request):
     return redirect('dashboard')
-
-
