@@ -434,7 +434,7 @@ def done_shopping(request,id):
     pan = Pantry.objects.get(user=user)
     prod = Product.objects.get(id=id)
     prod.pk = None
-    prod.quantity = prod.quantity * request.session['grocery_list'][shop_id]
+    prod.quantity = prod.quantity * request.session['grocery_list'][id]
     prod.pantry=pan
     prod.save()
     request.session['grocery_list'].pop(id,None)
