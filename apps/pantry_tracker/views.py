@@ -173,11 +173,7 @@ def update_profile(request,id):
         for y in Diet.objects.filter(users = id):
             print(y.preference)
     return redirect('/dashboard') 
-#**********************************************************
-def editPantry(request):
-    # Needs an user id number
-    response = "My Pantry"
-    return redirect('/myPantry')
+
 #**********************************************************
 
 def admin_dash(request):
@@ -472,3 +468,9 @@ def done_shopping(request,id):
     else:
         route = request.session['location']
     return redirect(route)
+
+def reduce_in_pantry(request,id):
+    return redirect('/dashboard')
+
+def remove_from_pantry(request,id):
+    return redirect('/dashboard')
