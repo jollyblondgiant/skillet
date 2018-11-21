@@ -84,12 +84,12 @@
                             <th>Quantity</th>
                             <th>Actions</th>
                         </tr>
-                        {% for products in grocerylist %}
+                        {% for product in grocerylist %}
                         <tr class="underline">
                             <td>{{ product.name }}</td>
                             <td>
                                 <a href="/grocery_decr/{{ product.id }}">- 1</a>
-                                <p>{{ produect.quantity }}</p>
+                                <p>{{ product.quantity }}</p>
                                 <a href="/grocery_incr/{{ product.id }}">+ 1</a>
                             </td>
                             <td>
@@ -98,6 +98,9 @@
                         </tr>
                         {% endfor %}
                     </table>
+                    <a href="/done_shopping">
+                        <button style="width: 100%;padding:30px">DONE SHOPPING</button>
+                    </a>
                 </div>
             </div>
 
