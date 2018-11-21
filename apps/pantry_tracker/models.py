@@ -105,7 +105,7 @@ class Product(models.Model):
     image = models.CharField(max_length = 255, default = "please link to static img")    # use this field to link to static img file, update default once we have a default watermark to use instead
     price = models.PositiveSmallIntegerField()          # represent price in cents, present to user after dividing by 100
     shelf_life = models.PositiveSmallIntegerField(default = 0)     # Product.shelf_life should be expressed in days // HOW TO EXPRESS NON-PERISHABLE? **FOR NOW, USE (AND {IF-CHECK} FOR) 0**
-    # there exists a ManyToMany with Diet below
+        # there exists a ManyToMany with Diet below
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
 
