@@ -50,19 +50,12 @@
                         <div class="container">
                             <div class="row justify-content-between">
                                 <div class="col-12 checkbox form-group">
+                                    {% for diet in dietlist %}
                                     <div class="col-12">
-                                    <label>Vegetarian</label>
-                                    <input class="checkbox" type="checkbox" name="vegetarian"{{ user.vegCheck }}>
-                                    
+                                        <label>{{diet.diet}}</label>
+                                        <input class="checkbox" type="checkbox" name="{{diet.id}}" {{diet.checked}}>
                                     </div>
-                                    <div class="col-12">
-                                    <label>Gluten Free</label>
-                                    <input class="checkbox" type="checkbox" name="gluten_free"{{ user.glutCheck }}>
-                                    </div>
-                                    <div class="col-12">
-                                    <label>Lactose Intolerant</label>
-                                    <input class="checkbox" type="checkbox" name="lactose_intolerant" {{ user.lacCheck }}>
-                                    </div>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>
