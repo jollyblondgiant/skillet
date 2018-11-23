@@ -130,18 +130,20 @@ def dashboard(request):
             'time': time,
         }
         pantrylist.append(temp)
+    
+    dietlist=[]
+    for diet in user.diets.all():
+        dietlist.append(diet.preference)
     context = {
         'username':name,
         'access_level': user.access_level,
         'pantrylist':pantrylist,
         'grocerylist':list_to_show,
-        'joined': User.objects.get(id = id).created_at
+        'joined': User.objects.get(id = id).created_at,
+        'dietlist':dietlist,
     }
-    for y in Diet.objects.filter(users = id):
-        request.session['diets'].append(y.preference)
-    if request.session['diets'] == []:
-        request.session['diets'] = 'NONE!!!!'
-    request.session['diets'] = request.session['diets']
+    
+
     return render(request, 'dashboard.html',context)
 #**********************************************************
 
@@ -152,27 +154,27 @@ def editProfile(request,id):
     glutCheck = ''
     request.session['location']="/editProfile"
     user=User.objects.get(id=id)
-    for y in Diet.objects.filter(users = id):
-        if y.preference == 'Vegetarian': 
-            vegCheck = 'checked'
-        if y.preference == 'lactose_intolerant':
-            lacCheck = 'checked'
-        if y.preference == 'gluten_free':
-            glutCheck = 'checked'
+    dietlist=[]
+    for y in Diet.objects.all():
+        if y in user.diets.all():
+            check='checked'
+        else:
+            check=''
+        temp = {
+            'diet':y.preference,
+            'id':y.id,
+            'checked':check
+        }
+        dietlist.append(temp)
     context = {
         'user':{
             'first_name':user.first_name,
             'last_name':user.last_name,
             'email':user.email,
             'id':id,
-            'vegCheck': vegCheck,
-            'lacCheck': lacCheck,
-            'glutCheck': glutCheck
-        }
+        },
+        'dietlist':dietlist
     }
-    print('*'*100)
-    print(context)
-    print(vegCheck)
     return render(request,"edit.html", context)
 
 # Processes whatever changes the users submits
@@ -189,27 +191,24 @@ def update_profile(request,id):
             user.first_name=request.POST['first_name']
             user.last_name=request.POST['last_name']
             user.email=request.POST['email']
+            for diet in Diet.objects.all():
+                print("<>"*40)
+                print(diet.id)
+                if str(diet.id) in request.POST and diet not in user.diets.all():
+                    print(diet.preference)
+                    print("The diet is being added to the user")
+                    user.diets.add(diet)
+                elif str(diet.id) not in request.POST and diet in user.diets.all():
+                    print(diet.preference)
+                    print ("The diet is being removed from the user")
+                    user.diets.remove(diet)
+                else:
+                    print("No change")
+                print("*"*80)
             user.save()
+            print("$"*80)
             print(request.POST)
-            for x in user.diets.all():
-                if x.preference not in request.POST and user.diets.filter(preference = x.preference):
-                    print("-"*100)
-                    print("conflict")
-                    print("remove diets: ", x.preference)
-                    print("-"*100)
-                if x.preference in request.POST and not user.diets.filter(preference = x.preference):
-                    print("+"*100)
-                    print("conflict")
-                    print("Add diets: ", x.preference)  
-                    print("+"*100)
-
-        # for x in request.POST:
-            # if 'gluten_free' in request.POST:
-            #     Diet.objects.get(id = 2).users.add(User.objects.get(id = id))
-            # if 'vegetarian' in request.POST:
-            #     Diet.objects.get(id = 1).users.add(User.objects.get(id = id))
-            # if 'lactose_intolerant' in request.POST:
-            #     Diet.objects.get(id = 3).users.add(User.objects.get(id = id))
+            
     return redirect('/dashboard') 
 
 #**********************************************************

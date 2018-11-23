@@ -38,13 +38,12 @@
                     <p>About: This is where the user would say something about themselves.</p>
                     <p>Joined Skillet: {{ joined }}</p>
                     <ul>Dietary Restrictions/Preferences:
-                        {% if request.session.diets == 'NONE!!!!' %}
-                            {{ request.session.diets }}
-                        {% else %}
-                        {% for diet in request.session.diets %}
+                        {% if dietlist|length == 0 %}
+                        None.
+                        {% endif %}
+                        {% for diet in dietlist %}
                         <li>{{ diet }}</li>
                         {% endfor %}
-                        {% endif %}
                     </ul>
                 </div>
             </div>
