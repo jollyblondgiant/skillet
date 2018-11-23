@@ -59,11 +59,11 @@ class Validator(models.Manager):
         if len(postData['first_name'])==False:
             errors['first_name_null'] = "'First Name' field is required"
         elif len(postData['first_name']) < 3:
-            errors['first_name_len'] = 'Name must be 3 letters or more' 
+            errors['first_name_len'] = 'First name must be 3 letters or more' 
         if len(postData['last_name'])==False:
             errors['last_name_null'] = "'Last Name' field is required"
         elif len(postData['last_name']) < 3:
-            errors['last_name_len'] = 'Name must be 3 letters or more'
+            errors['last_name_len'] = 'Last name must be 3 letters or more'
         elif postData['last_name'].isalpha() == False or postData['first_name'].isalpha() == False:
             errors['name_alpha'] = "'Name' fields can only contain letters"
         if len(postData['email'])==False:

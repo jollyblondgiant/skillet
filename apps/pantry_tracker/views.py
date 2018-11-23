@@ -149,9 +149,6 @@ def dashboard(request):
 
 # Take user to the page for profile editing
 def editProfile(request,id):
-    vegCheck = ''
-    lacCheck = ''
-    glutCheck = ''
     request.session['location']="/editProfile"
     user=User.objects.get(id=id)
     dietlist=[]
@@ -183,7 +180,8 @@ def update_profile(request,id):
     if request.method=="POST":
         errors = User.objects.updator_validator(request.POST)
         if len(errors):
-            request.session['errors']=errors
+            for tag, error in errors.items():
+                messages.error(request, error, extra_tags = tag)
             route = '/editProfile/' + str(request.session['user_id'])
             return redirect(route)
         else:
