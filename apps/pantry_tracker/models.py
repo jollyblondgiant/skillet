@@ -29,7 +29,7 @@ class Validator(models.Manager):
         if len(postData['password'])==False:
             errors['password_null'] = "'Password' field is required"
         elif len(postData['password']) < 8:
-            errors['password_len'] = "Choose a password at elast 8 characters in length"
+            errors['password_len'] = "Choose a password at least 8 characters in length"
         if 'password_confirm' not in postData:
             errors['password_confirm_null'] = "confirm password"
         elif postData['password'] != postData['password_confirm']:
