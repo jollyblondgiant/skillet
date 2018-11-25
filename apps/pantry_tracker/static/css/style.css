@@ -26,12 +26,11 @@ div#header{
     background-color: rgb(1, 1, 31);
     padding: 0;
 }
-#content{
-    position: relative;
-    margin-top: 7%;
-}
 h1{
     color: whitesmoke;
+}
+p.lead{
+    text-align: center;
 }
 span{
     display: inline-block;
@@ -50,6 +49,7 @@ span:hover{
 }
 .first-a{
     margin: 0 0 0 0;
+    color: whitesmoke;
 }
 #pantry{
     margin-left: 20%;
@@ -138,9 +138,6 @@ footer{
     padding-top: 2%;
     padding-bottom: 2%;
 }
-#profile-wrapper{
-    position: fixed;
-}
 #profile{
     border: 5px solid black;
     border-radius: 50%;
@@ -176,13 +173,13 @@ footer{
     margin: 2%;
     font-size: 85%;
 }
-#profile-box h2{
-    margin: 0;
-    font-size: 200%;
+#profile-wrapper{
+    background-color: darkblue;
+    color: whitesmoke;
 }
-#about-user{
-    background-color: rgba(245, 245, 245, 0.705);
-    font-size: 200%;
+#info *{
+    font-size: 70%;
+    list-style-type: none;
 }
 .pantry-box{
     border: 2px solid black;
@@ -253,21 +250,20 @@ tr.head{
         font-size: 100%;
         color: whitesmoke;
     }
-    img#profile{
-        width: 50%;
-        margin: 5% 0 5% 25%;
-    }
     #profile-wrapper{
-        position: static;
-        margin-top: 35%;
+        background-color: darkblue;
+        color: whitesmoke;
     }
-    #profile-box{
-        left:0;
+    h2{
+        text-align: center;
     }
-    #profile-box h2{
-        width: 50%;
-        font-size: 150%;
-        margin-left: 30%;
+    #info *{
+        font-size: 100%;
+        margin-left: 5%;
+    }
+    img#profile{
+        width: 150%;
+        margin: 0 0 0 -15%;
     }
     .reroute{
         margin-left: 60%;
@@ -295,9 +291,19 @@ tr.head{
         margin: 13% 0 0 0;
         font-size: 90%;
     }
-    #content{
-        position: relative;
-        margin-top: 7%;
+    #profile-wrapper h2{
+        text-align: left;
+    }
+    img#profile{
+        width: 70%;
+        margin: 0 0 0 5%;
+    }
+    #info *{
+        margin: 0;
+        font-size: 125%;
+    }
+    .first-a{
+        margin-left: 5%;
     }
 }
 /*Medium devices (tablets, 768px and up)*/
@@ -317,15 +323,28 @@ tr.head{
         font-size: 100%;
     }
     img#profile{
-        width: 30%;
-        margin-left: 40%;
+        width: 100%;
+        margin: 0;
     }
-    #profile-box h2{
+    #profile-wrapper h2{
         font-size: 300%;
     }
-    #content{
-        position: relative;
-        margin-top: 15%;
+    #info{
+        font-size: 175%;
+    }
+    #info ul{
+        font-size: 100%;
+    }
+    #info ul li{
+        font-size: 75%;
+    }
+
+    .shopping-list-box{
+        font-size: 200%;
+        margin-left:0;
+    }
+    .pantry-box{
+        font-size: 175%;
     }
 
 }
@@ -346,18 +365,23 @@ tr.head{
     }
     img#profile{
         width: 60%;
-        margin: 0 0 5% 20%;
+        margin: 0;
     }
-    #profile-box h2{
-        font-size: 150%;
-        width: 70%;
-        margin: 0 0 5% 20%;
+    #profile-wrapper h2{
+        font-size: 300%;
     }
-    #profile-box a{
-        margin: 1% 0 5% 30%;
+    #info{
+        margin: 0 0 0 -10%;
     }
-    #about-user{
-        font-size: 150%;
+    .first-a{
+        font-size: 200%;
+        margin-left: 2%;
+    }
+    .shopping-list-box{
+        font-size: 100%;
+    }
+    .pantry-box{
+        font-size: 100%;
     }
  }
 
@@ -374,5 +398,22 @@ tr.head{
     div#landing-login{
         margin: -2% 0 0 80%;
         font-size: 100%;
+    }
+    #profile-wrapper h2{
+        font-size: 200%;
+    }
+    img#profile{
+        width: 30%;
+        margin-left: 5%;
+    }
+    #info{
+        margin-left: -20%;
+    }
+    #info *{
+        font-size: 75%;
+    }
+    .first-a{
+        font-size: 100%;
+        margin-left: 3%;
     }
 }

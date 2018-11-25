@@ -14,8 +14,8 @@
 </head>
 
 <body class="internal">
-    <div id="wrapper">
-        <div id="header" class="row fixed-top justify-content-start">
+    <div id="wrapper" >
+        <div id="header" class="row justify-content-start">
             <div class="col-lg-3 col-md-3 col-sm-3 col-2">
                 <img id="logo" class="img-thumbnail" src="../static/img/logo.png" alt="Skillet Logo">
             </div>
@@ -27,36 +27,48 @@
             </div>
         </div>
         <!--Ends Header-->
-        <div id="profile-wrapper" class="col-xl-2 col-lg-2 col-md-3 col-sm-12 col-12">
-            <div class="row d-flex justify-content-start">
-                <div id="profile-box" class="col-xl-12 col-lg-12 col-sm-12 col-12 box">
-                    <h2>{{ username }}</h2>
-                    <img id="profile" src="../static/img/profile-placeholder.jpg" alt="Profile Pic"><br>
-                    <a class="first-a" href="/editProfile/{{ request.session.user_id }}">Edit Profile</a>
-                </div>
-                <div id="about-user" class="col-xl-12 col-lg-12 col-sm-12 col-md-12 box">
-                    <h3>Joined Skillet:</h3>
-                    <hr>
-                    <p>{{ joined }}</p>
-                    <hr style="background-color: rgb(1,1,31);">
-                    <ul><h3>Diet:</h3>
-                        <hr>
-                        {% if dietlist|length == 0 %}
-                        None
-                        {% endif %}
-                        {% for diet in dietlist %}
-                        <li>{{ diet }}</li>
-                        {% endfor %}
-                    </ul>
+        <div id="content" class="container-fluid">
+            <div id="profile-wrapper" class="row justify-content-start">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2>{{ username }}</h2>
+                        </div>
+                    </div>
+                    <!--Ends Profile Name-->
+                    <div class="row">
+                        <div class="col-4">
+                            <img id="profile" src="../static/img/profile-placeholder.jpg" alt="Profile Pic">
+                        </div>
+                        <!--Ends Profile Image-->
+                        <div id="info" class="col-8">
+                            <h3>Joined Skillet:</h3>
+                            <p>{{ joined }}</p>
+                            <ul>
+                                <h3>Diet:</h3>
+                                {% if dietlist|length == 0 %}
+                                None
+                                {% endif %}
+                                {% for diet in dietlist %}
+                                <li>{{ diet }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <!--Ends Profile info-->
+                    </div>
+                    <!--Ends Profile Middle-->
+                    <div class="row">
+                        <div class="col-12">
+                            <a class="first-a" href="/editProfile/{{ request.session.user_id }}">Edit Profile</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!--Ends Profile Aside-->
-        <div class="container-fluid">
-            <div id="content" class="row justify-content-between">
+            <!--Ends Profile bar-->
+            <div class="row justify-content-around">
                 <div class="container-fluid">
-                    <div class="row justifty-content-between">
-                        <div id="pantry" class="col-12 col-sm-12 col-md-8 col-lg-5 col-xl-5 text-white">
+                    <div class="row justifty-content-around">
+                        <div id="pantry" class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-6 text-white">
                             <h2 class="display-4">MyPANTRY</h2>
                             <p class="lead">Here is a list of all your pantry items.</p>
                             <hr class="my-4">
@@ -86,7 +98,8 @@
                                                 {{products.time}} days
                                                 {% endif %}
                                             </td>
-                                            <td><a href="/reduce_in_pantry/{{ products.id }}"> -1 </a><a href="/remove_from_pantry/{{ products.id }}"> Remove </a>
+                                            <td><a href="/reduce_in_pantry/{{ products.id }}"> -1 </a><a href="/remove_from_pantry/{{ products.id }}">
+                                                    Remove </a>
                                             </td>
                                         </tr>
                                         {% endif %}
@@ -94,7 +107,7 @@
 
                                     </table>
                                 </div>
-                                <div class="pantry-box col-xl-10 col-lg-10 col-md-11 col-sm-11 col-11">
+                                <div class="pantry-box col-xl-10 col-lg-10 col-md-10 col-sm-11 col-11">
                                     <table class="row justify-content-around">
                                         <h5>Protein</h5>
                                         <tr>
@@ -119,7 +132,8 @@
                                                 {{products.time}} days
                                                 {% endif %}
                                             </td>
-                                            <td><a href="/reduce_in_pantry/{{ products.id }}"> -1 </a><a href="/remove_from_pantry/{{ products.id }}"> Remove </a>
+                                            <td><a href="/reduce_in_pantry/{{ products.id }}"> -1 </a><a href="/remove_from_pantry/{{ products.id }}">
+                                                    Remove </a>
                                             </td>
                                         </tr>
                                         {% endif %}
@@ -153,7 +167,8 @@
                                                 {{products.time}} days
                                                 {% endif %}
                                             </td>
-                                            <td><a href="/reduce_in_pantry/{{ products.id }}"> -1 </a><a href="/remove_from_pantry/{{ products.id }}"> Remove </a>
+                                            <td><a href="/reduce_in_pantry/{{ products.id }}"> -1 </a><a href="/remove_from_pantry/{{ products.id }}">
+                                                    Remove </a>
                                             </td>
                                         </tr>
                                         {% endif %}
@@ -185,7 +200,8 @@
                                                 {{products.time}} days
                                                 {% endif %}
                                             </td>
-                                            <td><a href="/reduce_in_pantry/{{ products.id }}"> -1 </a><a href="/remove_from_pantry/{{ products.id }}"> Remove </a>
+                                            <td><a href="/reduce_in_pantry/{{ products.id }}"> -1 </a><a href="/remove_from_pantry/{{ products.id }}">
+                                                    Remove </a>
                                             </td>
                                         </tr>
                                         {% endif %}
@@ -220,7 +236,8 @@
                                                 {% endif %}
                                             </td>
                                             <td>
-                                                <a href="/reduce_in_pantry/{{ products.id }}"> -1 </a><a href="/remove_from_pantry/{{ products.id }}"> Remove </a>
+                                                <a href="/reduce_in_pantry/{{ products.id }}"> -1 </a><a href="/remove_from_pantry/{{ products.id }}">
+                                                    Remove </a>
                                             </td>
                                         </tr>
                                         {% endif %}
@@ -252,7 +269,8 @@
                                                 {{products.time}} days
                                                 {% endif %}
                                             </td>
-                                            <td><a href="/reduce_in_pantry/{{ products.id }}">  -1 </a><a href="/remove_from_pantry/{{ products.id }}"> Remove </a>
+                                            <td><a href="/reduce_in_pantry/{{ products.id }}"> -1 </a><a href="/remove_from_pantry/{{ products.id }}">
+                                                    Remove </a>
                                             </td>
                                         </tr>
                                         {% endif %}
@@ -263,7 +281,7 @@
                             <br>
                             <a href="/shopping_list/{{request.session.user_id}}"><button id="shop">Go Shopping</button></a>
                         </div>
-                        <div class="shopping-list-box col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                        <div class="shopping-list-box col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
                             <h3>Grocery List</h3>
                             <table class="col-12">
                                 <tr class="head">
