@@ -1,11 +1,13 @@
 *{
-    outline: 1px solid red;
+    /*outline: 1px solid red;*/
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 
 }
-
+td{
+    padding: 3px;
+}
 body{
     background-color: rgb(133, 124, 124);
 }
@@ -28,10 +30,6 @@ div#header{
     position: relative;
     margin-top: 7%;
 }
-#main-dash{
-    margin-left: 25%;
-    margin-right:-20%;
-}
 h1{
     color: whitesmoke;
 }
@@ -52,6 +50,9 @@ span:hover{
 }
 .first-a{
     margin: 0 0 0 0;
+}
+#pantry{
+    margin-left: 20%;
 }
 table#pantry-table th{
     padding: 0 1% 0 1%;
@@ -98,6 +99,13 @@ div#pantry{
     border-radius: 10px;
     padding: 2%;
     margin-bottom: 10%;
+}
+button#shop{
+    background-color: rgb(1, 1, 31);
+    color: #e1801d;
+    padding: 2%;
+    margin: 0 0 5% 10%;
+    font-weight: 300;
 }
 #reg-wrapper{
     background-image: url(../img/spices.jpg);
@@ -188,6 +196,9 @@ footer{
     background-color: whitesmoke;
     color: black;
     text-align: center;
+    max-height: 500px;
+    margin-left: 3%;
+    font-size: 90%;
 }
 input.buy{
     background-color: rgb(25, 83, 241);
@@ -244,6 +255,11 @@ tr.head{
     }
     img#profile{
         width: 50%;
+        margin: 5% 0 5% 25%;
+    }
+    #profile-wrapper{
+        position: static;
+        margin-top: 35%;
     }
     #profile-box{
         left:0;
@@ -260,6 +276,9 @@ tr.head{
     input[type='checkbox']{
         padding: 7px;
     }
+    #pantry{
+        margin: 0;
+    }
 }
 /*Small devices (landscape phones, 576px and up)*/
 @media (min-width: 576px) {
@@ -275,6 +294,10 @@ tr.head{
         text-align: center;
         margin: 13% 0 0 0;
         font-size: 90%;
+    }
+    #content{
+        position: relative;
+        margin-top: 7%;
     }
 }
 /*Medium devices (tablets, 768px and up)*/
@@ -299,6 +322,10 @@ tr.head{
     }
     #profile-box h2{
         font-size: 300%;
+    }
+    #content{
+        position: relative;
+        margin-top: 15%;
     }
 
 }

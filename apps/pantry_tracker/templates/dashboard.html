@@ -27,252 +27,249 @@
             </div>
         </div>
         <!--Ends Header-->
-        <div id="content" class="d-flex justify-content-between">
-            <div id="profile-wrapper" class="col-xl-2 col-lg-2 col-md-2 col-sm-12 col-12">
-                <div class="row d-flex justify-content-start">
-                    <div id="profile-box" class="col-xl-12 col-lg-23 col-sm-12 box">
-                        <h2>{{ username }}</h2>
-                        <img id="profile" src="../static/img/profile-placeholder.jpg" alt="Profile Pic"><br>
-                        <a class="first-a" href="/editProfile/{{ request.session.user_id }}">Edit Profile</a>
-                    </div>
-                    <div id="about-user" class="col-xl-12 col-lg-12 col-sm-12 col-md-12 box">
-                        <p>Joined Skillet: {{ joined }}</p>
-                        <ul>Diet
-                            <hr>
-                            {% if dietlist|length == 0 %}
-                            None.
-                            {% endif %}
-                            {% for diet in dietlist %}
-                            <li>{{ diet }}</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
+        <div id="profile-wrapper" class="col-xl-2 col-lg-2 col-md-3 col-sm-12 col-12">
+            <div class="row d-flex justify-content-start">
+                <div id="profile-box" class="col-xl-12 col-lg-12 col-sm-12 col-12 box">
+                    <h2>{{ username }}</h2>
+                    <img id="profile" src="../static/img/profile-placeholder.jpg" alt="Profile Pic"><br>
+                    <a class="first-a" href="/editProfile/{{ request.session.user_id }}">Edit Profile</a>
+                </div>
+                <div id="about-user" class="col-xl-12 col-lg-12 col-sm-12 col-md-12 box">
+                    <h3>Joined Skillet:</h3>
+                    <hr>
+                    <p>{{ joined }}</p>
+                    <hr style="background-color: rgb(1,1,31);">
+                    <ul><h3>Diet:</h3>
+                        <hr>
+                        {% if dietlist|length == 0 %}
+                        None
+                        {% endif %}
+                        {% for diet in dietlist %}
+                        <li>{{ diet }}</li>
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
-            <!--Ends Profile Aside-->
-            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-12">
-                <div id="main-dash" class="row justify-content-start">
-                    <div id="pantry" class="jumbotron jumbotron-fluid">
+        </div>
+        <!--Ends Profile Aside-->
+        <div class="container-fluid">
+            <div id="content" class="row justify-content-between">
+                <div class="container-fluid">
+                    <div class="row justifty-content-between">
+                        <div id="pantry" class="col-12 col-sm-12 col-md-8 col-lg-5 col-xl-5 text-white">
+                            <h2 class="display-4">MyPANTRY</h2>
+                            <p class="lead">Here is a list of all your pantry items.</p>
+                            <hr class="my-4">
+                            <div class="row justify-content-around">
+                                <div class="pantry-box col-xl-10 col-lg-10 col-md-10 col-sm-11 col-11">
+                                    <table class="row justify-content-around">
+                                        <h5>Produce</h5>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Qty.</th>
+                                            <th>Exp.</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        {% for products in pantrylist %}
+                                        <tr>
+                                            {% if products.category == "Produce" %}
+                                            <td>{{ products.name }}</td>
+                                            <td>{{ products.quantity }}</td>
+                                            <td>
+                                                {% if products.time == 0 %}
+                                                None
+                                                {% elif products.time == -1 %}
+                                                SPOILED!!!
+                                                {% elif products.time == 1 %}
+                                                About to spoil!
+                                                {% else %}
+                                                {{products.time}} days
+                                                {% endif %}
+                                            </td>
+                                            <td><a href="/reduce_in_pantry/{{ products.id }}"> -1 </a><a href="/remove_from_pantry/{{ products.id }}"> Remove </a>
+                                            </td>
+                                        </tr>
+                                        {% endif %}
+                                        {% endfor %}
 
-                        <div id="pantry-wrapper" class="container col-xs-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 text-white">
-
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                <h2 class="display-4">PANTRY</h2>
-                                <p class="lead">Here is a list of all your pantry items.</p>
-                                <hr class="my-4">
-                                <div class="row justify-content-around">
-                                    <div class="pantry-box col-xl-10 col-lg-10 col-md-12 col-sm-12 col-12">
-                                        <table class="row justify-content-around">
-                                            <h5>Produce</h5>
-                                            <tr>
-                                                <th>Item</th>
-                                                <th>Qty.</th>
-                                                <th>Exp.</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                            {% for products in pantrylist %}
-                                            <tr>
-                                                {% if products.category == "Produce" %}
-                                                <td>{{ products.name }}</td>
-                                                <td>{{ products.quantity }}</td>
-                                                <td>
-                                                    {% if products.time == 0 %}
-                                                    Indefinite
-                                                    {% elif products.time == -1 %}
-                                                    SPOILED!!!
-                                                    {% elif products.time == 1 %}
-                                                    About to spoil!
-                                                    {% else %}
-                                                    {{products.time}} days
-                                                    {% endif %}
-                                                </td>
-                                                <td><a href="/reduce_in_pantry/{{ products.id }}">-</a><a href="/remove_from_pantry/{{ products.id }}">Remove</a>
-                                                </td>
-                                            </tr>
-                                            {% endif %}
-                                            {% endfor %}
-
-                                        </table>
-                                    </div>
-                                    <div class="pantry-box col-xl-10 col-lg-10 col-md-12 col-sm-12 col-12">
-                                        <table class="row justify-content-around">
-                                            <h5>Protein</h5>
-                                            <tr>
-                                                <th>Item</th>
-                                                <th>Qty.</th>
-                                                <th>Exp.</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                            {% for products in pantrylist %}
-                                            <tr>
-                                                {% if products.category == "Protein" %}
-                                                <td>{{ products.name }}</td>
-                                                <td>{{ products.quantity }}</td>
-                                                <td>
-                                                    {% if products.time == 0 %}
-                                                    Indefinite
-                                                    {% elif products.time == -1 %}
-                                                    SPOILED!!!
-                                                    {% elif products.time == 1 %}
-                                                    About to spoil!
-                                                    {% else %}
-                                                    {{products.time}} days
-                                                    {% endif %}
-                                                </td>
-                                                <td><a href="/reduce_in_pantry/{{ products.id }}">-</a><a href="/remove_from_pantry/{{ products.id }}">Remove</a>
-                                                </td>
-                                            </tr>
-                                            {% endif %}
-                                            {% endfor %}
-                                        </table>
-                                    </div>
+                                    </table>
                                 </div>
-                                <div class="row justify-content-around">
-                                    <div class="pantry-box col-xl-10 col-lg-10 col-md-12 col-sm-12 col-12">
-                                        <table class="row justify-content-around">
-                                            <h5>Dairy</h5>
-                                            <tr>
-                                                <th>Item</th>
-                                                <th>Qty.</th>
-                                                <th>Exp.</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                            {% for products in pantrylist %}
-                                            <tr>
-                                                {% if products.category == "Dairy" %}
-                                                <td>{{ products.name }}</td>
-                                                <td>{{ products.quantity }}</td>
-                                                <td>
-                                                    {% if products.time == 0 %}
-                                                    Indefinite
-                                                    {% elif products.time == -1 %}
-                                                    SPOILED!!!
-                                                    {% elif products.time == 1 %}
-                                                    About to spoil!
-                                                    {% else %}
-                                                    {{products.time}} days
-                                                    {% endif %}
-                                                </td>
-                                                <td><a href="/reduce_in_pantry/{{ products.id }}">-</a><a href="/remove_from_pantry/{{ products.id }}">Remove</a>
-                                                </td>
-                                            </tr>
-                                            {% endif %}
-                                            {% endfor %}
-                                        </table>
-                                    </div>
-                                    <div class="pantry-box col-xl-10 col-lg-10 col-md-12 col-sm-12 col-12">
-                                        <table class="row justify-content-around">
-                                            <h5>Grains</h5>
-                                            <tr>
-                                                <th>Item</th>
-                                                <th>Qty.</th>
-                                                <th>Exp.</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                            {% for products in pantrylist %}
-                                            <tr>
-                                                {% if products.category == "Grains" %}
-                                                <td>{{ products.name }}</td>
-                                                <td>{{ products.quantity }}</td>
-                                                <td>
-                                                    {% if products.time == 0 %}
-                                                    Indefinite
-                                                    {% elif products.time == -1 %}
-                                                    SPOILED!!!
-                                                    {% elif products.time == 1 %}
-                                                    About to spoil!
-                                                    {% else %}
-                                                    {{products.time}} days
-                                                    {% endif %}
-                                                </td>
-                                                <td><a href="/reduce_in_pantry/{{ products.id }}">-</a><a href="/remove_from_pantry/{{ products.id }}">Remove</a>
-                                                </td>
-                                            </tr>
-                                            {% endif %}
-                                            {% endfor %}
-                                        </table>
-                                    </div>
+                                <div class="pantry-box col-xl-10 col-lg-10 col-md-11 col-sm-11 col-11">
+                                    <table class="row justify-content-around">
+                                        <h5>Protein</h5>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Qty.</th>
+                                            <th>Exp.</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        {% for products in pantrylist %}
+                                        <tr>
+                                            {% if products.category == "Protein" %}
+                                            <td>{{ products.name }}</td>
+                                            <td>{{ products.quantity }}</td>
+                                            <td>
+                                                {% if products.time == 0 %}
+                                                None
+                                                {% elif products.time == -1 %}
+                                                SPOILED!!!
+                                                {% elif products.time == 1 %}
+                                                About to spoil!
+                                                {% else %}
+                                                {{products.time}} days
+                                                {% endif %}
+                                            </td>
+                                            <td><a href="/reduce_in_pantry/{{ products.id }}"> -1 </a><a href="/remove_from_pantry/{{ products.id }}"> Remove </a>
+                                            </td>
+                                        </tr>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </table>
                                 </div>
-                                <div class="row justify-content-around">
-                                    <div class="pantry-box col-xl-10 col-lg-10 col-md-12 col-sm-12 col-12">
-                                        <table class="row justify-content-around">
-                                            <h5>Spices/Herbs</h5>
-                                            <tr>
-                                                <th>Item</th>
-                                                <th>Qty.</th>
-                                                <th>Exp.</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                            {% for products in pantrylist %}
-                                            <tr>
-                                                {% if products.category == "Spices/Herbs" %}
-                                                <td>{{ products.name }}</td>
-                                                <td>{{ products.quantity }}</td>
-                                                <td>
-                                                    {% if products.time == 0 %}
-                                                    Indefinite
-                                                    {% elif products.time == -1 %}
-                                                    SPOILED!!!
-                                                    {% elif products.time == 1 %}
-                                                    About to spoil!
-                                                    {% else %}
-                                                    {{products.time}} days
-                                                    {% endif %}
-                                                </td>
-                                                <td>
-                                                    <a href="/reduce_in_pantry/{{ products.id }}">-</a><a href="/remove_from_pantry/{{ products.id }}">Remove</a>
-                                                </td>
-                                            </tr>
-                                            {% endif %}
-                                            {% endfor %}
-                                        </table>
-                                    </div>
-                                    <div class="pantry-box col-xl-10 col-lg-10 col-md-12 col-sm-12 col-12">
-                                        <table class="row justify-content-around">
-                                            <h5>Non-perishable</h5>
-                                            <tr>
-                                                <th>Item</th>
-                                                <th>Qty.</th>
-                                                <th>Exp.</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                            {% for products in pantrylist %}
-                                            <tr>
-                                                {% if products.category == "Non-Perishable" %}
-                                                <td>{{ products.name }}</td>
-                                                <td>{{ products.quantity }}</td>
-                                                <td>
-                                                    {% if products.time == 0 %}
-                                                    Indefinite
-                                                    {% elif products.time == -1 %}
-                                                    SPOILED!!!
-                                                    {% elif products.time == 1 %}
-                                                    About to spoil!
-                                                    {% else %}
-                                                    {{products.time}} days
-                                                    {% endif %}
-                                                </td>
-                                                <td><a href="/reduce_in_pantry/{{ products.id }}">-</a><a href="/remove_from_pantry/{{ products.id }}">Remove</a>
-                                                </td>
-                                            </tr>
-                                            {% endif %}
-                                            {% endfor %}
-                                        </table>
-                                    </div>
-                                </div>
-                                <a href="/shopping_list/{{request.session.user_id}}">Go Shopping</a>
                             </div>
-
+                            <div class="row justify-content-around">
+                                <div class="pantry-box col-xl-10 col-lg-10 col-md-10 col-sm-11 col-11">
+                                    <table class="row justify-content-around">
+                                        <h5>Dairy</h5>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Qty.</th>
+                                            <th>Exp.</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        {% for products in pantrylist %}
+                                        <tr>
+                                            {% if products.category == "Dairy" %}
+                                            <td>{{ products.name }}</td>
+                                            <td>{{ products.quantity }}</td>
+                                            <td>
+                                                {% if products.time == 0 %}
+                                                None
+                                                {% elif products.time == -1 %}
+                                                SPOILED!!!
+                                                {% elif products.time == 1 %}
+                                                About to spoil!
+                                                {% else %}
+                                                {{products.time}} days
+                                                {% endif %}
+                                            </td>
+                                            <td><a href="/reduce_in_pantry/{{ products.id }}"> -1 </a><a href="/remove_from_pantry/{{ products.id }}"> Remove </a>
+                                            </td>
+                                        </tr>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                                <div class="pantry-box col-xl-10 col-lg-10 col-md-10 col-sm-11 col-11">
+                                    <table class="row justify-content-around">
+                                        <h5>Grains</h5>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Qty.</th>
+                                            <th>Exp.</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        {% for products in pantrylist %}
+                                        <tr>
+                                            {% if products.category == "Grains" %}
+                                            <td>{{ products.name }}</td>
+                                            <td>{{ products.quantity }}</td>
+                                            <td>
+                                                {% if products.time == 0 %}
+                                                None
+                                                {% elif products.time == -1 %}
+                                                SPOILED!!!
+                                                {% elif products.time == 1 %}
+                                                About to spoil!
+                                                {% else %}
+                                                {{products.time}} days
+                                                {% endif %}
+                                            </td>
+                                            <td><a href="/reduce_in_pantry/{{ products.id }}"> -1 </a><a href="/remove_from_pantry/{{ products.id }}"> Remove </a>
+                                            </td>
+                                        </tr>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row justify-content-around">
+                                <div class="pantry-box col-xl-10 col-lg-10 col-md-10 col-sm-11 col-11">
+                                    <table class="row justify-content-around">
+                                        <h5>Spices/Herbs</h5>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Qty.</th>
+                                            <th>Exp.</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        {% for products in pantrylist %}
+                                        <tr>
+                                            {% if products.category == "Spices/Herbs" %}
+                                            <td>{{ products.name }}</td>
+                                            <td>{{ products.quantity }}</td>
+                                            <td>
+                                                {% if products.time == 0 %}
+                                                None
+                                                {% elif products.time == -1 %}
+                                                SPOILED!!!
+                                                {% elif products.time == 1 %}
+                                                About to spoil!
+                                                {% else %}
+                                                {{products.time}} days
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <a href="/reduce_in_pantry/{{ products.id }}"> -1 </a><a href="/remove_from_pantry/{{ products.id }}"> Remove </a>
+                                            </td>
+                                        </tr>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                                <div class="pantry-box col-xl-10 col-lg-10 col-md-10 col-sm-11 col-11">
+                                    <table class="row justify-content-around">
+                                        <h5>Non-perishable</h5>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Qty.</th>
+                                            <th>Exp.</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        {% for products in pantrylist %}
+                                        <tr>
+                                            {% if products.category == "Non-Perishable" %}
+                                            <td>{{ products.name }}</td>
+                                            <td>{{ products.quantity }}</td>
+                                            <td>
+                                                {% if products.time == 0 %}
+                                                None
+                                                {% elif products.time == -1 %}
+                                                SPOILED!!!
+                                                {% elif products.time == 1 %}
+                                                About to spoil!
+                                                {% else %}
+                                                {{products.time}} days
+                                                {% endif %}
+                                            </td>
+                                            <td><a href="/reduce_in_pantry/{{ products.id }}">  -1 </a><a href="/remove_from_pantry/{{ products.id }}"> Remove </a>
+                                            </td>
+                                        </tr>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
+                            <br>
+                            <a href="/shopping_list/{{request.session.user_id}}"><button id="shop">Go Shopping</button></a>
                         </div>
-                    </div>
-                    <!-- /.container -->
-                    <div class="shopping-list-box col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                        <div class="shopping-list-box col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                             <h3>Grocery List</h3>
-                            <table class="shopping-list-box col-12">
+                            <table class="col-12">
                                 <tr class="head">
                                     <th>Remove</th>
                                     <th>Product</th>
-                                    <th>Quantity</th>
+                                    <th>Qty.</th>
                                     <th>Bought</th>
                                 </tr>
                                 {% for product in grocerylist %}
@@ -291,13 +288,14 @@
                                     </td>
                                 </tr>
                                 {% endfor %}
-        
                             </table>
-        
                         </div>
+                        <!--Ends Shopping List-->
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     </div>

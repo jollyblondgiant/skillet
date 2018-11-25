@@ -29,7 +29,7 @@ class Validator(models.Manager):
         if len(postData['password'])==False:
             errors['password_null'] = "'Password' field is required"
         elif len(postData['password']) < 8:
-            errors['password_len'] = "Choose a password at elast 8 characters in length"
+            errors['password_len'] = "Choose a password at least 8 characters in length"
         if 'password_confirm' not in postData:
             errors['password_confirm_null'] = "confirm password"
         elif postData['password'] != postData['password_confirm']:
@@ -59,11 +59,11 @@ class Validator(models.Manager):
         if len(postData['first_name'])==False:
             errors['first_name_null'] = "'First Name' field is required"
         elif len(postData['first_name']) < 3:
-            errors['first_name_len'] = 'Name must be 3 letters or more' 
+            errors['first_name_len'] = 'First name must be 3 letters or more' 
         if len(postData['last_name'])==False:
             errors['last_name_null'] = "'Last Name' field is required"
         elif len(postData['last_name']) < 3:
-            errors['last_name_len'] = 'Name must be 3 letters or more'
+            errors['last_name_len'] = 'Last name must be 3 letters or more'
         elif postData['last_name'].isalpha() == False or postData['first_name'].isalpha() == False:
             errors['name_alpha'] = "'Name' fields can only contain letters"
         if len(postData['email'])==False:
