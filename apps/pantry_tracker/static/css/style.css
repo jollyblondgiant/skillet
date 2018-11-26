@@ -1,5 +1,5 @@
 *{
-    /*outline: 1px solid red;*/
+    /*outline: 1px solid red;*/ 
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -60,7 +60,9 @@ p#diet{
 p#diet span{
     color: whitesmoke;
 }
-
+.pantry-img{
+    width: 50%;
+}
 #pantry{
     margin-left: 20%;
 }
@@ -261,6 +263,20 @@ tr.head{
     overflow-y: scroll;
     display: block;
 }
+.toss{
+    background-image: url('../img/btn-toss.png');
+    background-size: cover;
+    background-position: center;
+    padding: 10%;
+
+}
+.take-out{
+    background-image: url('../img/btn-take_out.png');
+    background-size: cover;
+    background-position: center;
+    padding: 10%;
+
+}
 /*Small devices (portrait phones, 400 and up)*/
 @media (min-width: 320px){
     img#logo{
@@ -287,7 +303,7 @@ tr.head{
 
     #info{
         font-size: 175%;
-        margin-left: 5%;
+        margin-left: 10%;
     }
     #info ul{
         font-size: 100%;
@@ -297,7 +313,7 @@ tr.head{
     }
     img#profile{
         width: 150%;
-        margin: 0 0 0 -15%;
+        margin: 0 0 0 15%;
     }
     .reroute{
         margin-left: 60%;
@@ -308,6 +324,9 @@ tr.head{
     }
     #pantry{
         margin: 0;
+    }
+    .first-a{
+        margin-left: 50%;
     }
 }
 /*Small devices (landscape phones, 576px and up)*/
@@ -327,19 +346,15 @@ tr.head{
     }
     #profile-wrapper h2{
         text-align: left;
+        margin-left: 4%;
     }
     img#profile{
-        width: 70%;
-        margin: 0 0 0 5%;
+        width: 100%;
+        margin: 0 0 0 3%;
     }
     #info{
         font-size: 175%;
-    }
-    #info ul{
-        font-size: 100%;
-    }
-    #info ul li{
-        font-size: 75%;
+        margin: 0;
     }
     .first-a{
         margin-left: 5%;
@@ -377,12 +392,14 @@ tr.head{
     #info ul li{
         font-size: 75%;
     }
-
     .shopping-list-box{
         font-size: 200%;
         margin-left:0;
     }
     .pantry-box{
+        font-size: 175%;
+    }
+    h5{
         font-size: 175%;
     }
 

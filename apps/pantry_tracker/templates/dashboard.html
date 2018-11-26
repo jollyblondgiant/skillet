@@ -40,7 +40,7 @@
                         <img id="profile" src="../static/img/profile-placeholder.jpg" alt="Profile Pic">
                     </div>
                     <!--Ends Profile Image-->
-                    <div id="info" class="col-8">
+                    <div id="info" class="col-6 col-sm-6 col-md-8">
                         <h3>Joined Skillet:</h3>
                         <p>{{ joined }}</p>
 
@@ -50,7 +50,7 @@
                         {% endif %}
                         <p id="diet">
                             {% for diet in dietlist %}
-                            |<span> {{ diet }} </span>|
+                            <span><span>|</span> {{ diet }} <span>|</span></span>
                             {% endfor %}
                         </p>
                     </div>
@@ -80,7 +80,7 @@
                                         <th>Item</th>
                                         <th>Qty.</th>
                                         <th>Exp.</th>
-                                        <th>Actions</th>
+                                        <th>Edit</th>
                                     </tr>
                                     {% for products in pantrylist %}
                                     <tr>
@@ -99,8 +99,8 @@
                                             {% endif %}
                                         </td>
                                         <td>
-                                                <a href="/reduce_in_pantry/{{ products.id }}"><button> -1 </button></a>
-                                                <a href="/remove_from_pantry/{{ products.id }}"><button> Remove </button></a>
+                                                <a href="/reduce_in_pantry/{{ products.id }}"><button class="take-out"></button></a>
+                                                <a href="/remove_from_pantry/{{ products.id }}"><button class="toss"></button></a>
                                         </td>
                                     </tr>
                                     {% endif %}
@@ -115,7 +115,7 @@
                                         <th>Item</th>
                                         <th>Qty.</th>
                                         <th>Exp.</th>
-                                        <th>Actions</th>
+                                        <th>Edit</th>
                                     </tr>
                                     {% for products in pantrylist %}
                                     <tr>
@@ -134,8 +134,8 @@
                                             {% endif %}
                                         </td>
                                         <td>
-                                                <a href="/reduce_in_pantry/{{ products.id }}"><button> -1 </button></a>
-                                                <a href="/remove_from_pantry/{{ products.id }}"><button> Remove </button></a>
+                                                <a href="/reduce_in_pantry/{{ products.id }}"><button class="take-out"></button></a>
+                                                <a href="/remove_from_pantry/{{ products.id }}"><button class="toss"></button></a>
                                         </td>
                                     </tr>
                                     {% endif %}
@@ -151,7 +151,7 @@
                                         <th>Item</th>
                                         <th>Qty.</th>
                                         <th>Exp.</th>
-                                        <th>Actions</th>
+                                        <th>Edit</th>
                                     </tr>
                                     {% for products in pantrylist %}
                                     <tr>
@@ -170,8 +170,8 @@
                                             {% endif %}
                                         </td>
                                         <td>
-                                                <a href="/reduce_in_pantry/{{ products.id }}"><button> -1 </button></a>
-                                                <a href="/remove_from_pantry/{{ products.id }}"><button> Remove </button></a>
+                                                <a href="/reduce_in_pantry/{{ products.id }}"><button class="take-out"></button></a>
+                                                <a href="/remove_from_pantry/{{ products.id }}"><button class="toss"></button></a>
                                         </td>
                                     </tr>
                                     {% endif %}
@@ -185,7 +185,7 @@
                                         <th>Item</th>
                                         <th>Qty.</th>
                                         <th>Exp.</th>
-                                        <th>Actions</th>
+                                        <th>Edit</th>
                                     </tr>
                                     {% for products in pantrylist %}
                                     <tr>
@@ -204,8 +204,8 @@
                                             {% endif %}
                                         </td>
                                         <td>
-                                                <a href="/reduce_in_pantry/{{ products.id }}"><button> -1 </button></a>
-                                                <a href="/remove_from_pantry/{{ products.id }}"><button> Remove </button></a>
+                                                <a href="/reduce_in_pantry/{{ products.id }}"><button class="take-out"></button></a>
+                                                <a href="/remove_from_pantry/{{ products.id }}"><button class="toss"></button></a>
                                         </td>
                                     </tr>
                                     {% endif %}
@@ -221,7 +221,7 @@
                                         <th>Item</th>
                                         <th>Qty.</th>
                                         <th>Exp.</th>
-                                        <th>Actions</th>
+                                        <th>Edit</th>
                                     </tr>
                                     {% for products in pantrylist %}
                                     <tr>
@@ -240,8 +240,8 @@
                                             {% endif %}
                                         </td>
                                         <td>
-                                            <a href="/reduce_in_pantry/{{ products.id }}"><button> -1 </button></a>
-                                            <a href="/remove_from_pantry/{{ products.id }}"><button> Remove </button></a>
+                                            <a href="/reduce_in_pantry/{{ products.id }}"><button class="take-out"></button></a>
+                                            <a href="/remove_from_pantry/{{ products.id }}"><button class="toss"></button></a>
                                         </td>
                                     </tr>
                                     {% endif %}
@@ -255,7 +255,7 @@
                                         <th>Item</th>
                                         <th>Qty.</th>
                                         <th>Exp.</th>
-                                        <th>Actions</th>
+                                        <th>Edit</th>
                                     </tr>
                                     {% for products in pantrylist %}
                                     <tr>
@@ -274,8 +274,8 @@
                                             {% endif %}
                                         </td>
                                         <td>
-                                                <a href="/reduce_in_pantry/{{ products.id }}"><button class="pantry-button"> -1 </button></a>
-                                                <a href="/remove_from_pantry/{{ products.id }}"><button class="pantry-button"> Remove </button></a>
+                                                <a href="/reduce_in_pantry/{{ products.id }}"><button class="take-out"></button></a>
+                                                <a href="/remove_from_pantry/{{ products.id }}"><button class="toss"></button></a>
                                         </td>
                                     </tr>
                                     {% endif %}
