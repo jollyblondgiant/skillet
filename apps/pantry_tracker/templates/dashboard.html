@@ -19,10 +19,10 @@
             <div class="col-lg-3 col-md-3 col-sm-3 col-2">
                 <img id="logo" class="img-thumbnail" src="../static/img/logo.png" alt="Skillet Logo">
             </div>
-            <div class="col-8 col-lg-8 col-md-8 col-sm-6 col-xl-2">
+            <div class="col-7 col-lg-7 col-md-7 col-sm-6 col-xl-2">
                 <h1 id="skillet"><span>S</span><span id="turn">K</span><span>I</span><span>L</span><span>L</span><span>E</span><span>T</span></h1>
             </div>
-            <div class="col-12 col-sm-2 col-md-2 col-xl-2" id="landing-login">
+            <div id="landing-login">
                 <a href="/logout">Sign Out</a>
             </div>
         </div>
@@ -30,38 +30,28 @@
         <div id="profile-wrapper" class="row justify-content-start">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-12">
-                        <h2>{{ username }}</h2>
-                    </div>
-                </div>
-                <!--Ends Profile Name-->
-                <div class="row">
-                    <div class="col-4">
-                        <img id="profile" src="../static/img/profile-placeholder.jpg" alt="Profile Pic">
+                    <div class="col-3 col-lg-4">
+                            <a class="first-a" href="/editProfile/{{ request.session.user_id }}">
+                                <img id="profile" src="../static/img/profile-placeholder.jpg" alt="Edit Profile">
+                            </a>
                     </div>
                     <!--Ends Profile Image-->
                     <div id="info" class="col-6 col-sm-6 col-md-8">
-                        <h3>Joined Skillet:</h3>
-                        <p>{{ joined }}</p>
+                        <h2>{{ username }}</h2>
+                        <h3>Joined Skillet:
+                            <p>{{ joined }}</p></h3>
 
-                        <h3>Diet:</h3>
-                        {% if dietlist|length == 0 %}
-                        None
-                        {% endif %}
-                        <p id="diet">
+                        <h3>Diets:
+                            {% if dietlist|length == 0 %}
+                            None
+                            {% endif %}
                             {% for diet in dietlist %}
                             <span><span>|</span> {{ diet }} <span>|</span></span>
-                            {% endfor %}
-                        </p>
+                            {% endfor %} </h3>
                     </div>
                     <!--Ends Profile info-->
                 </div>
                 <!--Ends Profile Middle-->
-                <div class="row">
-                    <div class="col-12">
-                        <a class="first-a" href="/editProfile/{{ request.session.user_id }}">Edit Profile</a>
-                    </div>
-                </div>
             </div>
         </div>
         <!--Ends Profile bar-->
@@ -71,7 +61,7 @@
                     <div id="pantry" class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-7 text-white">
                         <h2 class="display-4">MyPANTRY</h2>
                         <p class="lead">Here is a list of all your pantry items.</p>
-                        <hr class="my-4">
+                        <!-- <hr class="my-4"> -->
                         <div class="row justify-content-around">
                             <div class="pantry-box col-xl-10 col-lg-10 col-md-10 col-sm-11 col-11">
                                 <table class="col-12">
@@ -89,7 +79,7 @@
                                         <td>{{ products.quantity }}</td>
                                         <td>
                                             {% if products.time == 0 %}
-                                            None
+                                            Non-perishable
                                             {% elif products.time == -1 %}
                                             SPOILED!!!
                                             {% elif products.time == 1 %}
@@ -99,8 +89,8 @@
                                             {% endif %}
                                         </td>
                                         <td>
-                                                <a href="/reduce_in_pantry/{{ products.id }}"><button class="take-out"></button></a>
-                                                <a href="/remove_from_pantry/{{ products.id }}"><button class="toss"></button></a>
+                                            <a href="/reduce_in_pantry/{{ products.id }}"><button class="take-out"></button></a>
+                                            <a href="/remove_from_pantry/{{ products.id }}"><button class="toss"></button></a>
                                         </td>
                                     </tr>
                                     {% endif %}
@@ -124,7 +114,7 @@
                                         <td>{{ products.quantity }}</td>
                                         <td>
                                             {% if products.time == 0 %}
-                                            None
+                                            Non-perishable
                                             {% elif products.time == -1 %}
                                             SPOILED!!!
                                             {% elif products.time == 1 %}
@@ -134,8 +124,8 @@
                                             {% endif %}
                                         </td>
                                         <td>
-                                                <a href="/reduce_in_pantry/{{ products.id }}"><button class="take-out"></button></a>
-                                                <a href="/remove_from_pantry/{{ products.id }}"><button class="toss"></button></a>
+                                            <a href="/reduce_in_pantry/{{ products.id }}"><button class="take-out"></button></a>
+                                            <a href="/remove_from_pantry/{{ products.id }}"><button class="toss"></button></a>
                                         </td>
                                     </tr>
                                     {% endif %}
@@ -160,7 +150,7 @@
                                         <td>{{ products.quantity }}</td>
                                         <td>
                                             {% if products.time == 0 %}
-                                            None
+                                            Non-perishable
                                             {% elif products.time == -1 %}
                                             SPOILED!!!
                                             {% elif products.time == 1 %}
@@ -170,8 +160,8 @@
                                             {% endif %}
                                         </td>
                                         <td>
-                                                <a href="/reduce_in_pantry/{{ products.id }}"><button class="take-out"></button></a>
-                                                <a href="/remove_from_pantry/{{ products.id }}"><button class="toss"></button></a>
+                                            <a href="/reduce_in_pantry/{{ products.id }}"><button class="take-out"></button></a>
+                                            <a href="/remove_from_pantry/{{ products.id }}"><button class="toss"></button></a>
                                         </td>
                                     </tr>
                                     {% endif %}
@@ -194,7 +184,7 @@
                                         <td>{{ products.quantity }}</td>
                                         <td>
                                             {% if products.time == 0 %}
-                                            None
+                                            Non-perishable
                                             {% elif products.time == -1 %}
                                             SPOILED!!!
                                             {% elif products.time == 1 %}
@@ -204,8 +194,8 @@
                                             {% endif %}
                                         </td>
                                         <td>
-                                                <a href="/reduce_in_pantry/{{ products.id }}"><button class="take-out"></button></a>
-                                                <a href="/remove_from_pantry/{{ products.id }}"><button class="toss"></button></a>
+                                            <a href="/reduce_in_pantry/{{ products.id }}"><button class="take-out"></button></a>
+                                            <a href="/remove_from_pantry/{{ products.id }}"><button class="toss"></button></a>
                                         </td>
                                     </tr>
                                     {% endif %}
@@ -230,7 +220,7 @@
                                         <td>{{ products.quantity }}</td>
                                         <td>
                                             {% if products.time == 0 %}
-                                            None
+                                            Non-perishable
                                             {% elif products.time == -1 %}
                                             SPOILED!!!
                                             {% elif products.time == 1 %}
@@ -264,7 +254,7 @@
                                         <td>{{ products.quantity }}</td>
                                         <td>
                                             {% if products.time == 0 %}
-                                            None
+                                            Non-perishable
                                             {% elif products.time == -1 %}
                                             SPOILED!!!
                                             {% elif products.time == 1 %}
@@ -274,8 +264,8 @@
                                             {% endif %}
                                         </td>
                                         <td>
-                                                <a href="/reduce_in_pantry/{{ products.id }}"><button class="take-out"></button></a>
-                                                <a href="/remove_from_pantry/{{ products.id }}"><button class="toss"></button></a>
+                                            <a href="/reduce_in_pantry/{{ products.id }}"><button class="take-out"></button></a>
+                                            <a href="/remove_from_pantry/{{ products.id }}"><button class="toss"></button></a>
                                         </td>
                                     </tr>
                                     {% endif %}
@@ -284,10 +274,10 @@
                             </div>
                         </div>
                         <br>
-                        <a href="/shopping_list/{{request.session.user_id}}"><button id="shop">Go Shopping</button></a>
                     </div>
                     <div class="shopping-list-box col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
                         <h3>Grocery List</h3>
+                        <a href="/shopping_list/{{request.session.user_id}}"><button id="shop">Go Shopping</button></a>
                         <table class="col-12">
                             <tr class="head">
                                 <th>Remove</th>

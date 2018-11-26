@@ -112,7 +112,6 @@ class Product(models.Model):
 class User(models.Model):
     # diet = models.CharField(max_length=255, default = True)
     first_name = models.CharField(max_length=255)
-    access_level = models.PositiveSmallIntegerField(default = 1)
     last_name = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
     password = models.CharField(max_length=255)

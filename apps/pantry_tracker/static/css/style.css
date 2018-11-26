@@ -5,6 +5,18 @@
     box-sizing: border-box;
 
 }
+
+.landing-content * {
+    text-align: center;
+}
+
+.landing-content a {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 30%;
+}
+
 td{
     padding: 3px;
 }
@@ -12,7 +24,9 @@ body{
     background-color: rgb(133, 124, 124);
 }
 body.internal{
-    background-image: url(../img/pantry.png)
+    background-color: transparent;
+    background-image: url(../img/pantry.png);
+    border: none;
 }
 .img-thumbnail {
     background-color: rgb(1, 1, 31);
@@ -47,13 +61,40 @@ h1 span#turn:hover{
 h1 span:hover{
     color: #e1801d;
 }
-.first-a{
-    margin: 0 0 0 0;
-    color: whitesmoke;
-}
+
 #main-dash{
-    margin-top: 5%;
+    margin-top: 1%;
 }
+
+#header * {
+    margin-top: auto;
+    margin-bottom: auto;
+    vertical-align: middle;
+}
+
+#header div:nth-child(2){
+    max-width: 50%;
+    margin-left: 10px;
+}
+
+#header #landing-login {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: 2%;
+    border: blue 1px solid;
+    padding: 5px;
+    text-align: center;
+}
+
+#header #logo {
+    margin: 10px 10px 0 20%;
+}
+#landing-login a {
+    padding: 20px;
+    text-decoration: none;
+}
+
 p#diet{
     color: #e1801d;
 }
@@ -65,6 +106,9 @@ p#diet span{
 }
 #pantry{
     margin-left: 20%;
+}
+#pantry h2 {
+    text-align: center;
 }
 table#pantry-table th{
     padding: 0 1% 0 1%;
@@ -116,8 +160,9 @@ button#shop{
     background-color: rgb(1, 1, 31);
     color: #e1801d;
     padding: 2%;
-    margin: 0 0 5% 10%;
     font-weight: 300;
+    font-size: 120%;
+    margin-bottom: 10px;
 }
 #reg-wrapper{
     background-image: url(../img/spices.jpg);
@@ -143,16 +188,25 @@ button#shop{
 }
 .shop-decr{
     background-image: url('../img/btn-descrease.png');
-    background-size: cover;
-    background-position: center;
-    padding: 20%;
 }
 .shop-incr{
     background-image: url('../img/btn-increase.png');
+}
+
+.shop-decr, .shop-incr {
     background-size: contain;
     background-position: center;
+    background-color: transparent;
     padding: 20%;
+    border: none;
+    height: 50px;
+    width: 50px;
 }
+
+.shopping-list-box table tr td, .shopping-list-box table tr th {
+    font-size: 140%;
+}
+
 div#footer{
     background-color: rgb(1, 1, 31);
 }
@@ -165,8 +219,8 @@ footer{
 #profile{
     border: 5px solid black;
     border-radius: 50%;
-    margin: -1% 1% 0 30%;
 }
+
 #profile-box{
     background-color: rgba(25, 25, 112, 0.856);
     background-size: 110%;
@@ -194,7 +248,9 @@ footer{
     border-radius: 5px;
 }
 #item-table{
-    margin: 2%;
+    margin-top: 2%;
+    margin-left: auto;
+    margin-right: auto;
     font-size: 85%;
 }
 #profile-wrapper{
@@ -202,10 +258,16 @@ footer{
     background-size: cover;
     background-color: rgb(1, 1, 87);
     color: whitesmoke;
+    padding: 2%;
+}
+
+#profile-wrapper #profile{
+    max-width: 200px;
 }
 #info *{
     font-size: 70%;
     list-style-type: none;
+    vertical-align: bottom;
 }
 .pantry-box{
     border: 2px solid black;
@@ -223,8 +285,10 @@ footer{
     color: black;
     text-align: center;
     max-height: 500px;
-    margin-left: 3%;
     font-size: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: auto;
 }
 input.buy{
     background-color: rgb(25, 83, 241);
@@ -236,6 +300,7 @@ input.buy{
     background-color: #e17f1d96;
     border: 2px solid black;
     border-radius: 10px;
+    margin: auto;
 }
 .search{
     margin: 1%;
@@ -259,51 +324,55 @@ tr.head{
     font-size: 90%;
 }
 #market{
-    height: 400px;
+    height: 490px;
     overflow-y: scroll;
     display: block;
 }
 .toss{
     background-image: url('../img/btn-toss.png');
-    background-size: cover;
-    background-position: center;
-    padding: 10%;
-
 }
 .take-out{
     background-image: url('../img/btn-take_out.png');
+}
+.toss, .take-out {
     background-size: cover;
     background-position: center;
+    background-color: transparent;
     padding: 10%;
-
+    width: 30px;
+    height: 30px;
+    border: none;
 }
+
 /*Small devices (portrait phones, 400 and up)*/
 @media (min-width: 320px){
     img#logo{
-        width: 250%;
+        width: 190%;
     }
     h1#skillet{
         text-align: center;
         font-size: 240%;
-        margin:10% 0 0 20%;
+        margin: 0% 0 0 0%;
     }
-    #landing-login{
+    /* #landing-login{
         text-align: center;
         margin: -3% 0 0 0;
         font-size: 100%;
         color: whitesmoke;
-    }
+    } */
     #profile-wrapper{
         background-color: darkblue;
         color: whitesmoke;
     }
-    h2{
-        text-align: center;
+    #info h2{
+        text-align: left;
+        font-size: 100%;
     }
 
     #info{
         font-size: 175%;
-        margin-left: 10%;
+        margin-left: 4%;
+        vertical-align: bottom;
     }
     #info ul{
         font-size: 100%;
@@ -313,8 +382,8 @@ tr.head{
     }
     img#profile{
         width: 150%;
-        margin: 0 0 0 15%;
     }
+
     .reroute{
         margin-left: 60%;
 
@@ -324,9 +393,6 @@ tr.head{
     }
     #pantry{
         margin: 0;
-    }
-    .first-a{
-        margin-left: 50%;
     }
 }
 /*Small devices (landscape phones, 576px and up)*/
@@ -339,25 +405,21 @@ tr.head{
         font-size: 300%;
         margin: 5% 0 0 -30%;
     }
-    div#landing-login{
+    /* div#landing-login{
         text-align: center;
         margin: 13% 0 0 0;
         font-size: 90%;
-    }
+    } */
     #profile-wrapper h2{
         text-align: left;
-        margin-left: 4%;
     }
+
     img#profile{
         width: 100%;
-        margin: 0 0 0 3%;
     }
     #info{
         font-size: 175%;
         margin: 0;
-    }
-    .first-a{
-        margin-left: 5%;
     }
 }
 /*Medium devices (tablets, 768px and up)*/
@@ -371,17 +433,17 @@ tr.head{
         font-size: 400%;
         margin: 3% 0 0 -80%;
     }
-    div#landing-login{
+    /* div#landing-login{
         text-align: center;
         margin: 10% 0 0 -10%;
         font-size: 100%;
-    }
+    } */
     img#profile{
         width: 100%;
         margin: 0;
     }
     #profile-wrapper h2{
-        font-size: 300%;
+        font-size: 120%;
     }
     #info{
         font-size: 175%;
@@ -393,14 +455,16 @@ tr.head{
         font-size: 75%;
     }
     .shopping-list-box{
-        font-size: 200%;
-        margin-left:0;
+        /* font-size: 100%;
+        margin-left:0; */
+        width:100%;
     }
     .pantry-box{
         font-size: 175%;
     }
     h5{
         font-size: 175%;
+        text-align: center;
     }
 
 }
@@ -414,25 +478,22 @@ tr.head{
         font-size: 400%;
         margin: 1% 0 0 -100%;
     }
-    div#landing-login{
+    /* div#landing-login{
         text-align: center;
         margin: 5% 0 0 -10%;
         font-size: 100%;
-    }
+    } */
     img#profile{
         width: 60%;
         margin: 0;
     }
     #profile-wrapper h2{
-        font-size: 300%;
+        font-size: 130%;
     }
     #info{
         margin: 0 0 0 -10%;
     }
-    .first-a{
-        font-size: 200%;
-        margin-left: 2%;
-    }
+
     .shopping-list-box{
         font-size: 100%;
     }
@@ -451,10 +512,10 @@ tr.head{
         font-size: 300%;
         margin: 10% 0 0 -200%;
     }
-    div#landing-login{
+    /* div#landing-login{
         margin: -2% 0 0 80%;
         font-size: 100%;
-    }
+    } */
     #profile-wrapper h2{
         font-size: 200%;
         margin: 1%;
@@ -475,10 +536,7 @@ tr.head{
     #info ul li{
         font-size: 50%;
     }
-    .first-a{
-        font-size: 100%;
-        margin: 0 0 0 3.5%;
-    }
+
     .shopping-list-box{
         font-size: 120%;
     }

@@ -134,12 +134,14 @@ def dashboard(request):
     dietlist=[]
     for diet in user.diets.all():
         dietlist.append(diet.preference)
+    joined=User.objects.get(id = id).created_at
+    joined=joined.strftime("%B %d, %Y")
     context = {
         'username':name,
         'access_level': user.access_level,
         'pantrylist':pantrylist,
         'grocerylist':list_to_show,
-        'joined': User.objects.get(id = id).created_at,
+        'joined': joined,
         'dietlist':dietlist,
     }
     return render(request, 'dashboard.html',context)

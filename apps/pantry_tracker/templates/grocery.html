@@ -28,6 +28,37 @@
         </div>
         <!--Ends Header-->
         <div class="container">
+            <div class="shopping-list-box col-xl-6 col-lg-6 col-md-7 col-sm-12 col-12">
+                <h3>Grocery List</h3>
+                <a href="/dashboard">
+                    <button id=shop>Back to Dashboard</button>
+                </a>
+                <table class="shopping-list-box col-12">
+                    <tr class="head">
+                        <th>Product</th>
+                        <th> </th>
+                        <th>Qty</th>
+                        <th> </th>
+                        <th>Actions</th>
+                    </tr>
+                    {% for product in grocerylist %}
+                    <tr class="underline">
+                        <td>{{ product.name }}</td>
+                        <td>
+                                <a class="shop-decr" href="/grocery_decr/{{ product.id }}"></a>
+                        </td>
+                        <td>{{ product.quantity }}</td>
+                        <td>
+                            <a class="shop-incr"
+                                href="/grocery_incr/{{ product.id }}"></a>
+                        </td>
+                        <td>
+                            <a class="remove_shopping" href="/grocery_remove/{{ product.id }}">Remove</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
             <div id="item-table" class="row justify-content-between">
                 <div class="products_available col-xl-6 col-lg-6 col-md-7 col-sm-12 col-12">
                     <table id="market">
@@ -75,40 +106,11 @@
                         {% endfor %}
                     </table>
                 </div>
-                <div class="shopping-list-box col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12">
-                    <h3>Grocery List</h3>
-                    <table class="shopping-list-box col-12">
-                        <tr class="head">
-                            <th>Product</th>
-                            <th>Qty</th>
-                            <th>Add/Sub</th>
-                            <th>Actions</th>
-                        </tr>
-                        {% for product in grocerylist %}
-                        <tr class="underline">
-                            <td>{{ product.name }}</td>
-                            <td>{{ product.quantity }}</td>
-                            <td class="plus_min">
-                                <a class="shop-decr" href="/grocery_decr/{{ product.id }}"></a><a class="shop-incr" href="/grocery_incr/{{ product.id }}"></a>
-                            </td>
-                            <td>
-                                <a class="remove_shopping" href="/grocery_remove/{{ product.id }}">Remove</a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </table>
-                    <a href="/dashboard">
-                        <button>Back to Dashboard</button>
-                    </a>
-                </div>
             </div>
 
 
         </div>
     </div>
-
-    </div>
-
 
     {% load static %}
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
