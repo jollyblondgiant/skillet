@@ -35,22 +35,32 @@ p.lead{
 span{
     display: inline-block;
 }
-span#turn{
+h1 span#turn{
     transition: all 0.5s;
     transform: rotateY(180deg);
     color: #e1801d;
 }
-span#turn:hover{
+h1 span#turn:hover{
     transform: rotateY(0deg);
     color: white;
 }
-span:hover{
+h1 span:hover{
     color: #e1801d;
 }
 .first-a{
     margin: 0 0 0 0;
     color: whitesmoke;
 }
+#main-dash{
+    margin-top: 5%;
+}
+p#diet{
+    color: #e1801d;
+}
+p#diet span{
+    color: whitesmoke;
+}
+
 #pantry{
     margin-left: 20%;
 }
@@ -129,6 +139,18 @@ button#shop{
     font-size: 110%;
     color: black;
 }
+.shop-decr{
+    background-image: url('../img/btn-descrease.png');
+    background-size: cover;
+    background-position: center;
+    padding: 20%;
+}
+.shop-incr{
+    background-image: url('../img/btn-increase.png');
+    background-size: contain;
+    background-position: center;
+    padding: 20%;
+}
 div#footer{
     background-color: rgb(1, 1, 31);
 }
@@ -174,7 +196,9 @@ footer{
     font-size: 85%;
 }
 #profile-wrapper{
-    background-color: darkblue;
+    background-image: url('../img/profile-bar.jpg');
+    background-size: cover;
+    background-color: rgb(1, 1, 87);
     color: whitesmoke;
 }
 #info *{
@@ -188,6 +212,9 @@ footer{
     margin: 1%;
     font-family: Andale Mono;
     text-align: center;
+}
+.pantry-button{
+    padding: 0 1% 0 1%;
 }
 .shopping-list-box{
     background-color: whitesmoke;
@@ -257,9 +284,16 @@ tr.head{
     h2{
         text-align: center;
     }
-    #info *{
-        font-size: 100%;
+
+    #info{
+        font-size: 175%;
         margin-left: 5%;
+    }
+    #info ul{
+        font-size: 100%;
+    }
+    #info ul li{
+        font-size: 75%;
     }
     img#profile{
         width: 150%;
@@ -298,9 +332,14 @@ tr.head{
         width: 70%;
         margin: 0 0 0 5%;
     }
-    #info *{
-        margin: 0;
-        font-size: 125%;
+    #info{
+        font-size: 175%;
+    }
+    #info ul{
+        font-size: 100%;
+    }
+    #info ul li{
+        font-size: 75%;
     }
     .first-a{
         margin-left: 5%;
@@ -401,10 +440,14 @@ tr.head{
     }
     #profile-wrapper h2{
         font-size: 200%;
+        margin: 1%;
     }
     img#profile{
         width: 30%;
         margin-left: 5%;
+    }
+    .pantry-box{
+        font-size: 125%;
     }
     #info{
         margin-left: -20%;
@@ -412,8 +455,15 @@ tr.head{
     #info *{
         font-size: 75%;
     }
+    #info ul li{
+        font-size: 50%;
+    }
     .first-a{
         font-size: 100%;
-        margin-left: 3%;
+        margin: 0 0 0 3.5%;
     }
+    .shopping-list-box{
+        font-size: 120%;
+    }
+
 }

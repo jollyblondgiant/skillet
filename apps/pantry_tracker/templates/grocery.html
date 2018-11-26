@@ -23,7 +23,6 @@
                 <h1 id="skillet"><span>S</span><span id="turn">K</span><span>I</span><span>L</span><span>L</span><span>E</span><span>T</span></h1>
             </div>
             <div class="col-12 col-sm-2 col-md-2 col-xl-2" id="landing-login">
-                <a class="first-a" href="/dashboard">Back to Dashboard</a>
                 <a href="/logout">Sign Out</a>
             </div>
         </div>
@@ -81,14 +80,16 @@
                     <table class="shopping-list-box col-12">
                         <tr class="head">
                             <th>Product</th>
-                            <th>Quantity</th>
+                            <th>Qty</th>
+                            <th>Add/Sub</th>
                             <th>Actions</th>
                         </tr>
                         {% for product in grocerylist %}
                         <tr class="underline">
                             <td>{{ product.name }}</td>
+                            <td>{{ product.quantity }}</td>
                             <td class="plus_min">
-                                <a href="/grocery_decr/{{ product.id }}">-</a><p>{{ product.quantity }}</p><a href="/grocery_incr/{{ product.id }}">+</a>
+                                <a class="shop-decr" href="/grocery_decr/{{ product.id }}"></a><a class="shop-incr" href="/grocery_incr/{{ product.id }}"></a>
                             </td>
                             <td>
                                 <a class="remove_shopping" href="/grocery_remove/{{ product.id }}">Remove</a>
