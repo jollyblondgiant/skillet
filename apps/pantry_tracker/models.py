@@ -92,7 +92,7 @@ class Pantry(models.Model):
     updated_at = models.DateTimeField(auto_now = True)
 
 class Product(models.Model):
-    pantry = models.ForeignKey(Pantry, related_name = "product")
+    pantry = models.ForeignKey(Pantry, related_name = "product", on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     quantity = models.PositiveSmallIntegerField( default =1)
     gluten_free = models.BooleanField(default = True)
@@ -115,7 +115,7 @@ class User(models.Model):
     last_name = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
-    pantry = models.ForeignKey(Pantry, related_name = "user")
+    pantry = models.ForeignKey(Pantry, related_name = "user", on_delete=models.CASCADE)
     access_level = models.PositiveSmallIntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
@@ -123,7 +123,7 @@ class User(models.Model):
 
 class GroceryList(models.Model):
     product = models.ManyToManyField(Product, related_name = "product_grocery_list",blank=True)
-    user = models.OneToOneField(User, related_name = "user_grocery_list", blank = True)
+    user = models.OneToOneField(User, related_name = "user_grocery_list", blank = True, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
     
@@ -153,7 +153,7 @@ class Recipe(models.Model):
     desc = models.TextField()
     #probably won't need the 'author' field,
     #adding it, just in case
-    author = models.ForeignKey(User, related_name="recipes_submitted")
+    author = models.ForeignKey(User, related_name="recipes_submitted", on_delete=models.CASCADE)
     #this field we'll definitely need:
     added_by = models.ManyToManyField(User, related_name='added_recipes')
     created_at = models.DateTimeField(auto_now_add = True)
@@ -163,8 +163,8 @@ class Recipe(models.Model):
 #stores quantity required and text notes, again
 #just in case
 class RecipeComponents(models.Model):
-    product = models.ForeignKey(Product, related_name='used_in_recipe')
-    recipe = models.ForeignKey(Recipe, related_name="components")
+    product = models.ForeignKey(Product, related_name='used_in_recipe', on_delete=models.PROTECT)
+    recipe = models.ForeignKey(Recipe, related_name="components", on_delete=models.PROTECT)
     quantity = models.IntegerField()
     note = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add = True)
